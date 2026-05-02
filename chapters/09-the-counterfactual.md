@@ -2,30 +2,15 @@
 
 *Pearl's abduction-action-prediction procedure, and why the individual-level counterfactual is the hardest and most valuable form of causal reasoning.*
 
-**Nik Bear Brown**
-**Draft — 2026-05-01**
-
 ---
 
-*Suggested titles:*
-
-- *The Counterfactual*
-- *Abduction, Action, Prediction*
-- *Worlds That Never Happened*
-
-**TL;DR.** Counterfactuals are statements about worlds that did not occur — *if I had done X, Y would have happened*. They cannot be verified by experiment, since the world that happened is the only one we have. But they are mathematically tractable in a structural causal model, via the abduction-action-prediction procedure. Counterfactuals are the upper rung of the Ladder of Causation, the level at which regret, attribution, blame, credit, and personalized intervention live. The Living Model architecture in Part Three depends on them.
-
----
-
-## The Decision That Was Not Taken
-
-A board chair sits in her office, six months after a decision that did not go well. The company chose, on her recommendation, to expand into a new geography. Revenue from the new market has come in at a third of the projection. Two senior leaders have left. The board is asking, quite reasonably, what would have happened if the company had not expanded — if it had instead invested the same resources in deepening its existing market.
+A board chair sits in her office, six months after a decision that did not go well. The company chose, on her recommendation, to expand into a new geography. Revenue from the new market came in at a third of the projection. Two senior leaders have left. The board is asking, quite reasonably, what would have happened if the company had not expanded — if it had instead invested the same resources in deepening its existing market.
 
 The board chair would like to answer the question. So would her CEO, her CFO, her board members, and the analysts on Wall Street. None of them can. The world in which the company did not expand does not exist. There is no data on it. There is no possibility of running the experiment. There is only the world that happened, with its disappointing revenue and its departing leaders, and the world that did not happen, about which we have only intuitions.
 
-This is a counterfactual question. It is the kind of question every executive faces every quarter, every time a strategic decision turns out to be other than expected. It is also the kind of question every patient faces when a treatment fails, every plaintiff in a wrongful-death lawsuit, every parent looking back at a difficult conversation with a teenager. *What would have happened if?*
+This is a counterfactual question. It is the kind of question every executive faces every quarter, every time a strategic decision turns out differently than expected. It is also the kind of question every patient faces when a treatment fails, every plaintiff in a wrongful-death lawsuit, every parent looking back at a difficult conversation with a teenager. *What would have happened if?*
 
-The question seems unanswerable. The world that did not happen is, by definition, unobserved. And yet, humans answer counterfactual questions all the time, with surprising consistency. We make judgments about what would have been, we hold ourselves and others accountable to those judgments, we use them as the basis of regret, attribution, and learning. The question for this chapter is whether such judgments can be made rigorous — whether we can compute counterfactuals from data and a model — and the answer, due primarily to Judea Pearl's work, is yes.
+The question seems unanswerable. The world that did not happen is, by definition, unobserved. And yet humans answer counterfactual questions all the time, with surprising consistency. We make judgments about what would have been, we hold ourselves and others accountable to those judgments, we use them as the basis of regret, attribution, and learning. The question for this chapter is whether such judgments can be made rigorous — whether we can compute counterfactuals from data and a model — and the answer, due primarily to Judea Pearl's work, is yes.
 
 ---
 
@@ -33,65 +18,69 @@ The question seems unanswerable. The world that did not happen is, by definition
 
 The Ladder of Causation, as we saw in Chapter 5, is sealed in one direction. Rung 1 cannot answer Rung 2 questions; Rungs 1 and 2 together cannot answer Rung 3 questions. The reason has to do with the kind of evidence each rung admits.
 
-Rung 1 admits only observational data — what we observed about the world. Rung 2 admits interventional data — what happens when we manipulate variables. Rung 3 admits *counterfactual* data — what would have happened in a world that did not occur. We cannot collect counterfactual data directly, because the worlds in question did not happen. The only way to get to Rung 3 is to combine the data we have with a model rich enough to predict what would have happened in the worlds we did not see.
+Rung 1 admits only observational data — what we saw happen in the world. Rung 2 admits interventional data — what happens when we manipulate variables. Rung 3 admits counterfactual data — what would have happened in a world that did not occur. We cannot collect counterfactual data directly, because the worlds in question did not happen. The only way to reach Rung 3 is to combine the data we have with a model rich enough to predict what would have happened in worlds we did not see.
 
-The model, in this case, is the structural causal model (SCM) we met in Chapter 6. The SCM is more than a diagram; it is a diagram plus the functions that determine each variable from its parents and an exogenous noise term. The functions encode the *mechanism* by which the system works. Given the mechanism, we can ask: in this specific case, what would the outcome have been if the input had been different? That is a counterfactual question. The SCM gives us a procedure for answering it.
+<!-- → [DIAGRAM: Pearl's Ladder revisited from Chapter 1, now annotated for Chapter 9 — three rungs with their standard labels; Rung 3 highlighted; beside it, a two-column annotation: "What you need" (Rung 1: observations, Rung 2: intervention records, Rung 3: SCM + abduction) and "What you cannot get by staying below" (Rung 2: causal direction, Rung 3: case-specific noise); purpose is to show why the SCM is a strict requirement for counterfactuals, not an optional upgrade] -->
 
-The procedure is called *abduction-action-prediction*, after the three steps it involves. It is short, mechanical, and one of the most beautiful results in causal inference.
+That model is the structural causal model we built in Chapter 6. The SCM is more than a diagram; it is a diagram plus the functions that determine each variable from its parents and an exogenous noise term. The functions encode the *mechanism* by which the system works. Given the mechanism, we can ask: in this specific case, with its specific circumstances, what would the outcome have been if the input had been different? That is a counterfactual question. The SCM gives us a procedure for answering it.
+
+The procedure is called abduction-action-prediction, after its three steps. It is short, mechanical, and one of the most beautiful results in causal inference.
 
 ---
 
 ## The Three Steps
 
-Suppose we have a structural causal model M with variables X, Y, and other variables. We have observed a specific case: X took value x, Y took value y, the other variables took specific values. The counterfactual question is: what would Y have been in this case if X had been x′ instead?
+Suppose we have an SCM with variables $X$, $Y$, and others. We have observed a specific case: $X$ took value $x$, $Y$ took value $y$, and the other variables took specific values. The counterfactual question is: what would $Y$ have been in this case if $X$ had been $x'$ instead?
 
-**Step 1: Abduction.** Use the observed data to update our knowledge of the exogenous noise terms. The SCM says that each variable is determined by its parents and a noise term U. We have observed the variables; we can therefore infer (in many cases) what the noise terms must have been to produce the observed values. This step recovers the case-specific information that distinguishes this case from others.
+**Step 1: Abduction.** Use the observed data to infer the exogenous noise terms. The SCM says each variable is determined by its parents and a noise term $U$. We have observed the variables; we can therefore recover what the noise terms must have been in order to produce the observed values. This step extracts the case-specific information — the idiosyncrasies of this particular situation — that distinguishes this case from all others.
 
-**Step 2: Action.** Modify the SCM to enforce the counterfactual condition. Replace the equation for X with the assignment X = x′. The other equations remain. This step builds the counterfactual world's model, which differs from the actual world's model only in the value of X.
+**Step 2: Action.** Modify the SCM to enforce the counterfactual condition. Replace the equation for $X$ with the assignment $X = x'$. The other equations remain unchanged. This builds the counterfactual world's model, which differs from the actual world's model only in the value of $X$.
 
-**Step 3: Prediction.** Using the modified SCM and the noise terms recovered in Step 1, compute the value of Y. This is the counterfactual outcome — what Y would have been in this case if X had been x′ instead of x.
+**Step 3: Prediction.** Using the modified SCM and the noise terms recovered in Step 1, compute the value of $Y$. This is the counterfactual outcome: what $Y$ would have been in this specific case if $X$ had been $x'$ instead of $x$.
 
-The procedure is mechanical. Given an SCM and an observation, it produces a counterfactual prediction. The prediction is not a fact; it is conditional on the SCM being correct. But the SCM is testable in the ways we discussed in Chapter 6 — its structural assumptions imply specific patterns in the observational data — and the counterfactual it produces inherits the SCM's empirical credibility.
+The procedure is mechanical. Given an SCM and an observation, it produces a counterfactual prediction. The prediction is not a fact — it is conditional on the SCM being correct. But the SCM is testable in the ways we covered in Chapter 6: its structural assumptions imply specific patterns in the observational data. The counterfactual inherits that empirical credibility.
 
 ---
 
 ## A Worked Example
 
-Pearl's classic worked example is the firing squad, which I will not repeat here. Let me instead work through a business example that maps onto the kind of counterfactual the board chair is asking.
+Let me work through a business example that maps onto the kind of counterfactual the board chair is asking.
 
-Suppose we have a simple model: a marketing campaign (M) drives leads (L), which drive revenue (R). The SCM is:
+Suppose a simple model: a marketing campaign ($M$) drives leads ($L$), which drive revenue ($R$). The SCM is:
 
-> M = U<sub>M</sub>
-> L = α M + U<sub>L</sub>
-> R = β L + U<sub>R</sub>
+$$M = U_M$$
+$$L = \alpha M + U_L$$
+$$R = \beta L + U_R$$
 
-We observe a specific case: a campaign was run with M = 100 (units of investment), it generated L = 50 leads, and revenue came in at R = 200. We have estimated the parameters from past data: α = 0.4, β = 5.
+We observe a specific case: a campaign run at $M = 100$ units of investment generated $L = 50$ leads and $R = 200$ in revenue. Estimated from past data: $\alpha = 0.4$, $\beta = 5$.
 
-The counterfactual question: *what would revenue have been if we had run the campaign at M = 200 instead of M = 100?*
+The counterfactual question: *what would revenue have been if we had run the campaign at $M = 200$ instead of $M = 100$?*
 
-**Step 1: Abduction.** The actual data: M = 100, L = 50, R = 200. Plugging into the equations:
+**Step 1: Abduction.** Plug the observations into the equations:
 
-> 50 = 0.4 × 100 + U<sub>L</sub>, so U<sub>L</sub> = 10
-> 200 = 5 × 50 + U<sub>R</sub>, so U<sub>R</sub> = −50
+$$50 = 0.4 \times 100 + U_L \implies U_L = 10$$
+$$200 = 5 \times 50 + U_R \implies U_R = -50$$
 
-The noise terms in this specific case were U<sub>L</sub> = 10 (we got 10 more leads than the average campaign at this spend produces) and U<sub>R</sub> = −50 (we got $50 less revenue per lead than the average lead produces).
+The noise terms for this specific case were $U_L = 10$ — we got 10 more leads than an average campaign at this spend produces — and $U_R = -50$ — we got \$50 less revenue per lead than the average lead produces. The campaign over-performed on volume and under-performed on conversion.
 
-**Step 2: Action.** Modify the SCM by setting M = 200. The other equations stay:
+**Step 2: Action.** Set $M = 200$, keep the other equations:
 
-> M = 200
-> L = 0.4 M + U<sub>L</sub>
-> R = 5 L + U<sub>R</sub>
+$$M = 200$$
+$$L = 0.4M + U_L$$
+$$R = 5L + U_R$$
 
-**Step 3: Prediction.** Using the noise terms from Step 1:
+**Step 3: Prediction.** Using the case-specific noise terms:
 
-> L<sub>counterfactual</sub> = 0.4 × 200 + 10 = 90
-> R<sub>counterfactual</sub> = 5 × 90 + (−50) = 400
+$$L_{\text{cf}} = 0.4 \times 200 + 10 = 90$$
+$$R_{\text{cf}} = 5 \times 90 + (-50) = 400$$
 
-So in this specific case, with this specific campaign's idiosyncrasies, doubling the investment from 100 to 200 would have doubled revenue from 200 to 400. The counterfactual answer is $400 in revenue, given the case-specific noise.
+In this specific case, with this specific campaign's idiosyncrasies, doubling the investment from 100 to 200 would have doubled revenue from 200 to 400.
 
-Notice what abduction did. In the average case, doubling investment from 100 to 200 should produce 80 leads (0.4 × 200) and $400 in revenue (5 × 80). In this specific case, abduction told us that we got 10 extra leads and $50 less per lead. The counterfactual carries those case-specific quirks forward into the new investment level. The result is 90 leads (10 more than average) and $400 in revenue (90 × 5 − 50). The case-specific noise survives the counterfactual because the counterfactual is asking about *this* case, not about the average.
+<!-- → [TABLE: Worked counterfactual — four columns: Step, Operation, Equation, Result; rows: (1) Abduction / recover noise / plug observations into SCM / U_L=10, U_R=−50; (2) Action / modify SCM / set M=200 / new system; (3) Prediction / run modified SCM with case-specific noise / compute L_cf and R_cf / L=90, R=400; a footer row showing the average-case prediction without abduction for contrast] -->
 
-This is the key feature of counterfactuals. They are not predictions about averages; they are predictions about specific cases, with all the idiosyncrasies of the case preserved. The board chair's question is exactly this kind of question: *given the specific situation our company was in, what would have happened if we had made a different decision?* The counterfactual procedure carries forward everything that was specific to the company's situation — the team, the market conditions, the competitive landscape — and asks what the outcome would have been under a different action.
+Notice what abduction did. In the average case, doubling investment from 100 to 200 should produce 80 leads and \$400 in revenue. In *this* case, abduction told us we got 10 extra leads and \$50 less per lead. The counterfactual carries those case-specific quirks forward into the new investment level — 90 leads (10 more than average), \$400 in revenue (90 × 5 − 50). The idiosyncrasies of the case survive into the counterfactual world, because the counterfactual is asking about *this* case, not about an average.
+
+This is the defining feature of Rung 3. Counterfactuals are not predictions about populations; they are predictions about specific cases, with all the particularity of the case preserved. The board chair's question is exactly this kind: given the specific situation our company was in — this team, these market conditions, this competitive landscape — what would have happened under a different decision? The abduction step is what makes that question answerable.
 
 ---
 
@@ -99,73 +88,119 @@ This is the key feature of counterfactuals. They are not predictions about avera
 
 Counterfactuals come in two flavors, distinguished by when they are evaluated.
 
-**Pre-factual counterfactuals** are evaluated before an action is taken. They ask: *if I were to take this action, what would happen?* This is, in essence, a Rung 2 question — an interventional question — being answered with the apparatus of Rung 3. The reason to use Rung 3 machinery instead of Rung 2 is that pre-factual counterfactuals can be conditioned on the specific case at hand, whereas Rung 2 estimates are typically averaged over a population. A doctor evaluating whether to give a particular drug to a particular patient is asking a pre-factual counterfactual: *given everything I know about this patient, what would happen if I prescribed this drug?*
+**Pre-factual counterfactuals** are evaluated before an action is taken. They ask: if I were to take this action, what would happen? This resembles a Rung 2 question, but answered with Rung 3 machinery — conditioned on the specific case at hand rather than averaged over a population. A doctor evaluating whether to give a drug to a particular patient is asking a pre-factual counterfactual: given everything I know about this patient, what would happen if I prescribed this drug?
 
-**Retrospective counterfactuals** are evaluated after an action has been taken. They ask: *given that I took this action and observed this outcome, what would have happened if I had taken a different action?* This is the canonical counterfactual question. The board chair's question is retrospective. Most legal questions of causation are retrospective. Most regret is retrospective.
+**Retrospective counterfactuals** are evaluated after an action has been taken. They ask: given that I took this action and observed this outcome, what would have happened if I had acted differently? This is the canonical counterfactual question. The board chair's question is retrospective. Most legal questions of causation are retrospective. Most regret is retrospective.
 
-The two flavors require the same machinery. Both use abduction-action-prediction. The difference is what we are conditioning on. Pre-factual counterfactuals condition on the patient's pre-treatment characteristics. Retrospective counterfactuals condition on the actual outcome as well. The retrospective version is harder because it requires us to update our model of the noise terms based on the actual observation, whereas the pre-factual version uses prior distributions over the noise.
+Both flavors use the same three steps. The difference is what we condition on. Pre-factual counterfactuals condition on the patient's pre-treatment characteristics, using prior distributions over the noise. Retrospective counterfactuals condition on the actual outcome as well, which is why abduction in the retrospective case can recover the noise terms more precisely — the observed outcome pins down the residual that the pre-factual case can only bound.
 
-In practice, the retrospective form is what most decision-makers want when they ask "what would have happened if?" It is the form that supports learning from experience. It is also, on the second front, the form that supports legal arguments about causation, attribution of responsibility, and assessment of necessity (the "but-for" test in tort law).
+In practice, the retrospective form is what most decision-makers want when they ask "what would have happened if." It supports learning from experience. It also, on the second front, supports legal arguments about causation, attribution of responsibility, and the but-for test — whether the harm would have occurred in the absence of the defendant's action.
+
+<!-- → [TABLE: Pre-factual vs. retrospective counterfactuals — rows: when evaluated, what is conditioned on, what abduction recovers, precision of noise recovery, primary use case, example from the chapter; columns: Pre-factual, Retrospective; purpose is to make the structural distinction concrete before the legal material that follows depends on it] -->
 
 ---
 
 ## The Individual-Level Counterfactual
 
-The counterfactual question can be asked at three levels of granularity, and they get progressively harder.
+The counterfactual question can be asked at three levels of granularity, each progressively harder.
 
-**Population-level counterfactual.** *On average, what would have happened if we had not run the campaign?* This is closely related to the average causal effect we estimated in Chapter 8. It uses the population distribution of noise terms rather than case-specific noise.
+At the **population level**: on average, what would have happened if we had not run the campaign? This is closely related to the average causal effect from Chapter 8. It uses the population distribution of noise terms rather than case-specific noise, and it is accessible via Rung 2 methods — it does not strictly require the full counterfactual apparatus.
 
-**Subgroup counterfactual.** *Among customers with these characteristics, what would have happened if we had not run the campaign?* This is the conditional average treatment effect, accessible via causal forests.
+At the **subgroup level**: among customers with these characteristics, what would have happened? This is the conditional average treatment effect, accessible via causal forests and similar methods. It is more informative than the population average but still not case-specific.
 
-**Individual-level counterfactual.** *For this specific case, what would have happened if we had not run the campaign?* This requires abduction — recovering the case-specific noise terms from the observed data — and is the form Pearl's three-step procedure addresses directly.
+At the **individual level**: for this specific case, what would have happened? This requires abduction — recovering the case-specific noise terms from the observed data — and is the form Pearl's three-step procedure addresses directly. It is the hardest, and it is also the most valuable. Decisions are made about specific cases — this patient, this customer, this price negotiation — and case-specific reasoning is what supports the decision. Population averages are useful background; they do not answer the question the decision-maker is actually asking.
 
-The individual-level counterfactual is the hardest. It is also the most valuable. Decisions are made about specific cases — this patient, this customer, this price negotiation — and the case-specific reasoning is what supports the decision. Population averages are useful as background; they do not address the question the decision-maker is actually asking.
+There is a caveat. The individual-level counterfactual is fully identifiable only when the SCM is completely specified and the abduction step uniquely recovers the noise terms. If the SCM has nonlinear relationships, or the noise terms are not separately identifiable from the observations, the individual-level counterfactual may be only partially identified — bounded above and below, but not pinned to a specific value. This is the discipline of causal inference: we report what we can identify, we report bounds when we cannot, and we are honest about the dependence on model assumptions.
 
-There is, however, a caveat. The individual-level counterfactual is identifiable only when the SCM is fully specified and the abduction step uniquely determines the noise terms. If the SCM has nonlinear relationships, or the noise terms are not separately identifiable from the observations, the individual-level counterfactual may be only partially identified — bounded above and below, but not pinned down to a specific value. This is, again, the discipline of causal inference: we report what we can identify, we report bounds when we cannot, and we are honest about the dependence on model assumptions.
-
----
-
-## Counterfactuals in Clinical Reasoning
-
-The most familiar setting for counterfactual reasoning is clinical medicine. A patient presents with symptoms. The doctor decides on a treatment. The patient improves, or does not. The natural questions are: *did the treatment cause the improvement? would the patient have improved anyway? would a different treatment have worked better?* These are all counterfactual questions, and they are part of how clinical reasoning works.
-
-The structural causal model approach formalizes the clinician's reasoning. Given a model of the disease — what causes the symptoms, how the treatment affects the mechanism, what other factors moderate the response — the clinician can reason explicitly about counterfactuals. Pre-factually, before deciding on treatment: *what is the probability of recovery under treatment A vs. treatment B for this patient?* Retrospectively, after the outcome: *given that the patient recovered under treatment A, would she have recovered without treatment? would she have recovered faster with treatment B?*
-
-The clinical literature has been quietly using counterfactual reasoning for decades, often without naming it as such. The recent shift toward causal inference frameworks — driven in part by work like that of Miguel Hernán and Jamie Robbins at Harvard — has made the counterfactual structure explicit and given it computational teeth. The result has been substantial improvements in observational studies of treatment effects, particularly in long-term and chronic conditions where randomized trials are impractical.
-
-The Living Model architecture inherits this discipline from clinical reasoning. A Living Model that produces a recommendation should be able to support the recommendation with counterfactual reasoning: *here is what we expect under this intervention; here is what we expect under the alternative; here is the case-specific evidence that distinguishes this situation from the average.* The board chair, the CFO, the patient's family — all want this kind of reasoning, and the SCM apparatus is what produces it.
+<!-- → [DIAGRAM: Three-level counterfactual hierarchy — nested circles or stacked bars: outermost is Population (average causal effect, no abduction needed), middle is Subgroup (conditional average, partial conditioning), innermost is Individual (case-specific, full abduction); each layer labeled with the method that reaches it and what information it requires; caption: "Each inner ring requires strictly more from the model than the ring outside it"] -->
 
 ---
 
-## The Necessity and Sufficiency of Causes
+## Necessity and Sufficiency
 
-Pearl's framework distinguishes between two kinds of causation, both of which can be expressed as counterfactual queries.
+Pearl's framework distinguishes between two kinds of causation, both expressible as counterfactual queries.
 
-**Necessary cause.** A is a necessary cause of B if, *had A not occurred, B would not have occurred*. The probability of necessity (PN) is the probability that B would not have occurred had A not occurred, given that A and B both did occur. This is the "but-for" test in tort law — the standard most legal systems use to determine liability.
+A is a **necessary cause** of B if, had A not occurred, B would not have occurred. The probability of necessity — $PN$ — is the probability that B would not have happened had A not happened, given that both did happen in the actual world. This is the but-for test in tort law: the standard most legal systems use to determine liability. Was the defendant's action necessary for the harm that occurred?
 
-**Sufficient cause.** A is a sufficient cause of B if, *whenever A occurs, B also occurs*. The probability of sufficiency (PS) is the probability that B would occur had A occurred, given that A and B both did not occur in the actual world. This is the standard for predictive accountability — would this action, if taken, produce this outcome?
+A is a **sufficient cause** of B if, whenever A occurs, B also occurs. The probability of sufficiency — $PS$ — is the probability that B would have occurred had A occurred, given that neither happened in the actual world. This is the standard for predictive accountability: would this action, if taken, produce this outcome?
 
-These two probabilities are different. A drug can be necessary for a patient's recovery (the patient would not have recovered without it) but not sufficient (taking the drug does not guarantee recovery). A flame can be necessary for a fire (no fire without ignition) but not sufficient (ignition without oxygen produces no fire).
+The two probabilities are different, and the distinction matters. A drug can be necessary for a patient's recovery — the patient would not have recovered without it — but not sufficient, since taking the drug does not guarantee recovery. A flame can be necessary for a fire but not sufficient; ignition without oxygen produces no fire.
 
-The legal and ethical implications differ. Necessary cause is the standard for assigning blame for outcomes that did occur. Sufficient cause is the standard for assigning credit for outcomes that did not occur but might have. In policy contexts, both matter: necessary cause tells you what made the difference; sufficient cause tells you what would have made the difference.
+<!-- → [TABLE: Necessary vs. sufficient causation — rows: formal definition, counterfactual query, probability measure (PN vs PS), legal/ethical standard it supports, example from the chapter (drug recovery, warehouse fire), what a high value implies, what a low value implies; columns: Necessary Cause, Sufficient Cause; purpose is to make the PN/PS distinction scannable before Chapter 10's attribution application] -->
 
-The counterfactual machinery handles both cleanly. PN and PS are both functions of the SCM and the observed case, computable via the abduction-action-prediction procedure. We will see in Chapter 10 a substantive application — the climate change attribution problem — in which both PN and PS play a role.
+The legal and ethical implications differ accordingly. Necessary cause is the standard for assigning blame for outcomes that did occur. Sufficient cause is the standard for assigning credit for outcomes that did not occur but might have. In policy contexts, both matter: $PN$ tells you what made the difference in the past; $PS$ tells you what would make the difference in the future.
+
+The counterfactual machinery handles both cleanly. $PN$ and $PS$ are functions of the SCM and the observed case, computable via abduction-action-prediction. We will see in Chapter 10 a substantive application — the climate change attribution problem — in which both play a role.
 
 ---
 
 ## Why Counterfactuals Frighten Some Statisticians
 
-The counterfactual is not universally beloved among statisticians. The principal complaint is that the counterfactual world cannot be observed, and a statement about an unobservable cannot, by some definitions of science, be scientific. Karl Popper would have wanted to know what observation could falsify a counterfactual claim, and the honest answer is: no direct observation can. We can only test the SCM that produces the counterfactual, and the test is on its observable implications.
+The counterfactual is not universally beloved. The principal complaint is that the counterfactual world cannot be observed, and a statement about an unobservable cannot, by some definitions of science, be scientific. The honest response to this objection is that the counterfactual is in exactly the same epistemic position as every other theoretical construct in science.
 
-The defense of counterfactual reasoning is the same as the defense of any unobservable construct in science. Atoms cannot be directly observed; they are inferred from observable patterns and the theories that explain them. Black holes cannot be directly observed in the strict sense; they are inferred from the behavior of the surrounding matter and the theory that explains the behavior. The counterfactual is the same kind of construct: not directly observable, but inferred from a model that is observably testable, and used to support inferences and decisions that no other apparatus supports as cleanly.
+Atoms cannot be directly observed; they are inferred from observable patterns and the theories that explain them. Black holes cannot be seen directly; they are inferred from the behavior of surrounding matter and the theory of general relativity. The counterfactual is the same kind of construct: not directly observable, inferred from a model that is observably testable, and used to support inferences that no other apparatus supports as cleanly.
 
-The pragmatic case is stronger still. Humans reason counterfactually all the time. The question is not whether to reason this way but whether to do it consistently and rigorously. The structural causal model approach makes counterfactual reasoning systematic; the alternative is to leave it implicit, intuitive, and uncheckable.
+The pragmatic case is stronger still. Humans reason counterfactually all the time. The question is not whether to reason this way but whether to do it consistently and rigorously. The SCM approach makes counterfactual reasoning systematic. The alternative is to leave it implicit, intuitive, and uncheckable — which is not more scientific, only more opaque.
+
+---
+
+## The Living Model Connection
+
+The counterfactual is not a theoretical luxury. It is the form of reasoning that consequential decisions actually require.
+
+Consider what a decision-support system needs to do to be genuinely useful. It needs to say not just "here is what tends to happen" but "here is what we expect to happen in this specific situation, under this specific action, compared to this specific alternative." That is a counterfactual statement. It requires a model of mechanism, not just a correlation engine. It requires abduction — leveraging what we know about this specific case — not just population averages. And it requires the discipline to report uncertainty honestly when the model assumptions do not fully identify the counterfactual.
+
+The Living Model architecture in Part Three is built on this requirement. A Living Model that produces a recommendation should be able to support that recommendation with counterfactual reasoning: here is what we expect under this intervention; here is what we expect under the alternative; here is the case-specific evidence that distinguishes this situation from the average. The board chair, the CFO, the patient's family — all want this kind of reasoning. The abduction-action-prediction procedure is what makes it computable.
 
 ---
 
 ## Looking Forward
 
-Chapter 10 takes up the limits of what observational data can do for us. The counterfactual machinery in this chapter assumes the SCM is correct — that the structure of the diagram is right and the functional forms are right. In practice, models are always imperfect, and the most consequential imperfection is unmeasured confounding: a variable that affects both treatment and outcome but is not in our diagram. Chapter 10 takes up this problem honestly, including the methods for sensitivity analysis that quantify how robust our conclusions are to unmeasured confounding.
+Chapter 10 takes up the limits of what observational data can do for us. The counterfactual machinery in this chapter assumes the SCM is correct — that the structure of the diagram is right and the functional forms are right. In practice, models are always imperfect, and the most consequential imperfection is unmeasured confounding: a variable that affects both treatment and outcome but is not in the diagram. Chapter 10 takes up this problem honestly, including the sensitivity analysis methods that quantify how robust our conclusions are to the confounding we cannot see.
+
+---
+
+## Student Activities
+
+**Problem 9.1 — Running the Procedure.** A retailer's SCM links advertising spend ($A$) to store visits ($V$) and purchases ($P$) as follows: $V = 0.3A + U_V$, $P = 0.6V + U_P$. In a specific week, $A = 50$, $V = 20$, $P = 15$. (a) Perform the abduction step: recover $U_V$ and $U_P$ for this specific week. (b) Perform the action step: write the modified SCM for the counterfactual in which advertising spend was doubled to $A = 100$. (c) Perform the prediction step: compute the counterfactual values of $V$ and $P$. (d) Compare the counterfactual prediction to what the model would predict at $A = 100$ *without* abduction — that is, using $U_V = U_P = 0$. Explain in one sentence what the difference between the two predictions represents.
+
+**Problem 9.2 — Pre-factual vs. Retrospective.** A physician is considering two treatments for a patient with a chronic condition. Before prescribing, she asks: *what would happen to this patient under Treatment A vs. Treatment B?* After prescribing Treatment A and observing partial recovery, she asks: *would the patient have done better under Treatment B?* (a) Classify each question as pre-factual or retrospective. (b) Explain what the abduction step recovers in each case and why the retrospective version can recover it more precisely. (c) Describe one piece of observable information about the patient — not about the treatment — that would sharpen the abduction step in both cases.
+
+**Problem 9.3 — Necessity vs. Sufficiency.** A warehouse fire is attributed to an electrical fault ($F$) in the presence of dry conditions ($D$). The fire ($B$) occurred. (a) Write the counterfactual queries corresponding to $PN(F, B)$ and $PS(F, B)$. (b) Explain in plain language what each probability captures and why they are different. (c) A plaintiff's attorney argues that the electrical fault was a necessary cause of the fire; the defendant's attorney argues it was not sufficient. Explain what each attorney must show, expressed as a counterfactual claim. (d) Identify one piece of evidence — physical or statistical — that would change your estimate of $PN$ and one that would change your estimate of $PS$.
+
+**Problem 9.4 — Individual vs. Population.** A clinical trial estimates that a new drug increases five-year survival by 12 percentage points on average across a population. A specific patient has characteristics that place her in a subgroup where the average effect was 8 percentage points. The patient's individual-level counterfactual, computed via abduction, yields an estimated effect of 19 percentage points. (a) Explain why the three estimates differ and what each one means. (b) Which estimate is most relevant to the physician's prescription decision, and why? (c) Under what conditions would the individual-level estimate be identical to the subgroup estimate? Under what conditions would they diverge most sharply?
+
+**Problem 9.5 — The Objection.** A statistician colleague argues: "Counterfactual claims cannot be falsified by any observation, because the counterfactual world never exists. Therefore they are not scientific." Write a structured response to this objection. Your response should (a) acknowledge the legitimate concern behind the objection, (b) explain the epistemic status of the SCM on which counterfactuals are based and how it is testable, (c) name two other constructs in science that have the same observability status as counterfactuals, and (d) make the pragmatic case for rigorous counterfactual reasoning over the alternative of leaving such reasoning implicit.
+
+**Problem 9.6 — Design Challenge.** You are building a decision-support system for a retail operations team. The team makes weekly markdown decisions on slow-moving inventory. They want the system to support retrospective review: after each markdown decision, they want to ask "what would have happened if we had marked down more aggressively?" (a) Specify the minimum SCM structure you would need to support this counterfactual query, naming the variables and the causal relationships between them. (b) Describe the abduction step in concrete operational terms — what data would you collect, and how would it pin down the case-specific noise for a given week? (c) Identify one structural assumption in your SCM that is most likely to be wrong in practice, explain what would break if it were wrong, and describe one sensitivity analysis you would run to quantify the exposure.
+
+---
+
+## Key Terms
+
+**Abduction.** The first step of Pearl's abduction-action-prediction procedure. Given an observed case, abduction uses the structural equations of the SCM to infer the values of the exogenous noise terms that produced the observed outcome. Abduction recovers the case-specific information that distinguishes this case from the population average.
+
+**Action (in abduction-action-prediction).** The second step of the procedure. The SCM is modified by replacing the structural equation for the treatment variable with a fixed assignment $X = x'$. This modification represents the counterfactual intervention — it builds the model of the world in which a different action was taken.
+
+**But-For Test.** The legal standard for necessary causation: the harm would not have occurred but for the defendant's action. Formally, the but-for test asks whether the probability of necessity $PN$ is sufficiently large. Courts applying this test are asking a counterfactual question.
+
+**Counterfactual.** A statement about what would have happened in a world that did not occur. Counterfactuals are the third rung of Pearl's Ladder of Causation. They cannot be observed directly but are computable from a structural causal model via the abduction-action-prediction procedure.
+
+**Exogenous Noise Term ($U$).** A variable in an SCM that captures all influences on a node that are not represented by other nodes in the diagram. Each node has its own noise term. The abduction step recovers the value of the noise term for a specific case from the observed data.
+
+**Individual-Level Counterfactual.** A counterfactual prediction about a specific case, carrying forward the case-specific noise terms recovered by abduction. Distinguished from population-level and subgroup-level counterfactuals by its use of case-specific information. The hardest and most valuable form of counterfactual reasoning.
+
+**Prediction (in abduction-action-prediction).** The third step of the procedure. The modified SCM — with the counterfactual action applied and the case-specific noise terms inserted — is used to compute the counterfactual outcome.
+
+**Pre-factual Counterfactual.** A counterfactual question asked before an action is taken: what would happen if I were to do $X$? Conditioned on pre-action characteristics of the specific case. Closely related to Rung 2 interventional reasoning but conditioned on the individual rather than the population.
+
+**Probability of Necessity ($PN$).** The probability that the outcome $Y$ would not have occurred had the treatment $X$ not occurred, given that both did occur in the actual world. Formalizes the but-for test. Requires a retrospective counterfactual.
+
+**Probability of Sufficiency ($PS$).** The probability that the outcome $Y$ would have occurred had the treatment $X$ occurred, given that neither occurred in the actual world. Measures the predictive reliability of the cause. Requires a pre-factual counterfactual.
+
+**Retrospective Counterfactual.** A counterfactual question asked after an action has been taken and an outcome has been observed: given that I did $X$ and observed $Y$, what would have happened if I had done $X'$? The canonical form of counterfactual reasoning. The abduction step uses the observed outcome to sharpen the recovery of case-specific noise.
+
+**Structural Causal Model (SCM).** The mathematical object required for Rung 3 reasoning. An SCM is a DAG augmented with structural equations specifying the mechanism by which each variable is determined from its parents and an exogenous noise term. The abduction-action-prediction procedure runs on the SCM.
 
 ---
 
