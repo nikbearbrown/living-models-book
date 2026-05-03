@@ -380,3 +380,52 @@ The Zillow case will return in Chapter 8, where I use it as the anchor example f
 ---
 
 *Tags: observational vs interventional distribution, do-operator, Zillow Offers failure, concept drift vs covariate shift, Innovator's Dilemma incentive structure, disruption horizon compression, causal inference MBA, Living Model architecture*
+
+---
+
+###  LLM Exercise — Chapter 2: The Map That Doesn't Move
+
+**Project:** Build Your Own Living Model
+
+**What you're building this chapter:** The intervention diagnostic on your chosen decision — a ranked list of the three most dangerous intervention risks (training-scale, confounding, or feedback-loop) that surface why your current historical data may fail to predict what happens after you act.
+
+**Tool:** Claude Project (continue in the same one from Chapter 1).
+
+---
+
+**The Prompt:**
+
+```
+Continuing my Living Model project. My chosen decision and current data sources are documented in the Decision Dossier in the Project context.
+
+This chapter teaches that a predictive model trained on observational data — P(Y|X) — is not the same as one that can predict the consequence of an intervention — P(Y|do(X)). The do-operator severs the upstream causes of X. Three diagnostic questions surface intervention failures before they happen:
+
+1. SCALE — Was your training data generated under a regime in which actors like you were intervening at the scale you are now considering? (Zillow's failure was scaling iBuying to a level no participant in the training data had ever operated at.)
+
+2. CONFOUNDING — What is the conditional distribution of your action given the other variables in the data? Is your action confounded by something that also drives the outcome? (J.C. Penney's failure was treating segment-driven correlation as price-driven causation.)
+
+3. FEEDBACK — If you ran the recommendation as an intervention, what would the world look like two, three, four periods later — and are those subsequent states inputs to the next decision your model will make? (Zillow's purchases moved local prices, which fed back into the next round of estimates.)
+
+For my chosen decision, walk through all three questions specifically. Don't give me generic advice — anchor every answer to my actual decision, the data sources I named in the Decision Dossier, and the realistic confounders and feedback paths in my domain. Name the specific upstream variables you suspect are doing the work that the observational data credits to my candidate intervention.
+
+Then classify the most likely deployment-divergence mechanism if I were to act on the current data:
+- Concept drift (world changed on its own)
+- Covariate shift (new input regions)
+- Intervention (I am setting a variable by fiat)
+
+End with: a numbered list of the THREE most dangerous intervention risks for my decision, ordered by severity, and one specific data-collection or experimental move I could make this quarter that would meaningfully reduce risk #1.
+```
+
+---
+
+**What this produces:** A three-question intervention diagnostic written specifically for your decision, a divergence-mechanism classification, and a ranked list of the three most dangerous intervention risks with one concrete next move on the top one.
+
+**How to adapt this prompt:**
+- *For your own project:* If you skipped Chapter 1, replace the Dossier reference with: "My decision is [X], my domain is [Y], my current data sources are [Z]."
+- *For ChatGPT / Gemini:* Works as-is.
+- *For Claude Code:* Not needed yet.
+- *For a Claude Project:* Just paste — the Project carries Chapter 1's Decision Dossier automatically.
+
+**Connection to previous chapters:** Builds directly on the decision and data sources defined in Chapter 1. Without that anchoring this exercise produces generic answers.
+
+**Preview of next chapter:** Chapter 3 audits the *time dimension* of the systems you currently use for this decision — whether they are continually updated in any meaningful sense, and which of three latencies (data, model, decision) is the actual bottleneck.

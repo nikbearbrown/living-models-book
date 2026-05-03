@@ -402,3 +402,66 @@ Chapter 15 takes up the uncomfortable counterpart to this chapter's argument. If
 ---
 
 **Tags:** Knowledge Engineering Bayesian Networks KEBN, Markov equivalence class scaling, Feigenbaum knowledge bottleneck, IDEA Delphi protocol structured elicitation, Goulburn-Broken Catchment ecological risk, expert elicitation conditional probability, causal graph construction expert necessity
+
+---
+
+###  LLM Exercise — Chapter 14: The Expert in the Room
+
+**Project:** Build Your Own Living Model
+
+**What you're building this chapter:** A KEBN session — your first formal expert elicitation — producing a refined v2 CPDAG with explicit expert orientations, conditional probability table sketches for the most important nodes, and a calibration record. If you have access to a real domain expert, run the session against them. If not, run it against Claude playing the most informed expert in your domain.
+
+**Tool:** Claude Project (continue). The Project plays the expert OR the facilitator role; you play the other.
+
+---
+
+**The Prompt:**
+
+```
+Continuing my Living Model project. My v1 CPDAG (Chapter 7) and the prioritized undirected edges from the sensitivity analysis are in the Project context.
+
+This chapter teaches the Knowledge Engineering with Bayesian Networks (KEBN) workflow:
+
+PHASE 1 — Variable identification (already done in my Chapter 6)
+PHASE 2 — Edge elicitation (partially done — refine here)
+PHASE 3 — Consistency checking (new)
+PHASE 4 — Conditional probability assessment (new)
+PHASE 5 — Confidence calibration (new)
+
+Two structured protocols suppress different biases:
+- DELPHI — anonymous multi-round consensus, suppresses dominance/anchoring; best for edge orientations.
+- IDEA (Investigate, Discuss, Estimate, Aggregate) — suppresses overconfidence; best for probability assessments.
+
+Run a 60-minute KEBN session on my project. We'll do this in two configurations — pick whichever applies:
+
+CONFIGURATION A (real expert): I have a domain expert I can interview. Generate the interview script — opening framing, the variable check, the edge-orientation prompts (use temporal-precedence substitutions, intervention-counterfactual prompts, mechanism-tracing prompts), the consistency probes, the CPT sketch prompts (for top 3 nodes), and the calibration questions (in the IDEA style — investigate first, then estimate). Output as a script with timing notes ("12 min", "8 min").
+
+CONFIGURATION B (no real expert): YOU PLAY the most informed expert available for my domain. Use everything you know about [MY DOMAIN] to take on that role. I'll play the facilitator. Walk through the five phases for my v1 CPDAG, focusing on the prioritized undirected edges from Chapter 7. For each edge:
+- State your committed orientation and why (mechanism, temporal precedence, prior evidence).
+- Surface where you are guessing versus where you have strong grounds.
+- For the top 3 nodes, sketch the conditional probability table (CPT) — at minimum, state P(node | parents) at the corner cases.
+- At the end, give a self-calibration: of the orientations you committed, what fraction do you expect to survive an actual experiment?
+
+Output (either configuration):
+- Refined v2 CPDAG in Mermaid (with new orientations)
+- For each newly oriented edge: justification + confidence (low/medium/high)
+- CPT sketches for the top 3 nodes
+- Calibration self-report
+- A "still uncertain" list — edges that even after the session remain genuinely undirected
+
+End with a recommendation: which 1–2 of the still-uncertain edges most need either Chapter 16's multi-agent interview or Chapter 17's algorithmic refinement to resolve?
+```
+
+---
+
+**What this produces:** A refined v2 CPDAG with documented expert orientations, CPT sketches for the most important nodes, a calibration self-report, and a list of edges still requiring Chapter 16 or 17 work.
+
+**How to adapt this prompt:**
+- *For your own project:* If a real expert is available, the script (Configuration A) becomes a sixty-minute calendar invite. The output is the same structure.
+- *For ChatGPT / Gemini:* Works as-is.
+- *For Claude Code:* Not needed.
+- *For a Claude Project:* Recommended. Save the v2 CPDAG, displacing the v1.
+
+**Connection to previous chapters:** Chapter 7 said expert input is mathematically required. Chapter 13 said the elicitation gap was the weakest property of your model. This chapter starts closing it.
+
+**Preview of next chapter:** Chapter 15 audits your v2 CPDAG against the three errors expert reasoners systematically make — collider blindness, feedback-loop simplification, domain-matching heuristics — and stress-tests the orientations you just committed.

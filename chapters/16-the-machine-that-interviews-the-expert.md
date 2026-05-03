@@ -370,3 +370,62 @@ Chapter 18 covers parameterization — the translation from the structural diagr
 ---
 
 *Tags: LLM-guided causal elicitation, Nina framework brand strategy, forty-five-minute first-pass DAG, multi-agent architecture, CPDAG handoff, causal interview protocol, Living Model elicitation pipeline*
+
+---
+
+###  LLM Exercise — Chapter 16: The Machine That Interviews the Expert
+
+**Project:** Build Your Own Living Model
+
+**What you're building this chapter:** A 45-minute multi-agent causal interview on yourself or your domain expert, producing a v3 CPDAG that integrates Chapter 14's KEBN orientations and Chapter 15's bias audit, with all four agent roles (Interviewer, Consistency, Equivalence, Bias-Watch) actively running.
+
+**Tool:** Claude Project (continue). The single Project plays all four agent roles by switching personas in the conversation — this is the prototype. (A production version would be a real multi-agent system; for the textbook exercise the Project does it sequentially.)
+
+---
+
+**The Prompt:**
+
+```
+Continuing my Living Model project. My v2.5 CPDAG with bias annotations (Chapters 14 + 15) is in the Project context.
+
+This chapter teaches the four-phase causal elicitation protocol with a four-agent architecture:
+
+PHASES (45 minutes total):
+- Phase 1 — Variable Identification (8 min)
+- Phase 2 — Edge Elicitation (15 min) — using temporal-precedence substitution and intervention-counterfactual probes
+- Phase 3 — Equivalence Resolution (12 min) — proposing orientations for undirected edges, asking the expert to commit or refuse
+- Phase 4 — Confidence Calibration (10 min) — IDEA-style: investigate, discuss, estimate, aggregate; eliciting numeric confidence in each commitment
+
+AGENT ROLES (all four active throughout):
+- INTERVIEWER — runs the protocol, asks the questions, paces the conversation
+- CONSISTENCY — silently tracks every commitment; when a new claim contradicts a prior one, surfaces the contradiction for resolution
+- EQUIVALENCE — silently tracks the CPDAG state; when an edge orientation is proposed, checks whether the resulting graph is in the same Markov equivalence class or a new one; surfaces the implication
+- BIAS-WATCH — silently monitors for the three Chapter 15 errors (collider blindness, feedback simplification, domain-matching); interrupts when one is suspected
+
+Run the interview now. I will play [PICK ONE: "the expert" / "the facilitator while you play the expert" / "myself"]. Use my v2.5 CPDAG as the starting state. Focus the edge-elicitation and equivalence-resolution phases on the prioritized still-undirected edges from Chapter 7 and the bias-flagged edges from Chapter 15.
+
+For each agent intervention, label which agent is speaking ("[CONSISTENCY]: Earlier you said X drives Y. Now you're claiming Y drives X. Which holds?" or "[BIAS-WATCH]: You're orienting this edge by analogy to retail when your domain is healthcare. Is the mechanism actually parallel?"). Keep the Interviewer in the foreground; let the other agents punctuate.
+
+Time-box each phase. If a phase runs over, note the overrun and what you cut.
+
+Output:
+- The interview transcript (or a summary if too long), with agent labels
+- The v3 CPDAG (Mermaid), with each newly oriented edge tagged by which agent committed it
+- A confidence score per edge (low / medium / high) from Phase 4
+- A "still undirected" list — what the interview could not resolve
+- An honest section: which agent was most useful in this interview? Which was least? What does that say about the architecture for production?
+```
+
+---
+
+**What this produces:** A 45-minute interview transcript with four-agent annotations, a v3 CPDAG with confidence scores and orientation provenance, and a "still undirected" list to be resolved either by Chapter 17's algorithms or by additional data collection.
+
+**How to adapt this prompt:**
+- *For your own project:* If you find the multi-agent simulation hard to follow, do the four agent roles in sequential passes — run the Interviewer alone first, then have Consistency review the transcript, etc. Same outcome, easier to track.
+- *For ChatGPT / Gemini:* Works as-is. ChatGPT's Custom GPTs can encode each agent as a separate persona.
+- *For Claude Code:* If you want the production version, ask Claude Code to write a Python multi-agent system using the Anthropic API where each agent is a separate API call with its own system prompt. This is the architectural prototype Chapter 16 specifies.
+- *For a Claude Project:* Recommended for the textbook exercise. The Project keeps all your prior CPDAG state in context.
+
+**Connection to previous chapters:** Chapter 14 ran a single-expert KEBN session. Chapter 15 audited the orientation choices. This chapter wraps both into a structured architecture that works in 45 minutes instead of weeks — the key bottleneck-removal that makes the rest of the Living Model architecture deployable at organizational scale.
+
+**Preview of next chapter:** Chapter 17 brings algorithmic causal discovery into the loop. You'll run PC, GES, and (on synthetic data from your SCM) NOTEARS over your variable list and resolve disagreements between the algorithmic CPDAG and your expert v3 CPDAG using the three-step protocol.

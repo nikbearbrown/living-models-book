@@ -521,3 +521,76 @@ Chapter 20 closes the architectural arc by taking up what happens after the reco
 ---
 
 **Tags:** Causal Brain Executive Report, four-part recommendation evidence assumptions counterfactual, LLM narration must-do must-never-do, decision-focused visualization, audit record named-owner accountability, tornado chart assumption sensitivity, confidence intervals executive communication
+
+---
+
+###  LLM Exercise — Chapter 19: The Causal Brain Executive Report
+
+**Project:** Build Your Own Living Model
+
+**What you're building this chapter:** The four-part executive report — produced as an actual markdown file in your Living Model folder, audited against the must-do and must-never-do rules, with one decision-focused visualization, an audit record, and a named human owner. This is the artifact you would actually present to a decision-maker.
+
+**Tool:** Cowork — file creation in your selected folder. The Project provides the language; Cowork writes and saves the file.
+
+---
+
+**The Prompt:**
+
+```
+I am working through Chapter 19 of "Living Models." My recommendation-package.json from Chapter 18 contains the recommended portfolio, runner-up, persuadable segments, assumptions, counterfactual baseline, and provenance.
+
+This chapter teaches the four-part report structure (in this order):
+
+1. RECOMMENDATION — One sentence at the top stating exactly what to do, by whom, by when. Then a short paragraph naming the expected EVI with confidence interval and the persuadable segment to target.
+
+2. EVIDENCE — The data and analytical moves that support the recommendation. Specific: which estimation method, which sample, which key finding. Two paragraphs maximum. No graphs of the model itself.
+
+3. ASSUMPTIONS — The 3–5 most consequential assumptions on which the recommendation rests. For each: what it is, what would invalidate it, and how the recommendation changes if it fails. This is the part executives skip — and the part that determines whether they can hold the model accountable when something turns out wrong.
+
+4. COUNTERFACTUAL — What happens if you do nothing. What happens under the runner-up. The recommendation's value is the counterfactual gap; surface it explicitly.
+
+LLM NARRATION rules — six MUST-DO behaviors:
+1. Translate rankings into specific recommendations (don't list options as equally weighted)
+2. Surface confidence without false precision (use ranges, not 4-decimal-place numbers)
+3. Flag structural uncertainty without undermining the recommendation
+4. Ground every claim in model evidence (cite the package field)
+5. Produce structured reasoning traces
+6. Maintain consistent identity (don't shift voice or stance across the report)
+
+Six (or seven) MUST-NEVER-DO behaviors enforced by guardrails:
+1. Never explain the model's internals (executives don't need to know it's DML)
+2. Never show the full causal graph (not the right visual for this audience)
+3. Never present ranked options as equally valid
+4. Never make commitments outside the model's scope
+5. Never apologize for the model's limits — quantify them
+6. Never fabricate consensus
+7. Never act on its own authority — the report is decision-support, the human decides
+
+Produce the executive report for my recommendation. Use my recommendation-package.json as the source of every claim.
+
+Format:
+- Save as `executive-report-v1.md` in my Living Model folder.
+- Include all four parts in the order above.
+- Include ONE decision-focused visualization (described in markdown / specified for image generation if needed) — the right viz here is usually a tornado chart of assumption sensitivity OR a payoff distribution comparing recommended vs do-nothing. NOT the causal graph.
+- Include an AUDIT RECORD section at the bottom: model version, DAG version, data snapshot date, estimation method, who reviewed, named human owner of the recommendation.
+- Include a SELF-AUDIT against the six must-do and seven must-never-do rules. List each rule and how the report satisfies (or fails) it. Rewrite any failing section.
+
+End the conversation with three things:
+1. The file saved to my Living Model folder
+2. The self-audit table
+3. Two questions a thoughtful executive would ask after reading this — and the model-grounded answers
+```
+
+---
+
+**What this produces:** A real markdown file (`executive-report-v1.md`) in your Living Model folder containing the four-part report, an audit record, a named owner, a self-audit table against the must-do/must-never rules, and two anticipated executive questions with answers.
+
+**How to adapt this prompt:**
+- *For your own project:* If you don't have a recommendation-package.json yet, run Chapter 18's pipeline first. If you can't, generate a plausible one by hand and use it.
+- *For ChatGPT / Gemini:* Works as-is. ChatGPT can save files via Code Interpreter; Gemini through Drive integration.
+- *For Claude Code:* Optional — Claude Code is overkill for a single markdown file but useful if you want to generate the visualization as an actual PNG via matplotlib.
+- *For a Claude Project:* The Project drafts; Cowork writes the file. Run them in tandem.
+
+**Connection to previous chapters:** Every chapter has fed this. Chapter 6 gave you the structure, Chapter 8 gave you the estimate, Chapter 10 gave you the E-value for the assumptions section, Chapter 12 gave you the friction-adjusted deployment forecast, Chapter 18 gave you the package. This chapter renders all of it for the executive.
+
+**Preview of next chapter:** Chapter 20 keeps the model alive after the recommendation lands. You'll specify the Bayesian-update protocol for parameters, the structural-drift detector, and the four-stage minimum viable feedback loop — the operational discipline that turns a one-time deliverable into infrastructure.

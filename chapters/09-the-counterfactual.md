@@ -211,3 +211,72 @@ Chapter 10 takes up the limits of what observational data can do for us. The cou
 ---
 
 **Tags:** counterfactual reasoning, abduction action prediction Pearl, individual level counterfactual, necessary and sufficient causes, structural causal model
+
+---
+
+###  LLM Exercise — Chapter 9: The Counterfactual
+
+**Project:** Build Your Own Living Model
+
+**What you're building this chapter:** A counterfactual analysis of one historical decision in your domain — a real one your organization made, ideally one that turned out worse than expected — using Pearl's three-step abduction-action-prediction procedure on your SCM.
+
+**Tool:** Claude Project for the reasoning. Optionally Claude Code if you want to compute the counterfactual numerically.
+
+---
+
+**The Prompt:**
+
+```
+Continuing my Living Model project. My DAG and structural equations are in the Project context.
+
+This chapter teaches Pearl's three-step counterfactual procedure on a Structural Causal Model:
+
+1. ABDUCTION — Given the observed outcome and the structural equations, infer the values of the exogenous noise terms (ε) that must have held for the observed outcome to have occurred. This locks in the case-specific facts.
+
+2. ACTION — Modify the SCM by replacing the actual value of the intervention variable X with the counterfactual value X' (this is what the do-operator does). Hold the noise terms from abduction fixed.
+
+3. PREDICTION — Run the modified SCM forward to compute what the outcome would have been under X'.
+
+The result is the individual-level counterfactual: not "on average across the population, what happens at X'?" but "in this specific case, with this specific noise, what would have happened?"
+
+Pick a HISTORICAL DECISION in my domain that I have enough information about to analyze. Ideally one that turned out worse than expected. Examples:
+- A pricing change my company made that didn't move retention as predicted
+- A campaign that underperformed
+- A staffing decision that didn't deliver expected output
+- A policy intervention with weaker than projected take-up
+
+Walk me through the abduction-action-prediction procedure for this case:
+
+ABDUCTION:
+- What were the observed values of all variables in my DAG at the time of the decision?
+- Given my structural equations, what exogenous noise terms (ε) must have held to produce the observed outcome? Be explicit — for each ε, name what real-world factors it represents (e.g., "ε_retention captures everything the model doesn't measure: macro economy, competitor moves, the specific account managers on those accounts that quarter").
+
+ACTION:
+- What is the counterfactual intervention X'? Be specific (e.g., "if we had raised price by 5% instead of 15%").
+- Modify the SCM accordingly.
+
+PREDICTION:
+- With ε fixed from abduction and X replaced by X', what does the outcome become?
+- Compare to the actual outcome: by how much would the decision have been better or worse under X'?
+- Quantify the regret (or relief).
+
+Then answer two synthesis questions:
+- Was X a NECESSARY cause of the bad outcome? (Would the bad outcome have happened anyway under X'?)
+- Was X a SUFFICIENT cause? (Was X enough on its own to produce the outcome, or did it require the specific noise that obtained?)
+
+End with: a one-paragraph honest assessment — does this counterfactual hold up, or is the SCM too thin to support it? If too thin, what specific structural equation would need to be tightened for the counterfactual to be trustworthy?
+```
+
+---
+
+**What this produces:** A worked individual-level counterfactual on a real historical decision, with explicit abduction (noise inference), action (do-substitution), and prediction (outcome under counterfactual). Plus a necessity/sufficiency analysis and a calibration check on your SCM.
+
+**How to adapt this prompt:**
+- *For your own project:* If you can't think of a historical decision, ask Claude to help you construct a plausible synthetic one anchored to your domain — labeled clearly as illustrative.
+- *For ChatGPT / Gemini:* Works as-is.
+- *For Claude Code:* Optional. If you want the counterfactual computed numerically against the Chapter 8 estimated SCM, ask Claude Code to add a `counterfactual()` function to estimate-effects.py.
+- *For a Claude Project:* Recommended. The Project remembers your SCM from Chapter 6.
+
+**Connection to previous chapters:** Chapter 6 gave you the SCM. Chapter 8 estimated some of its parameters. This chapter uses the SCM to answer the hardest class of question — what would have happened in a world that didn't occur — and reveals where your model is too thin to support strong counterfactuals.
+
+**Preview of next chapter:** Chapter 10 audits your DAG for latent confounders — the variables you didn't include because you couldn't measure them — and computes an E-value for your strongest causal claim, giving you an honest measure of how fragile your conclusion is.

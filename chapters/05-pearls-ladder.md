@@ -404,3 +404,54 @@ The Ladder is not a staircase you climb once. It is the question you ask at the 
 ---
 
 *Tags: Pearl's Ladder of Causation, do-operator, association intervention counterfactual, three rungs, why data cannot answer causal questions, confounding, structural causal model, Living Model architecture*
+
+---
+
+###  LLM Exercise — Chapter 5: Pearl's Ladder
+
+**Project:** Build Your Own Living Model
+
+**What you're building this chapter:** A ladder placement of every sub-question your decision contains — sorted onto Rung 1 (association), Rung 2 (intervention), or Rung 3 (counterfactual) — and a gap analysis between the rung your current data supports and the rung the decision requires.
+
+**Tool:** Claude Project (continue).
+
+---
+
+**The Prompt:**
+
+```
+Continuing my Living Model project. My decision is in the Decision Dossier in the Project context.
+
+Pearl's three-rung Ladder of Causation:
+- RUNG 1 — ASSOCIATION: "What does the data show?" Answered by correlation, regression, dashboards. Operator: observe.
+- RUNG 2 — INTERVENTION: "What would happen if we acted?" Requires the do-operator and a causal model. Answered by RCT, backdoor adjustment, instrumental variables.
+- RUNG 3 — COUNTERFACTUAL: "What would have happened if things had been different?" Requires a structural causal model. Answered by abduction-action-prediction.
+
+The rungs are mathematically sealed — no rung is reachable from below by accumulating more data.
+
+For my decision, do three things:
+
+1. UNPACK the decision into 6–10 sub-questions a decision-maker would actually need answered to act with confidence. Be granular — "should we raise prices?" decomposes into "what is current price elasticity in segment A?", "would raising prices change customer mix?", "if last quarter's price increase had been 5% instead of 10%, what would retention have looked like?", etc.
+
+2. CLASSIFY each sub-question onto Rung 1, Rung 2, or Rung 3. For each: explain what kind of evidence would answer it, and what kind would not.
+
+3. DIAGNOSE the gap. For every sub-question on Rung 2 or Rung 3, name the rung my current analysis lives on. If the current analysis is on a lower rung than the question requires (it usually will be), name what additional machinery — causal graph, controlled experiment, structural model — would be needed to climb. If the gap cannot be closed with the data and access I currently have, say so explicitly and propose what would have to change.
+
+End with a summary table: Sub-question | Rung Required | Rung We Currently Operate On | Gap | What Would Close It.
+
+Then answer the synthesis question: which sub-questions, if I could only resolve three of them, would most change the decision? These are the ones the rest of the Living Model project should focus on.
+```
+
+---
+
+**What this produces:** A ladder-classified decomposition of your decision (markdown table) and a prioritized list of the three sub-questions whose resolution would most change the call.
+
+**How to adapt this prompt:**
+- *For your own project:* If you can't think of 6–10 sub-questions, ask Claude to generate them based on your Decision Dossier.
+- *For ChatGPT / Gemini:* Works as-is.
+- *For Claude Code:* Not needed.
+- *For a Claude Project:* Recommended. The prioritized sub-questions become the focus of the DAG you'll draw in Chapter 6.
+
+**Connection to previous chapters:** The intervention diagnostic in Chapter 2 told you which questions cannot be answered observationally. This chapter generalizes that — you now have a principled classification scheme for every question your decision contains and a clear view of how far your current analysis is from where it needs to be.
+
+**Preview of next chapter:** Chapter 6 takes the prioritized sub-questions and turns them into your first directed acyclic graph (DAG) — the structural object the rest of the math layer operates on.

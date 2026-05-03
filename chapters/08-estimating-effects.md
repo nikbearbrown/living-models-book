@@ -177,3 +177,63 @@ Chapter 9 takes us to the third rung of the Ladder — counterfactuals. The meth
 ---
 
 **Tags:** backdoor criterion estimation, double machine learning, causal forests Athey Wager, heterogeneous treatment effects, why average effect is wrong question
+
+---
+
+###  LLM Exercise — Chapter 8: Estimating Effects
+
+**Project:** Build Your Own Living Model
+
+**What you're building this chapter:** A working estimation pipeline — a Python script that takes your DAG, applies the backdoor criterion to identify the deconfounding set, runs double machine learning for the average treatment effect (ATE), and runs a causal forest for heterogeneous effects (CATE) by segment. If you don't have data, you'll generate plausible synthetic data from your SCM and run the pipeline against that.
+
+**Tool:** Claude Code — this is the first chapter that produces runnable code.
+
+---
+
+**The Prompt:**
+
+```
+I am working through Chapter 8 of "Living Models." I have a DAG for my decision (variables, edges, structural equations) saved in this Project.
+
+Chapter 8 teaches that to estimate the causal effect of X on Y from observational data, I need to:
+1. Identify all BACKDOOR PATHS from X to Y (paths starting with an arrow into X) — these carry spurious correlation.
+2. Find an ADJUSTMENT SET Z that blocks all backdoor paths, where Z must not contain colliders or descendants of X.
+3. Estimate E[Y | do(X), Z] using a method that controls for Z without imposing strong functional form assumptions. Double Machine Learning (DML, Chernozhukov et al.) is the modern default. Causal Forests (Athey-Wager) extend this to estimate heterogeneous effects (CATE) by segment.
+
+Build a Python script that does the following, using my DAG variables (replace placeholders):
+
+PHASE 1 — IDENTIFICATION:
+- Take my DAG (I'll provide it inline or as a networkx definition).
+- Identify all backdoor paths from my candidate intervention X to outcome Y.
+- Find a minimal adjustment set Z that satisfies the backdoor criterion.
+- Print the path enumeration and the chosen Z, with justification.
+
+PHASE 2 — ESTIMATION:
+- If I have real data: load it from a CSV [GIVE PATH OR SAY "GENERATE SYNTHETIC"].
+- If synthetic: generate ~10,000 rows from my SCM with realistic noise. Use the structural equations from my Project context.
+- Run DML using `econml`'s LinearDML or DML estimator with random-forest nuisance models. Output the ATE point estimate and 95% confidence interval.
+- Run a Causal Forest using `econml`'s CausalForestDML. Output CATE estimates segmented by 2–3 of my moderator variables. Identify the segment with the largest treatment effect (the "persuadables" — the customers, accounts, or units most responsive to the intervention).
+
+PHASE 3 — INTERPRETATION:
+- Print a one-paragraph plain-language summary of the ATE result, including the units (e.g., "raising price by $30 reduces renewal probability by an estimated 4.2 percentage points, 95% CI [2.1, 6.3]").
+- Identify the persuadable segment by name and quantify how much larger their CATE is than the overall ATE.
+- Flag any backdoor path that the adjustment set cannot block — i.e., the cases where the effect is NOT IDENTIFIABLE from this DAG and data. Recommend the next move (instrumental variable? front-door? RCT?).
+
+Use econml, networkx, pandas, numpy, scikit-learn. Make the script self-contained and well-commented. Save it to my Living Model folder as estimate-effects.py.
+
+Here is my DAG and the candidate intervention X and outcome Y: [PASTE FROM CHAPTER 6 / 7].
+```
+
+---
+
+**What this produces:** A runnable Python script that identifies the adjustment set, estimates ATE via DML, estimates CATE via Causal Forest, names the persuadable segment, and flags any non-identifiable effects. Output: a numeric estimate of your intervention's causal effect plus the segments where it works hardest.
+
+**How to adapt this prompt:**
+- *For your own project:* If you don't have observational data, the synthetic-data path lets you stress-test the pipeline before real data exists. The ATE will be whatever you encoded in your SCM — this is a sanity check, not a real estimate.
+- *For ChatGPT / Gemini:* Works as-is in code-interpreter modes. ChatGPT's Code Interpreter and Gemini's code execution can both run this if you upload data.
+- *For Claude Code:* Recommended. Claude Code will execute the script in your terminal, install dependencies, and iterate on bugs.
+- *For a Claude Project:* Run the script outside the Project, then paste the output back in for interpretation in the Chapter 9 exercise.
+
+**Connection to previous chapters:** Chapter 7's CPDAG told you which edges in your DAG are defensible. This chapter operationalizes the defensible portion — turning the graph into a number you can put in a recommendation.
+
+**Preview of next chapter:** Chapter 9 takes one historical decision in your domain that turned out badly and runs the abduction-action-prediction counterfactual on it — answering "what would have happened if we had done the other thing?"

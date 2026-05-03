@@ -445,3 +445,53 @@ Part Two builds the representation that does not discard it. The Ladder of Causa
 ---
 
 **Tags:** Expected Value of Intervention, probability-impact collapse, COSO ERM heat map failure, Long-Term Capital Management 1998, fat-tail risk decision frameworks, distributional risk analysis, risk register failure modes
+
+---
+
+###  LLM Exercise — Chapter 4: Risk Is Two Numbers, Not One
+
+**Project:** Build Your Own Living Model
+
+**What you're building this chapter:** An EVI rebuild — taking whatever heat map, risk register, or single-number scoring you currently use for your decision and reconstructing it as a probability × impact distribution with expected value, tail risk, and the decision implication made explicit.
+
+**Tool:** Claude Project (continue). If you have a real spreadsheet of risks, export it and either paste the rows or use Claude Code to compute over a CSV.
+
+---
+
+**The Prompt:**
+
+```
+Continuing my Living Model project. My decision is in the Decision Dossier in the Project context.
+
+This chapter teaches that any "risk score" — heat-map color, 1-to-5 number, RAG status — collapses two independent quantities (probability and impact) into one and destroys decision-relevant information. The replacement is Expected Value of Intervention (EVI):
+
+EVI = P(success) × Value(success) + P(failure) × Cost(failure)
+
+But EV alone hides tail risk. Two interventions with identical EV can have radically different distributions (one tight around the mean, one with a 5% chance of catastrophic loss). Both numbers — expected value AND distribution shape — matter for the decision.
+
+Here is the current risk analysis I use for my decision: [PASTE YOUR HEAT MAP, RISK REGISTER, OR DESCRIPTION OF HOW RISK IS CURRENTLY SCORED]. If I don't have one, walk me through building a reasonable starting one for my decision.
+
+For each candidate intervention or risk in my analysis:
+
+1. Extract the implicit probability and impact estimates from the current single-number score. Make the estimates explicit, with units (% probability, $ or person-days impact).
+2. Specify the IMPACT DISTRIBUTION rather than a point estimate — at least three points: 10th percentile, median, 90th percentile. Where the distribution is fat-tailed (catastrophic 1% scenarios), call that out explicitly.
+3. Compute Expected Value of Intervention (EV).
+4. Compute one tail-risk metric — Value-at-Risk at 95% (the loss that is exceeded only 5% of the time) or Conditional Value-at-Risk (the average loss given that you are in the worst 5%).
+5. Surface the decision implication: which intervention dominates on EV? Which dominates on tail safety? When they disagree, which would a reasonable decision-maker pick and why — and what does the disagreement say about the right framing for the executive who has to choose?
+
+End with a side-by-side comparison table: Intervention | P(success) | E[Value] | E[Cost] | EVI | VaR-95 | Recommended? | Heat-map answer | Why they disagree.
+```
+
+---
+
+**What this produces:** A markdown table replacing your heat map with EVI plus tail risk for every candidate intervention, and a one-paragraph summary of which interventions look different under the new framing.
+
+**How to adapt this prompt:**
+- *For your own project:* If your current "risk analysis" is informal (verbal in meetings), ask Claude to help you reconstruct what the implicit probabilities and impacts are.
+- *For ChatGPT / Gemini:* Works as-is.
+- *For Claude Code:* If you have many interventions or want Monte Carlo, ask Claude Code to generate a Python script with `numpy` that samples from each impact distribution and produces EV + VaR programmatically.
+- *For a Claude Project:* Save the rebuilt table back into the Project. The Chapter 18 portfolio exercise will rank these interventions by EV under constraint.
+
+**Connection to previous chapters:** Chapter 2 told you the do-X your decision actually represents. This chapter teaches you to value the do-X correctly — both its expectation and its tail. Together they replace the "intuition + heat map" stack most decisions currently rest on.
+
+**Preview of next chapter:** Chapter 5 leaves Part One and starts Part Two — the math layer. You'll classify each sub-question of your decision onto Pearl's three-rung Ladder and identify which rung your current analysis lives on versus which the decision actually requires.

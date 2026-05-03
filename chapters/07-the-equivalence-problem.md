@@ -367,3 +367,55 @@ Chapter 14 and Chapter 16 in Part Three address the expert elicitation architect
 ---
 
 *Tags: Markov equivalence class, CPDAG completed partially directed acyclic graph, causal discovery algorithms PC GES NOTEARS, expert knowledge mathematically necessary, observational vs interventional identification, Verma-Pearl theorem, v-structure*
+
+---
+
+###  LLM Exercise — Chapter 7: The Equivalence Problem
+
+**Project:** Build Your Own Living Model
+
+**What you're building this chapter:** Your CPDAG — a partially directed version of your DAG showing which edges your data could in principle determine and which are mathematically underdetermined and must come from expert judgment, plus a sensitivity analysis on the most consequential undirected edge.
+
+**Tool:** Claude Project (continue).
+
+---
+
+**The Prompt:**
+
+```
+Continuing my Living Model project. My first-pass DAG (variables, edges, structural equations, low-confidence edges) is in the Project context.
+
+This chapter teaches that a CPDAG (Completed Partially Directed Acyclic Graph) is the honest output of observational analysis. Multiple DAGs can be observationally indistinguishable — they share the same skeleton (which pairs of variables are connected) and the same v-structures (X → Z ← Y where X and Y are not adjacent), but differ in the orientation of the remaining edges. The Verma-Pearl characterization says: two DAGs are Markov equivalent iff they have the same skeleton and the same v-structures. Edges that are not part of a v-structure cannot be oriented from observational data alone — they require domain knowledge or interventional data.
+
+For my DAG, do four things:
+
+1. SKELETON — From my DAG, extract just the skeleton (edges as undirected pairs).
+
+2. V-STRUCTURE IDENTIFICATION — Find every v-structure (X → Z ← Y where X and Y are not adjacent). These edges remain DIRECTED in the CPDAG. Justify each: why is X → Z and not Z → X?
+
+3. CPDAG CONSTRUCTION — For all other edges, decide whether the direction is forced by domain knowledge that any reasonable expert would commit to (e.g., temporal precedence — last quarter's marketing cannot cause this quarter's marketing). If yes, keep directed and label "expert-forced." If no, mark UNDIRECTED. Output the CPDAG in Mermaid syntax: directed edges as -->, undirected as ---.
+
+4. SIZE THE EQUIVALENCE CLASS — Estimate roughly how many DAGs are in the Markov equivalence class my CPDAG represents (one per orientation choice, modulo acyclicity and v-structure constraints). If it's 2, fine. If it's 32, that's a flag.
+
+Then run a SENSITIVITY ANALYSIS on the single most consequential undirected edge — the one whose orientation would most change my decision recommendation. Construct two scenarios:
+- Scenario A: edge oriented one way
+- Scenario B: edge oriented the other way
+
+For each, walk through how my decision recommendation would change. If both orientations lead to the same recommendation, the edge doesn't matter for the decision (note this — it simplifies my model). If they lead to different recommendations, this is an edge I need either expert resolution or interventional data on.
+
+End with: a prioritized list of UNDIRECTED edges ordered by decision-impact, and one specific small experiment, A/B test, or expert interview that could resolve the top edge.
+```
+
+---
+
+**What this produces:** Your CPDAG (Mermaid), an estimate of equivalence class size, a sensitivity analysis on the most consequential undirected edge, and a prioritized list of edges to resolve.
+
+**How to adapt this prompt:**
+- *For your own project:* If your DAG had no v-structures, that means observational data can orient very little — the case for expert elicitation gets stronger.
+- *For ChatGPT / Gemini:* Works as-is.
+- *For Claude Code:* If you want this done programmatically, Claude Code can build the CPDAG from your DAG using `causal-learn` or a hand-rolled v-structure detector.
+- *For a Claude Project:* Save the CPDAG as `cpdag-v1.md`. Chapter 14's expert elicitation is going to operate on this object.
+
+**Connection to previous chapters:** Chapter 6 gave you the DAG you currently believe in. This chapter shows you which parts of that belief are actually defensible from data alone and which require expert judgment — setting up Chapter 8's effect estimation and Chapter 14's expert interview.
+
+**Preview of next chapter:** Chapter 8 turns the structural problem into a measurement problem — given the DAG, you'll specify the backdoor adjustment set and write a plan to estimate the causal effect of your candidate intervention using double machine learning and causal forests.

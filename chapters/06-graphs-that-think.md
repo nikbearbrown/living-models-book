@@ -195,3 +195,59 @@ The lesson of Chapter 7 will be that human domain knowledge is not a convenience
 ---
 
 **Tags:** directed acyclic graphs, structural causal models, regression vs causation, Sewall Wright path coefficients, graphs as maps of mechanism
+
+---
+
+###  LLM Exercise — Chapter 6: Graphs That Think
+
+**Project:** Build Your Own Living Model
+
+**What you're building this chapter:** Your first-pass DAG for the decision — variables, edges with directions, and the structural equations that turn the DAG into an SCM. This is the foundational artifact every subsequent chapter operates on.
+
+**Tool:** Claude Project (continue). Output the DAG in Mermaid syntax so you can paste it anywhere that renders Mermaid.
+
+---
+
+**The Prompt:**
+
+```
+Continuing my Living Model project. My decision and the prioritized sub-questions from Chapter 5 are in the Project context.
+
+This chapter teaches that a DAG is a structural claim about mechanism, not a picture of correlations. Each arrow X → Y says "intervening on X would change Y, holding everything else fixed." A regression equation Y = βX + ε is symmetric and tells you nothing about direction; a DAG is asymmetric and encodes the causal claim. An SCM is a DAG plus the functional form for each node: Y = f(parents of Y) + ε_Y, with ε independent across nodes.
+
+Build the first-pass DAG for my decision in three steps:
+
+1. VARIABLES — List 8–15 variables that matter for the decision. Include:
+   - The candidate intervention(s) — the variable(s) I am considering setting by fiat
+   - The primary outcome(s) the decision will be judged on
+   - Mediators (variables on the causal path from intervention to outcome)
+   - Plausible confounders (variables that affect both the intervention and the outcome — drawn from the Chapter 2 diagnostic)
+   - Moderators (variables that change the size of the intervention's effect)
+   - Outcome contaminators (variables that affect the outcome but not the intervention)
+   For each variable, give a one-line operational definition: what it is, how it is measured, and what its plausible range is.
+
+2. EDGES — For every pair of variables, ask: would intervening on the first change the second, holding everything else fixed? If yes, draw the arrow. If the direction is genuinely ambiguous, draw an undirected edge for now (we will resolve in Chapter 7). Be willing to commit. The first-pass DAG should reflect what I currently believe; we will stress-test it later.
+
+3. SCM SKETCH — For 3–5 of the most important nodes (especially the outcome and the mediators on the path from my intervention to the outcome), write the structural equation in plain prose: "outcome Y is a function of mediator M1, mediator M2, and confounder C, plus exogenous noise that captures everything else." Where you can, name the functional form (linear, multiplicative, threshold, saturation) you'd expect from domain knowledge.
+
+OUTPUT FORMAT:
+- The variable list as a markdown table (Variable | Definition | Range | Type [intervention/outcome/mediator/confounder/moderator]).
+- The DAG in Mermaid syntax (graph LR; node names; arrows). Use --- for undirected edges.
+- The structural equations in prose, one per equation.
+
+End with a one-paragraph honesty section: which 2–3 edges am I least confident about, and why? These become Chapter 7's CPDAG candidates.
+```
+
+---
+
+**What this produces:** A variable table, a Mermaid DAG you can render or hand-draw, plain-prose structural equations for the most important nodes, and a list of low-confidence edges. Save all of this to your Project — every subsequent chapter references this DAG.
+
+**How to adapt this prompt:**
+- *For your own project:* If you have fewer than 8 variables, your decision is probably not granular enough — push for more. If you have more than 15, group some into composite nodes.
+- *For ChatGPT / Gemini:* Works as-is. Both render Mermaid in canvas / artifact modes.
+- *For Claude Code:* If you want the DAG in `networkx` so you can run code on it later, ask Claude Code to convert your Mermaid to a Python `nx.DiGraph` definition.
+- *For a Claude Project:* Recommended. Save the DAG as `dag-v1.md` in your Project knowledge so future chapters can edit it as it evolves.
+
+**Connection to previous chapters:** Chapters 1–5 told you what decision to model and what sub-questions matter. This chapter gives you the structural object every subsequent chapter operates on. From here forward, "the DAG" means this DAG.
+
+**Preview of next chapter:** Chapter 7 takes your DAG and asks: which edges are determined by the data you have, and which are mathematically underdetermined and require expert input? You'll convert your DAG into a CPDAG — the honest output of observational analysis.

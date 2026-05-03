@@ -393,3 +393,65 @@ The reader who has worked through Part Two now has everything needed to evaluate
 ---
 
 **Tags:** randomized controlled trials gold standard, Esther Duflo experimental design plumber, SUTVA stable unit treatment value, spillover effects network interference, JTPA job training causal inference, cluster randomization, encouragement design instrumental variables, deployment gap trial-to-production
+
+---
+
+###  LLM Exercise — Chapter 11: Treatments
+
+**Project:** Build Your Own Living Model
+
+**What you're building this chapter:** A trial design for testing your top intervention — a runnable RCT (or quasi-experimental) protocol with the SUTVA audit completed and the right design alternative selected if SUTVA fails.
+
+**Tool:** Claude Project (continue).
+
+---
+
+**The Prompt:**
+
+```
+Continuing my Living Model project. My top candidate intervention from the Chapter 4 EVI analysis and the Chapter 8 estimation pipeline is in the Project context.
+
+This chapter teaches that randomization establishes causation by SEVERING all backdoor paths into the treatment by construction — it is do-calculus in practice. But every RCT relies on SUTVA (Stable Unit Treatment Value Assumption), which has two parts:
+
+1. NO INTERFERENCE — one unit's treatment status doesn't affect another unit's outcome (e.g., a vaccinated person doesn't reduce the probability that an unvaccinated neighbor gets sick).
+2. NO HIDDEN TREATMENT VARIATIONS — the treatment is the same for every unit assigned to it.
+
+Real organizational interventions routinely violate both. When SUTVA fails, design alternatives apply:
+- CLUSTER RANDOMIZATION when interference is local (treat whole stores, regions, or teams together).
+- TIME-STAGGERED ROLLOUT (stepped-wedge) when you can phase the intervention over time.
+- ENCOURAGEMENT DESIGN when you can randomize the offer/incentive but not the behavior.
+
+For my top intervention, design the trial that would settle whether it works. Do five things:
+
+1. STATE THE INTERVENTION precisely. What is the treatment? What is the control? Who or what are the units? What is the primary outcome? What is the time horizon?
+
+2. SPECIFY the trial:
+   - Sample size and power calculation (use my Chapter 8 estimated effect as the minimum detectable effect; assume α=0.05, power=0.8; specify the formula).
+   - Randomization scheme.
+   - Compliance and blinding considerations.
+   - Primary analysis (intention-to-treat) and secondary analysis (per-protocol, CATE by segment).
+
+3. AUDIT FOR SUTVA — Walk through both components:
+   - INTERFERENCE: Is there spillover between units? (E.g., do my customers talk to each other? Do treated employees affect untreated colleagues? Does the price change in one segment leak to another?) Specify the spillover mechanism if present.
+   - HIDDEN VARIATIONS: Will every treated unit actually receive the same intervention? (E.g., will every store actually implement the price change identically? Does the training depend on the trainer?) Name the variation source.
+
+4. PICK A DESIGN ALTERNATIVE if SUTVA fails. Justify the choice. Walk through how the new design changes the analysis (e.g., cluster-randomization requires accounting for intracluster correlation; encouragement design uses LATE rather than ATE).
+
+5. THE DEPLOYMENT GAP — Even with a clean trial, the trial-level effect typically ATTENUATES in deployment. List 3–5 specific reasons attenuation would happen for my intervention (instructor variability, manager follow-through, market response, novelty effects, etc.). Quantify the gap I should expect: trial effect of X probably becomes Y in deployment.
+
+End with: a one-page trial protocol I could hand to my team or an academic collaborator. Include sections for objective, hypothesis, design, sample, randomization, analysis, SUTVA mitigation, and expected deployment gap.
+```
+
+---
+
+**What this produces:** A trial protocol document, a SUTVA audit, and a deployment-gap forecast. Save the protocol to your Project — Chapter 12 will use it to map the friction that will block deployment even if the trial succeeds.
+
+**How to adapt this prompt:**
+- *For your own project:* If a real RCT is impossible (regulation, ethics, scale), explicitly ask for a quasi-experimental design — synthetic control, regression discontinuity, instrumental variable.
+- *For ChatGPT / Gemini:* Works as-is. Both can compute power calculations.
+- *For Claude Code:* Ask Claude Code to compute the power calculation and simulate the trial (false-positive rates, expected confidence intervals) before running it.
+- *For a Claude Project:* Recommended.
+
+**Connection to previous chapters:** Chapter 10 said your observational estimate is fragile to unmeasured confounding. This chapter shows you the design that would resolve that — and warns you that even a clean RCT doesn't survive the trip from trial to deployment.
+
+**Preview of next chapter:** Chapter 12 takes the deployment gap seriously — even if the intervention works in trial, the path between "correct estimate" and "actual change" is full of plumbing problems. You'll build the friction map that names what would block deployment of your intervention even if everything in the model is right.

@@ -175,3 +175,65 @@ Chapter 16 takes up the architecture itself: an LLM-guided elicitation system th
 ---
 
 **Tags:** collider blindness expert error, Berkson 1946 gallbladder paradox, feedback loop simplification linear thinking, domain matching heuristic physics envy, kind versus wicked learning environments
+
+---
+
+###  LLM Exercise — Chapter 15: How Experts Get Causation Wrong
+
+**Project:** Build Your Own Living Model
+
+**What you're building this chapter:** A stress-test of your v2 CPDAG against the three expert-reasoning errors — collider blindness, feedback-loop simplification, and domain-matching heuristics — plus a kind/wicked classification of the learning environment your expert (or your own knowledge) was forged in.
+
+**Tool:** Claude Project (continue).
+
+---
+
+**The Prompt:**
+
+```
+Continuing my Living Model project. My v2 CPDAG (Chapter 14) and the expert-orientation justifications are in the Project context.
+
+This chapter teaches three errors specific to causal reasoning that even careful experts make:
+
+1. COLLIDER BLINDNESS — confusing the spurious correlation induced by conditioning on a common effect (X → Z ← Y; conditioning on Z) with a real causal relationship between the causes. The Mayo Clinic 1946 gallbladder example: diabetic patients appeared to have lower gallbladder disease rates, but only because both conditions cause hospitalization, and the analysis was conditioned on being hospitalized.
+
+2. FEEDBACK-LOOP SIMPLIFICATION — collapsing reinforcing loops (R) and balancing loops (B) into linear chains. The bullwhip effect: each step in the supply chain treats the demand signal as causal when it's a feedback amplification.
+
+3. DOMAIN-MATCHING HEURISTICS — applying the causal pattern from a familiar adjacent domain to a domain where the pattern doesn't hold. "Physics envy" in finance: treating asset returns as physical processes with stationary distributions, leading to risk models like LTCM's that handled normal volatility well and tail events catastrophically.
+
+Plus Hogarth's distinction:
+- KIND learning environment — fast, accurate, repeated feedback (chess, poker, weather forecasting in stable climates).
+- WICKED learning environment — slow, noisy, ambiguous feedback (strategy, brand, long-horizon investing, organizational change). Experts in wicked environments can have high confidence and low reliability on the same question.
+
+For my v2 CPDAG, do four things:
+
+1. COLLIDER AUDIT — For every node in my graph, check: is this node a common effect of two or more causes (a collider)? If yes, was it conditioned on (used in any analysis, included in the adjustment set, used as a filter)? If yes-and-yes, the inferences downstream of that conditioning are suspect. List every collider that was conditioned on and what spurious correlation it might have introduced.
+
+2. FEEDBACK CHECK — Identify every place in my domain where a feedback loop almost certainly exists (sales→capacity→fulfillment→sales; price→demand→competitor price→demand; recommendation→engagement→training data→recommendation). For each: is it represented in my DAG, or did I collapse it into a directed chain? If collapsed, name what that simplification will hide.
+
+3. DOMAIN-MATCH AUDIT — For each major causal claim my CPDAG makes, ask: am I (or my expert) reasoning by analogy from another domain where the claim is well-established? If yes, name the source domain and check whether the causal mechanism actually transfers — or whether I'm doing physics-envy. Flag any imported assumptions.
+
+4. KIND/WICKED CLASSIFICATION — Classify the learning environment my domain expertise (or the real expert's) was forged in. KIND, WICKED, or MIXED. If MIXED, identify which sub-areas of my graph are in the kind region (high confidence justified) versus wicked (high confidence unjustified). For wicked regions: recommend either widening the confidence intervals on those edges or scheduling explicit empirical tests before acting.
+
+Output:
+- Three audit lists (collider, feedback, domain-match) with specific findings
+- Kind/wicked classification with sub-area breakdown
+- A v2.5 CPDAG with annotations: each suspect edge or node tagged with the error type and the implication for downstream analysis
+- A "do this before Chapter 16" list — specific edges to revisit when the multi-agent interview runs in the next chapter
+
+End with: which of the three errors is the biggest risk for MY domain specifically, and what one architectural choice in the Chapter 16 interview design would most reduce it?
+```
+
+---
+
+**What this produces:** Three named audit findings (collider, feedback, domain-match), a kind/wicked classification, an annotated v2.5 CPDAG, and a list of edges to revisit in the Chapter 16 interview.
+
+**How to adapt this prompt:**
+- *For your own project:* If your domain is heavily wicked (most strategy/brand/policy work), expect this audit to flag many edges. That's the honest result.
+- *For ChatGPT / Gemini:* Works as-is.
+- *For Claude Code:* Optional — could add an automated collider-check on a networkx graph.
+- *For a Claude Project:* Recommended.
+
+**Connection to previous chapters:** Chapter 14 produced the expert-refined graph. This chapter says the expert is human and audits accordingly. Together they give you a model that has been built deliberately AND stress-tested against the predictable failure modes of expert judgment.
+
+**Preview of next chapter:** Chapter 16 turns expert elicitation into software. You'll set up the four-agent architecture (Interviewer, Consistency, Equivalence, Bias-Watch) and run a 45-minute multi-agent interview that produces a refined CPDAG with all three of this chapter's errors actively monitored.

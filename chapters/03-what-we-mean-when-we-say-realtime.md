@@ -395,3 +395,56 @@ If the pattern is becoming familiar, that is by design. Every layer of the AI-au
 ---
 
 **Tags:** real-time latency audit, three latency framework, data latency model latency decision latency, continually updated decision systems, streaming infrastructure organizational decision rights, epistemic layer batch reporting culture
+
+---
+
+###  LLM Exercise — Chapter 3: What We Mean When We Say "Real-Time"
+
+**Project:** Build Your Own Living Model
+
+**What you're building this chapter:** A three-latency audit of every data system you currently rely on for your chosen decision, ending in a one-page report that names the bottleneck and what it costs.
+
+**Tool:** Claude Project (continue).
+
+---
+
+**The Prompt:**
+
+```
+Continuing my Living Model project. My decision and data sources are in the Decision Dossier in the Project context.
+
+This chapter teaches that "real-time" is one word doing three jobs. Any decision system has three independent latencies:
+
+- DATA LATENCY: how stale the inputs are when they reach the model.
+- MODEL LATENCY: how long after data arrives the model produces a score.
+- DECISION LATENCY: how long after the score appears a human or system actually acts.
+
+The pipeline moves at the rate of its slowest segment. And there are three layers of "continually updated" — technical (the pipes), organizational (decision rights and meeting cadence), epistemic (the willingness to act on incomplete evidence). A system can be technically streaming and organizationally batch — in which case it is still batch.
+
+For each of the data sources and reports I named in my Decision Dossier, conduct an audit:
+
+1. Measure (or estimate, with explicit assumptions) the data, model, and decision latencies in hours, days, or weeks.
+2. Identify which of the three is the actual bottleneck.
+3. Classify the bottleneck by layer: technical, organizational, or epistemic.
+4. Name the specific decision-relevant signal that arrives too late to be acted on.
+
+Then answer two synthesis questions:
+- Given the rate at which the world I am modeling actually changes, is my current update frequency adequate, marginal, or catastrophic? Justify with a specific scenario where the gap between update frequency and world-change rate matters for my decision.
+- If I had budget to fix exactly one of the three latencies, which one and why? What would the fix actually look like in my organization — not "build a streaming pipeline" but "renegotiate the Tuesday risk meeting cadence to Wednesday morning so the daily snapshot is one day fresher."
+
+End with a one-page audit report I can save to my Living Model folder, formatted as a markdown table: System Name | Data Latency | Model Latency | Decision Latency | Bottleneck | Layer | Recommended Fix.
+```
+
+---
+
+**What this produces:** A markdown audit table covering every system you currently use for this decision, a named bottleneck with its layer (technical / organizational / epistemic), and one prioritized fix.
+
+**How to adapt this prompt:**
+- *For your own project:* If you don't know the latencies, ask Claude to walk you through estimating them with the data you do have.
+- *For ChatGPT / Gemini:* Works as-is.
+- *For Claude Code:* Not needed unless you want to instrument an actual pipeline — then ask Claude Code to write the latency-measurement script.
+- *For a Claude Project:* Recommended. Save the audit table back into the Project so later chapters can reference what is and is not currently fast enough.
+
+**Connection to previous chapters:** Chapter 2 named *what* the data cannot tell you about your intervention. This chapter names *when* the data tells you anything at all — and the answers compound. A correctly causal model that updates monthly may be useless for a decision that needs to be made daily.
+
+**Preview of next chapter:** Chapter 4 takes any risk analysis you currently use for this decision and rebuilds it as a probability × impact distribution, replacing the heat map with Expected Value of Intervention.

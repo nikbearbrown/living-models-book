@@ -349,3 +349,82 @@ The architecture this book has described is mature enough to deploy. It is not f
 ---
 
 *Tags: Bayesian updating edge parameters, structural change detection, parametric drift structural drift mechanism failure, DecisionOps versus MLOps, minimum viable feedback loop, Living Model maintenance, operational causal inference*
+
+---
+
+###  LLM Exercise — Chapter 20: Keeping the Model Alive
+
+**Project:** Build Your Own Living Model
+
+**What you're building this chapter:** The maintenance layer that turns your Living Model from a one-time deliverable into operational infrastructure — a Bayesian update script for edge parameters, a structural-drift detector, a four-stage minimum viable feedback loop spec, a DecisionOps runbook, and a named owner who is on-call when the drift detector fires. Plus a final project-completion deliverable: the full Living Model folder, organized and documented so another practitioner could pick it up.
+
+**Tool:** Claude Code (for the maintenance scripts) + Cowork (for the runbook and the final folder organization).
+
+---
+
+**The Prompt:**
+
+```
+I am working through Chapter 20 of "Living Models" — the final chapter. My Living Model folder contains: validated-dag-v1.json (Ch 17), parameterized SCM and recommendation-package.json (Ch 18), executive-report-v1.md (Ch 19), governance.md (Ch 17), monitor-drift.py stub (Ch 17), and the audit record.
+
+This chapter teaches three modes of decay:
+- PARAMETRIC DRIFT — edge weights shift; same structure, new parameters. Fix: Bayesian update.
+- STRUCTURAL DRIFT — the graph itself changes; new edges or new variables. Fix: structural change detection + re-elicitation.
+- MECHANISM FAILURE — the world the model was built for no longer exists. Fix: rebuild from Chapter 6.
+
+Three structural-detection approaches: CMSI (Conditional Mutual Sufficiency Index), DOCL (Drift via Online Causal Learning), CaSCo (Causal Structural Change). Graduated escalation: warn → flag → re-elicit → rebuild.
+
+DecisionOps vs MLOps along four axes: optimizes decision quality (not prediction accuracy); assumes contested non-stationary world (not stable distribution); primary artifact is pipeline + audit record (not model artifact); human review is throughout (not end-only).
+
+Minimum viable feedback loop in four stages:
+1. RECORD — every recommendation issued, every action taken, every outcome observed
+2. UPDATE — Bayesian parameter updates on a regular cadence
+3. DETECT — structural drift monitoring with graduated escalation
+4. RE-VALIDATE — re-elicitation when drift triggers fire; periodic full validation
+
+Build the maintenance layer. Do four things:
+
+PART 1 — BAYESIAN UPDATER (`bayesian-update.py` via Claude Code):
+- Loads validated-dag-v1.json and parameterized-scm.pkl
+- Takes new data (CSV)
+- For each edge with sufficient new data, runs Bayesian update of the parameter (use a normal-normal conjugate update for linear edges, beta-binomial for binary). Use a discount factor (0.85 by default) on the prior to weight recent data more heavily.
+- Propagates updated parameters into a new SCM artifact, parameterized-scm-v2.pkl
+- Re-runs the EV calculation on the recommended portfolio with new parameters and flags any intervention whose EVI ranking changed by more than two positions
+- Logs to audit-log.jsonl
+
+PART 2 — STRUCTURAL DRIFT DETECTOR (`structural-drift.py` via Claude Code, extending Chapter 17's stub):
+- Runs PC monthly on the recent data window
+- Computes Jaccard similarity vs validated DAG
+- Computes a CMSI proxy: for each edge, conditional mutual information between endpoints given parent set; flag edges where CMSI drops by more than 30%
+- Graduated triggers:
+  - Yellow (warn): one Jaccard < 0.85 month → log
+  - Orange (flag): two consecutive Jaccard < 0.85 OR one CMSI red → notify named owner
+  - Red (re-elicit): three consecutive Jaccard < 0.85 OR a structural change that affects a recommendation edge → trigger Chapter 16 multi-agent interview
+  - Black (rebuild): persistent disagreement after re-elicitation → trigger full Part Two rerun
+
+PART 3 — DECISIONOPS RUNBOOK (`decisionops-runbook.md` via Cowork):
+- Document the operational discipline: who runs the updater, on what cadence; who reviews; who has the authority to act on a drift alert; the escalation path
+- For each of the four axes (decision quality vs prediction; contested vs stable; pipeline vs artifact; throughout vs end review), specify what your team will actually do
+- Name the human owner of the model. Include their role, their backup, and the conditions under which the model can be paused
+
+PART 4 — FINAL PROJECT FOLDER ORGANIZATION (Cowork):
+- Walk my Living Model folder and produce a `README.md` that lists every artifact, when it was produced, what it depends on, and what it produces
+- Organize into subfolders: /structure (DAG, CPDAG, governance), /estimation (Chapter 8 + 17 scripts), /recommendations (Chapter 18 package, Chapter 19 report), /maintenance (the three new artifacts from this chapter), /audit-log (the rolling log file)
+- Generate one final integration check: walk my folder against the four Living Model properties from Chapter 13 and score each on a 0–3 scale. Compare to my Chapter 13 baseline scores. Document the change.
+
+End with a one-paragraph "graduation" note: what does this Living Model now do that no system in my organization could do at the start of the project? And what is the next decision-domain it should be applied to?
+```
+
+---
+
+**What this produces:** A Bayesian update script, a structural-drift detector with graduated escalation, a DecisionOps runbook with named owner, an organized Living Model folder with a README, and a final four-property scorecard documenting the change from the Chapter 13 baseline. Plus a graduation reflection.
+
+**How to adapt this prompt:**
+- *For your own project:* If your data refresh cadence is monthly, the detector cadence should match. If it's daily, adjust accordingly.
+- *For ChatGPT / Gemini:* Code Interpreter / code execution can run the scripts; Drive can hold the folder. The runbook and folder organization are easier in Cowork because they involve actual file management.
+- *For Claude Code:* Recommended for the two scripts. Iteration is fast and dependencies install cleanly.
+- *For Cowork:* Recommended for the runbook, the folder reorganization, and the README. This is the chapter that benefits most from the file-management capability.
+
+**Connection to previous chapters:** This chapter closes every loop. The DAG (Ch 6) is now under version control with drift detection. The parameters (Ch 8, 18) update as new data arrives. The recommendations (Ch 18, 19) get re-evaluated each cycle. The named owner (Ch 19) has a runbook. The four properties from Chapter 13 are now operationalized rather than aspirational.
+
+**Preview of next chapter:** There is no next chapter — this is where the book hands you the model and the discipline to keep it alive. The next thing is to point this same architecture at the next decision in your organization that deserves it.

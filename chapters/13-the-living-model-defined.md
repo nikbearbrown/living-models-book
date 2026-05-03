@@ -318,3 +318,62 @@ Chapters 18 through 20 take up the operational pipeline: how the model produces 
 ---
 
 *Tags: Living Model four properties, causal counterfactual continually-updated treatment-oriented, orchestrated outcomes, analytics maturity ladder Pearl ladder, hybrid causal digital twin, structural causal model, do-operator, abduction-action-prediction*
+
+---
+
+###  LLM Exercise — Chapter 13: The Living Model Defined
+
+**Project:** Build Your Own Living Model
+
+**What you're building this chapter:** A four-property audit of everything you've built across Chapters 1–12, identifying which Living Model properties are partially present, fully present, or missing — and a Part Three roadmap that names what each remaining chapter must deliver.
+
+**Tool:** Claude Project (continue).
+
+---
+
+**The Prompt:**
+
+```
+Continuing my Living Model project. The artifacts I have built so far — Decision Dossier (Ch1), intervention diagnostic (Ch2), latency audit (Ch3), EVI rebuild (Ch4), ladder placement (Ch5), DAG (Ch6), CPDAG (Ch7), estimation pipeline (Ch8), counterfactual (Ch9), confounder audit + E-value (Ch10), trial protocol (Ch11), friction map (Ch12) — are in the Project context.
+
+This chapter defines a Living Model by four properties:
+
+1. CAUSAL — structure encodes mechanisms, not correlations; recommendations expressed as P(Y|do(X)).
+2. COUNTERFACTUAL — can reason about outcomes in worlds that did not occur (abduction-action-prediction on an SCM).
+3. CONTINUALLY UPDATED — live connection between incoming data and model parameters; reflects current conditions, not a stale training set.
+4. TREATMENT-ORIENTED — output is a ranked list of interventions evaluated by expected causal effect under current constraints, not a description or a prediction.
+
+Together these produce ORCHESTRATED OUTCOMES — recommendation, action, feedback, learning closing in a loop.
+
+Audit my project. For each of the four properties:
+
+1. EVIDENCE — Cite the specific artifacts I have built that contribute to the property. Be concrete: "Causal: my Chapter 6 DAG with directed edges, my Chapter 7 CPDAG with v-structure-resolved orientations, my Chapter 8 backdoor-adjusted estimate."
+
+2. STATUS — Score each property on a 0–3 scale:
+   0 = absent
+   1 = sketched (the structure exists but isn't operational)
+   2 = present (works but isn't integrated into a workflow)
+   3 = orchestrated (works AND is wired into the decision loop)
+
+3. GAP — For each property scoring below 3, name precisely what is missing and which Part Three chapter should produce it.
+
+4. INTEGRATION CHECK — Beyond the individual properties, audit whether the artifacts so far would compose into a single decision-support system or whether they are still parallel pieces. Where are the integration seams broken?
+
+Then produce a PART THREE ROADMAP — a one-page plan tying each remaining chapter (14–20) to the specific Living Model property gap it will close for my project. Be concrete about deliverables: "Chapter 14: run a real KEBN session against my Chapter 7 CPDAG, producing a refined v2 CPDAG with expert-orientation justifications saved to my Project."
+
+End with the most important honesty question: which property is currently weakest, and what is the realistic chance my Part Three work actually closes that gap by Chapter 20?
+```
+
+---
+
+**What this produces:** A four-property scorecard for your project, an integration check, a chapter-by-chapter Part Three roadmap, and an honest assessment of the weakest property.
+
+**How to adapt this prompt:**
+- *For your own project:* Be brutal about the scoring. A 1 ("sketched") is the honest score for most artifacts at this point.
+- *For ChatGPT / Gemini:* Works as-is.
+- *For Claude Code:* Not needed.
+- *For a Claude Project:* Recommended. Save the roadmap as `part3-plan.md` and check it at the start of every Part Three chapter.
+
+**Connection to previous chapters:** This is the Part One→Part Two→Part Three pivot. It synthesizes the diagnosis (Part One), the math layer (Part Two), and sets the architectural agenda (Part Three).
+
+**Preview of next chapter:** Chapter 14 picks up the expert-elicitation thread. You'll run your first real Knowledge Engineering with Bayesian Networks (KEBN) session — using the IDEA or Delphi protocol — to refine the parts of your CPDAG that the data couldn't orient.

@@ -378,3 +378,58 @@ The gap between the point estimate and the honest causal claim is the gap this e
 ---
 
 *Tags: unmeasured confounding, unconfoundedness assumption, sensitivity analysis, E-value, Cornfield condition, collider bias, Berkson's paradox, hormone replacement therapy, limits of observational inference, Living Model architecture*
+
+---
+
+###  LLM Exercise — Chapter 10: Confounders, Colliders, and the Limits of Observational Data
+
+**Project:** Build Your Own Living Model
+
+**What you're building this chapter:** A latent-confounder audit of your DAG, an E-value computation for your strongest causal claim from Chapter 8, and a triangulation plan that says how you would build credibility for the claim without an RCT.
+
+**Tool:** Claude Project for the audit and reasoning. Claude Code for the E-value computation if you want it programmatic.
+
+---
+
+**The Prompt:**
+
+```
+Continuing my Living Model project. My DAG, the Chapter 8 ATE estimate (with 95% CI), and the adjustment set are in the Project context.
+
+This chapter teaches that:
+
+- The UNCONFOUNDEDNESS ASSUMPTION (the adjustment set blocks ALL confounding paths) cannot be tested from observational data alone. There may always be a latent confounder you didn't measure.
+- COLLIDER BIAS is bias you INTRODUCE by conditioning on the wrong variable (a common effect of two causes). It produces spurious correlations that don't exist in the population.
+- The E-VALUE quantifies how strong an unmeasured confounder would have to be — its association with both treatment and outcome — to fully explain away the observed effect. An E-value of 1.5 means a moderate confounder could overturn the result; an E-value of 5 means it would take an unrealistically strong one.
+- TRIANGULATION — combining multiple data sources, methods, or natural experiments that have different bias structures — is the honest response when randomization is unavailable.
+
+For my Chapter 8 estimate, do four things:
+
+1. LATENT CONFOUNDER AUDIT — List the 5 most plausible latent confounders for my decision. For each, name:
+   - The variable (specific, not vague)
+   - Why it plausibly causes both my intervention X and my outcome Y
+   - Why I cannot measure it (data not collected, person-level psychology, market timing, etc.)
+   - The expected direction of the bias it would introduce in my Chapter 8 estimate
+
+2. COLLIDER CHECK — Audit my adjustment set Z from Chapter 8. For each variable in Z, confirm it is NOT a collider on any backdoor path. If any variable is suspect, reconstruct the adjustment.
+
+3. E-VALUE COMPUTATION — Using the formula E-value = RR + sqrt(RR × (RR − 1)) where RR is the risk ratio (or hazard ratio) of my estimate, compute the E-value for my point estimate AND for the lower bound of my 95% CI (the more conservative number). Interpret: what strength of unmeasured confounder would be required to overturn this result, and is a confounder of that strength plausible in my domain?
+
+4. TRIANGULATION PLAN — Propose 2–3 INDEPENDENT lines of evidence I could pursue that have DIFFERENT bias structures than my main observational analysis. Examples: a small RCT on a subpopulation; a regression-discontinuity around a natural threshold; an instrumental variable I might be able to identify; an industry comparison with a competitor that made the opposite decision; a historical natural experiment (a regulatory change, a vendor outage). For each: what would it tell me, what biases would it have that mine doesn't, and what specific evidence pattern would substantially update my confidence?
+
+End with a verdict on the Chapter 8 estimate: STRONG (E-value high, no plausible confounder of that strength), MODERATE (E-value moderate, plausible confounders exist), or FRAGILE (E-value low, a moderate confounder could overturn). State what the verdict implies for whether to act on the estimate now versus pursue triangulation first.
+```
+
+---
+
+**What this produces:** A latent-confounder list, a collider check on your adjustment set, an E-value for your headline estimate, a strength verdict (Strong / Moderate / Fragile), and a triangulation plan with 2–3 independent lines of evidence.
+
+**How to adapt this prompt:**
+- *For your own project:* If you don't have a Chapter 8 estimate yet, do this against your domain intuition — what would a plausible estimate look like, and would it survive an E-value test?
+- *For ChatGPT / Gemini:* Works as-is.
+- *For Claude Code:* Optional — can add an `evalue()` function to estimate-effects.py that computes E-values for any RR.
+- *For a Claude Project:* Recommended.
+
+**Connection to previous chapters:** Chapter 8 produced the headline number. This chapter tests how durable that number is to the worst plausible thing you didn't measure — and gives you a defensible vocabulary for telling a decision-maker exactly how confident to be.
+
+**Preview of next chapter:** Chapter 11 designs the experiment that would settle the question — an RCT or quasi-experiment for testing your top intervention — and audits it for SUTVA violations (interference, spillover, hidden treatment variations) that quietly invalidate most organizational A/B tests.

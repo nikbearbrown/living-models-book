@@ -187,3 +187,95 @@ One structural point worth flagging before moving on. The four-step pipeline —
 ---
 
 **Tags:** parameterizing causal graph structural equations, counterfactual engine abduction action prediction, Expected Value of Intervention ranking, heterogeneous treatment effects persuadables, constrained-knapsack portfolio optimization
+
+---
+
+###  LLM Exercise — Chapter 18: From Graph to Decision
+
+**Project:** Build Your Own Living Model
+
+**What you're building this chapter:** The full graph-to-decision pipeline — parameterization, counterfactual engine, EV ranking with persuadable segmentation, and constrained-knapsack portfolio solver — producing the structured package that Chapter 19 turns into the executive report.
+
+**Tool:** Claude Code — runnable Python that takes the validated DAG from Chapter 17 and produces a ranked, constraint-satisfying portfolio of interventions.
+
+---
+
+**The Prompt:**
+
+```
+I am working through Chapter 18 of "Living Models." My validated DAG (Chapter 17, validated-dag-v1.json), the Chapter 8 estimation pipeline (estimate-effects.py), and the Chapter 4 EVI framework are in this Project / working directory.
+
+This chapter teaches the four operational steps from validated graph to recommendation:
+
+STEP 1 — PARAMETERIZE: Replace each structural equation with concrete functional form and parameters. For continuous variables, linear or DSCM (Deep SCM); for discrete, conditional probability tables.
+
+STEP 2 — RUN THE COUNTERFACTUAL ENGINE: For each candidate intervention, run abduction-action-prediction across the population. Estimate ATE and CATE (heterogeneous effect by segment) using the parameterized SCM.
+
+STEP 3 — RANK BY EXPECTED VALUE: For each intervention, compute EVI = E[benefit] − E[cost], with uncertainty bounds. Identify "persuadables" — the segment with the largest CATE that justifies targeted (rather than uniform) deployment.
+
+STEP 4 — CONSTRAINED KNAPSACK PORTFOLIO: Multiple interventions interact. Some share resources; some are mutually exclusive; some have prerequisites. Solve as constrained optimization:
+- MULTIDIMENSIONAL constraints (budget, labor, time)
+- LOGICAL DEPENDENCY (intervention A requires B done first)
+- MULTIPLE-CHOICE (at most one of {A1, A2, A3})
+- CHANCE constraints (P(catastrophic loss) < 5%)
+
+Build a Python script `decision-pipeline.py` that does all four steps for my project.
+
+INPUTS (from prior chapters):
+- validated-dag-v1.json (DAG structure)
+- structural equations from Chapter 6 (functional forms — linear by default unless I specified otherwise)
+- candidate interventions list (top 5–10 from EVI work in Chapter 4)
+- constraint set (ask me to specify if not already in Project context — budget cap, labor pool, mutual-exclusion groups, prerequisite dependencies, tail-risk threshold)
+
+PHASE 1 — PARAMETERIZATION:
+- For each node, fit a parameterized model. Use linear regression for continuous nodes with continuous parents (statsmodels). Use logistic regression for binary outcomes. Use the DML estimates from Chapter 8 as priors where available.
+- For nodes where data is thin, use the expert CPT sketches from Chapter 14 as priors.
+- Output a parameterized SCM as a Python class with `intervene(X, x)` and `simulate(n)` methods.
+
+PHASE 2 — COUNTERFACTUAL ENGINE:
+- For each candidate intervention X = x', run abduction-action-prediction on a sample of 10,000 simulated units.
+- Compute ATE and 95% bootstrap CI.
+- Compute CATE by segments defined by my moderator variables. Identify the "persuadable" segment.
+
+PHASE 3 — EV RANKING:
+- For each intervention, compute EVI = E[benefit | do(X = x'), persuadables] × N_persuadables − cost(x').
+- Compute VaR-95 (worst 5% of bootstrap outcomes).
+- Rank by EVI; produce a side panel with VaR for tail-risk-conscious decision-makers.
+
+PHASE 4 — KNAPSACK PORTFOLIO:
+- Solve as integer programming problem (`pulp` or `ortools`):
+  Maximize sum of EVI_i × x_i
+  Subject to:
+    - Budget constraint: sum(cost_i × x_i) <= BUDGET
+    - Labor constraint: sum(labor_i × x_i) <= LABOR_POOL
+    - Mutual exclusion: x_i + x_j <= 1 for each exclusion pair
+    - Prerequisites: x_i <= x_j for each (i requires j)
+    - Tail-risk: P(portfolio loss > L) <= 5% (chance constraint approximated as linearization)
+- Output the optimal portfolio AND the second-best for sensitivity.
+- Run sensitivity analysis: how does the portfolio change when budget shifts ±20%? When the most uncertain ATE is at the lower bound of its CI?
+
+PHASE 5 — STRUCTURED PACKAGE:
+- Produce a JSON file `recommendation-package.json` with:
+  - The recommended portfolio (intervention IDs, EVI, CI, tail risk)
+  - The runner-up portfolio
+  - The persuadable segment for each chosen intervention
+  - The assumptions list (every parameter that materially drives the answer; whether it came from data, expert, or guess)
+  - The counterfactual baseline ("if we do nothing, expected outcome is X")
+  - Provenance pointers (which DAG version, which estimation run)
+
+Save everything to the Living Model folder. Print a one-paragraph summary of the recommended portfolio at the end.
+```
+
+---
+
+**What this produces:** A parameterized SCM as Python, a ranked intervention list with EV and tail risk, an optimal portfolio under your constraints, a runner-up for sensitivity, and a `recommendation-package.json` that Chapter 19 will consume as input.
+
+**How to adapt this prompt:**
+- *For your own project:* If you don't have constraint values, use placeholder ones and treat this run as the dry run before the real one.
+- *For ChatGPT / Gemini:* Code Interpreter / code execution can run this; Claude Code is faster on the iteration loop.
+- *For Claude Code:* Recommended. The whole pipeline — install, run, debug — happens in one terminal session.
+- *For a Claude Project:* Run the script outside the Project, then load `recommendation-package.json` back into the Project for Chapter 19.
+
+**Connection to previous chapters:** Every prior chapter has been building toward this. The DAG (Ch 6) becomes parameterized (here); the CPDAG (Ch 7, 14, 15, 16, 17) becomes operational; the EVI framework (Ch 4) becomes the ranking criterion; the friction map (Ch 12) appears as the cost side of the EV calculation. From this chapter forward, the project is producing real recommendations.
+
+**Preview of next chapter:** Chapter 19 takes the recommendation package and produces the four-part executive report — recommendation, evidence, assumptions, counterfactual — with LLM narration audited against the must-do and must-never-do rules.

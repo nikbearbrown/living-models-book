@@ -199,3 +199,62 @@ The plumber's objection is honored in each of these chapters. The architecture i
 ---
 
 **Tags:** Esther Duflo economist as plumber AEA Ely lecture, Tangier piped water hassle costs, Ne-FMS MGNREGA fund flow reform, plumber's objection to causal AI, distance between causal estimate and organizational change
+
+---
+
+###  LLM Exercise — Chapter 12: The Plumber's Objection
+
+**Project:** Build Your Own Living Model
+
+**What you're building this chapter:** A friction map — the second graph that lives alongside your DAG, naming every administrative, behavioral, default, incentive, and institutional friction that would block your intervention from producing its modeled effect even if the math is perfect.
+
+**Tool:** Claude Project (continue).
+
+---
+
+**The Prompt:**
+
+```
+Continuing my Living Model project. My DAG (Chapter 6) and trial protocol for the top intervention (Chapter 11) are in the Project context.
+
+This chapter teaches Duflo's three-role framework: scientist (causal estimate), engineer (translate estimate into intervention), plumber (handle the messy details that determine whether the intervention actually does anything in deployment). The Tangier piped-water case showed take-up at 10% with a perfect economic model and 69% with the same model + procedural help. The model wasn't wrong; the plumbing wasn't done.
+
+Five categories typically fill the gap between correct causal estimate and effective change:
+
+1. ADMINISTRATIVE FRICTION — paperwork, sign-offs, multi-step processes, hours-of-availability constraints.
+2. DEFAULTS — what happens when no one acts; opt-in vs opt-out architectures.
+3. INCENTIVE ARCHITECTURE — what the people who must execute the intervention are actually paid (or penalized) for.
+4. BEHAVIORAL BIASES — present bias, status quo bias, mental accounting, loss aversion in the people on whom the intervention will land.
+5. INSTITUTIONAL INERTIA — existing systems, contracts, vendor relationships, legacy processes that resist change.
+
+For my top intervention, build the FRICTION MAP. Do four things:
+
+1. INVENTORY — For each of the five categories, list 2–4 specific frictions that apply to my intervention in my organization. Be granular — not "administrative friction" but "the regional VP must sign off on every price exception over 8%, and her calendar is booked three weeks out."
+
+2. QUANTIFY — For each friction, estimate (with stated assumptions) what fraction of the intended effect it would absorb. The Tangier study showed paperwork absorbed roughly 7× the effect. Most frictions absorb less, but several together can absorb most of an intervention's value.
+
+3. RANK — Order the frictions by total expected absorption. The top three are where deployment will actually fail.
+
+4. PLUMBING PROPOSALS — For the top three frictions, propose a specific plumbing fix. The fix should be implementable inside the next quarter and should be small enough to test (i.e., it has its own measurable proxy for whether it worked). Examples: "Pre-fill the price exception form for all eligible accounts so the VP only has to approve, not author"; "Make opt-out the default for the new pricing tier rather than opt-in"; "Add 'successful intervention deployment' to the regional VP's bonus calculation at a 10% weight."
+
+Then construct the DEPLOYMENT FORECAST: what fraction of my modeled effect should I actually expect in deployment, before plumbing fixes? After plumbing fixes? Be honest — most well-modeled interventions deploy at 30–60% of their trial effect; with explicit plumbing they can reach 70–85%.
+
+Output:
+- Friction inventory table: Category | Friction | Expected Absorption | Proposed Fix
+- Deployment forecast: Trial effect → Pre-plumbing deployment effect → Post-plumbing deployment effect
+- A one-paragraph note for the executive sponsor explaining that the most expensive part of this project will not be the model — it will be the plumbing, and that a Living Model that doesn't budget for plumbing will not produce the projected return.
+```
+
+---
+
+**What this produces:** A friction inventory table, a quantified deployment forecast (trial effect → deployment effect), and a memo for the executive sponsor explaining why the plumbing budget matters more than the modeling budget.
+
+**How to adapt this prompt:**
+- *For your own project:* If you don't know the absorption fractions, give Claude your best guess and treat the numbers as scenario analysis, not estimates.
+- *For ChatGPT / Gemini:* Works as-is.
+- *For Claude Code:* Optional — could automate friction-detection by parsing process docs, but typically not worth it.
+- *For a Claude Project:* Recommended.
+
+**Connection to previous chapters:** Chapter 11 designed the trial. This chapter says the trial result is an upper bound — the deployment effect will be less, and the friction map tells you by how much and where. Together they give you a defensible deployment forecast rather than the over-optimistic projection that produces most disappointed executives.
+
+**Preview of next chapter:** Chapter 13 closes Part Two and opens Part Three. You'll audit everything you've built so far against the four properties of a Living Model — causal, counterfactual, continually updated, treatment-oriented — and identify which properties are present and which still need to be built in Part Three.

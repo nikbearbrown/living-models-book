@@ -179,3 +179,57 @@ The remainder of this book is about closing that gap. Not by discarding descript
 ---
 
 **Tags:** WAU dashboard silent failure, J.C. Penney 2012 pricing collapse, Pearl's Ladder of Causation, four rungs of analytics maturity, observational vs interventional distribution
+
+---
+
+###  LLM Exercise — Chapter 1: The Dashboard That Lied
+
+**Project:** Build Your Own Living Model
+
+**What you're building this chapter:** The decision you will model across the next twenty chapters, plus a maturity audit of how your organization currently analyzes that decision.
+
+**Tool:** Claude Project — set up a new Project called "My Living Model" and return to it every chapter for the rest of the book.
+
+---
+
+**The Prompt:**
+
+```
+I am working through a textbook called "Living Models: Causal Intelligence for the Decisions That Actually Matter." Across the book I am going to build a complete Living Model — a causal, counterfactual, continually-updated, treatment-oriented decision support system — for one consequential decision in my domain. This is the setup chapter. I need your help with two tasks.
+
+TASK 1 — Help me pick the right decision. The decision should be:
+- Consequential (real money, real people, real consequences if wrong)
+- Recurring or upcoming (not one-shot or already settled)
+- Mine to influence (I can act on the recommendation or directly advise the actor)
+- A do-X question, not a what-happened question (e.g., "should we raise enterprise prices by 15%?" not "why did Q3 revenue fall?")
+- Bounded enough to model in fifteen weeks but rich enough to be worth modeling
+
+Here is my context:
+- Domain / industry: [FILL IN]
+- Role or position: [FILL IN]
+- 2–3 candidate decisions I'm considering: [LIST THEM, OR SAY "HELP ME BRAINSTORM"]
+
+Help me evaluate the candidates against the criteria and pick one. If my candidates are weak, push back and propose alternatives that would better serve a fifteen-week project.
+
+TASK 2 — Once we settle on the decision, do an analytics maturity audit specific to it. The book defines four organizational stages — descriptive (what happened), diagnostic (why), predictive (what will happen), prescriptive (what should we do) — and a separate three-rung Pearl's Ladder of causation (association, intervention, counterfactual). For my chosen decision:
+- Which of the four organizational stages does my organization currently operate at when making this decision?
+- Which rung of Pearl's Ladder does our current analysis actually live on?
+- What silent failure modes — mechanical (a pipeline breaks quietly) or epistemic (the framework cannot distinguish observation from intervention) — are most plausible in the data and reports we currently use? Name the specific data source and the specific failure mode for each.
+- What is the single most dangerous gap between the rung our current analysis lives on and the rung this decision actually requires?
+
+End with a one-paragraph "Decision Dossier" I can paste into my Claude Project's system prompt so every future chapter exercise inherits the context. The dossier should name the decision, the actor, the time horizon, the primary data sources, the current analytics stage, and the rung the decision requires.
+```
+
+---
+
+**What this produces:** A chosen decision, a stage / rung diagnosis, a list of named silent-failure risks in your current data, and a Decision Dossier paragraph you pin to the top of your Claude Project so every subsequent chapter exercise inherits the context.
+
+**How to adapt this prompt:**
+- *For your own project:* Fill in the bracketed fields. If you don't have 2–3 candidate decisions yet, write "Help me brainstorm candidates given my domain and role."
+- *For ChatGPT / Gemini:* Works as-is. In ChatGPT, set this up as a Custom GPT instead of a Project — same persistence, different label.
+- *For Claude Code:* Not needed yet. Coming chapters use Claude Code for the math.
+- *For a Claude Project:* Recommended. The Decision Dossier paragraph at the end becomes part of the Project's system prompt going forward.
+
+**Connection to previous chapters:** This is the foundation. Skip it and the rest of the project has no anchor.
+
+**Preview of next chapter:** Chapter 2 takes your chosen decision and runs the intervention diagnostic on it — testing whether the historical data you currently rely on has any chance of supporting the do-X question you are asking.

@@ -478,3 +478,86 @@ Chapter 18 takes the validated graph and produces ranked recommendations. With s
 ---
 
 **Tags:** PC GES NOTEARS FCI causal discovery algorithms, CPDAG handoff expert data integration, aleatory versus epistemic uncertainty, validated graph as living artifact, causal governance Jaccard drift monitoring, three-step resolution protocol, graph stewardship version control
+
+---
+
+###  LLM Exercise — Chapter 17: Resolving the Graph
+
+**Project:** Build Your Own Living Model
+
+**What you're building this chapter:** An algorithmic CPDAG from causal discovery (PC + GES + NOTEARS) on your data (real or synthetic), the three-step disagreement-resolution between the algorithmic CPDAG and your v3 expert CPDAG, and a governance setup committing the validated graph to version control with drift monitoring and re-elicitation triggers.
+
+**Tool:** Claude Code — this chapter writes runnable causal-discovery code.
+
+---
+
+**The Prompt:**
+
+```
+I am working through Chapter 17 of "Living Models." My v3 expert CPDAG and structural equations are saved in this Project. My estimate-effects.py script from Chapter 8 is in the working directory.
+
+This chapter teaches that algorithmic causal discovery and expert elicitation are complementary — neither alone is enough.
+
+Four algorithm families:
+- PC (constraint-based) — uses conditional independence tests; requires faithfulness assumption.
+- GES (score-based) — searches DAG space by score (BIC); handles continuous data well.
+- NOTEARS (continuous-optimization) — frames structure learning as a smooth optimization with an acyclicity constraint.
+- FCI — handles latent confounders explicitly; outputs a Maximal Ancestral Graph (MAG) instead of a CPDAG.
+
+The CPDAG handoff produces three patterns:
+- AGREEMENT — algorithm and expert agree; commit and move on.
+- REFINEMENT — algorithm fills in what expert was uncertain about; commit, label as algorithmically-determined.
+- DISAGREEMENT — algorithm and expert oriented an edge differently. Triggers the three-step resolution protocol:
+  1. Re-examine the data evidence (test power, sample composition, hidden colliders).
+  2. Re-examine the expert reasoning (was it analogy? was it from a kind or wicked sub-area?).
+  3. Decide: more data, more experts, or accept the more conservative orientation.
+
+Aleatory vs epistemic uncertainty — aleatory is fundamental noise (more data won't help); epistemic is missing knowledge (more data or more experts will). The right next move depends on which one is binding.
+
+Build a Python script `resolve-graph.py` that does the following:
+
+PHASE 1 — DATA SETUP:
+- If I have real data: load from CSV.
+- If synthetic: generate ~5,000 rows from my SCM (use the structural equations from my Project context). Use realistic noise scales.
+
+PHASE 2 — RUN ALL THREE DISCOVERY ALGORITHMS:
+- PC using `causal-learn` (or pgmpy). Output the CPDAG.
+- GES using `causal-learn`. Output the CPDAG.
+- NOTEARS using `notears` package or hand-rolled. Output the directed graph.
+- For each, print the graph in adjacency-list form and as Mermaid.
+
+PHASE 3 — COMPARE TO EXPERT v3 CPDAG:
+- For each of the three algorithm outputs, compare edge-by-edge to my v3 expert CPDAG (loaded as a separate file).
+- Compute Structural Hamming Distance (SHD) — number of edge additions, deletions, and re-orientations needed to match.
+- Tabulate the three patterns:
+  - AGREEMENT edges
+  - REFINEMENT edges (expert undirected, algorithm oriented)
+  - DISAGREEMENT edges (oriented opposite directions)
+
+PHASE 4 — RESOLUTION:
+- For each DISAGREEMENT, propose the three-step resolution. The script doesn't decide — it surfaces. For each: print the data-side reasons (sample issue? hidden collider?) and prompt the human to choose: accept-data, accept-expert, more-data, or more-experts.
+
+PHASE 5 — COMMIT THE VALIDATED GRAPH:
+- Once disagreements are resolved (either by your script's recommendation or by my override), output the FINAL VALIDATED DAG.
+- Commit to git: `git add validated-dag-v1.json && git commit -m "Validated DAG v1 — chapter 17"`.
+- Generate a `governance.md` file with: the variable definitions, the orientation provenance for each edge (expert / algorithm / both), the disagreement log with how each was resolved, and the re-elicitation trigger conditions.
+
+PHASE 6 — DRIFT MONITORING SCAFFOLD:
+- Generate a `monitor-drift.py` stub that, given new data each week or month, runs PC over the new data and computes Jaccard similarity against the validated CPDAG. Flag any similarity drop > 15% as a re-elicitation trigger.
+
+Save everything to the Living Model folder.
+```
+
+---
+
+**What this produces:** A validated DAG committed to git, three discovery-algorithm outputs with comparison to the expert CPDAG, a documented disagreement-resolution log, a governance file, and a drift-monitoring scaffold. From this point forward your causal model is a living artifact under version control, not a one-shot deliverable.
+
+**How to adapt this prompt:**
+- *For your own project:* If `causal-learn` or `notears` won't install in your environment, ask Claude Code to use only one algorithm (PC is the most reliable to install) plus a hand-rolled comparison.
+- *For ChatGPT / Gemini:* Code Interpreter / code execution can run this; iteration loops are slower than Claude Code.
+- *For Claude Code:* Recommended. Claude Code installs dependencies, runs each algorithm, debugs version issues, and commits to git.
+- *For a Claude Project:* Run the script outside the Project, then paste the disagreement log into the Project for the resolution discussion.
+
+**Connection to previous chapters:** Chapter 16 produced the expert v3 CPDAG. Chapter 8 produced the estimation pipeline. This chapter brings the algorithmic perspective and resolves it against the expert one — closing the structure-learning loop. The output (validated DAG under version control) is what Chapter 18's parameterization pipeline operates on.
+
+**Preview of next chapter:** Chapter 18 takes the validated DAG and turns it into actual recommendations. You'll parameterize it, run the counterfactual engine, rank candidate interventions by Expected Value, and solve the constrained-knapsack portfolio problem to produce the package that the executive report will consume.
