@@ -34,6 +34,9 @@ Twelve weeks. Six experts. One model. No machine learning. No big data. The outp
 
 <!-- → [IMAGE: Map of the Goulburn-Broken Catchment in Victoria, Australia — river system, key towns, and watershed boundary marked. Adjacent to the map: a simplified schematic of the resulting Bayesian network (~15 of the ~30 nodes shown, with directed edges), overlaid with three example management intervention arrows pointing into key nodes (flow_regime, riparian_vegetation, invasive_species). Caption: "From geography to causal graph: the catchment team's output in schematic form. Each arrow represents a structural commitment the data alone could not have made." Reader should see the connection between the physical system and the model structure.] -->
 
+![Figure 14.1 — Map of the Goulburn-Broken Catchment in Victoria, Australia](images/14-the-expert-in-the-room-fig-01.jpg)
+
+
 This chapter is about how that kind of model gets built, why it cannot be built any other way for problems like the catchment, and why — despite a track record of successes in environmental science, clinical medicine, and intelligence analysis — this style of work has not crossed over into the corporate boardroom. The next several chapters of Part Three describe the architectural moves that can finally bring it across.
 
 ---
@@ -50,6 +53,9 @@ Recent theoretical results establish that for *sparse random graphs* — the kin
 
 <!-- → [CHART: Log-scale line chart. X-axis: number of variables (5 to 50, in steps of 5). Y-axis: size of Markov equivalence class (logarithmic scale, from 1 to 10^10). The curve rises sharply from left, becoming nearly vertical around n=25–30. Two annotated reference points: (1) at n=20: "Equivalence class contains thousands of diagrams"; (2) at n=50: "Effectively incomputable." A horizontal dashed line near the bottom labeled "Practically resolvable by data alone" — the curve crosses it around n=8–10. Caption: "The equivalence-class explosion is the rule, not the exception. Every realistic organizational system sits in the steep part of this curve."] -->
 
+![Figure 14.2 — Log-scale line chart. X-axis: number of variables (5 to 50, in steps of 5). Y-axis: size of Markov equivalence class (logarithmic scale, from 1 to 10^10). The curve rises sharply from left, becoming nearly vertical around n=25–30. Two annotated reference points: (1) at n=20: "Equivalence class contains thousands of diagrams"; (2) at n=50: "Effectively incomputable." A horizontal dashed line near the bottom labeled "Practically resolvable by data alone"](images/14-the-expert-in-the-room-fig-02.jpg)
+
+
 The picture worsens when we relax the assumptions that make Markov equivalence cleanly defined. If unmeasured confounders exist — and they always do — the relevant equivalence class is over Acyclic Directed Mixed Graphs, and the expected class size is super-exponential. If the system contains feedback loops — as ecological, biological, and most social systems do — the equivalence class for directed cyclic graphs scales exponentially in a different but equally catastrophic way.
 
 This is not a limitation we can engineer our way out of. It is not waiting for the next algorithm or the next compute jump. It is a mathematical property of the relationship between observational data and causal structure. The information needed to identify a unique diagram is simply not in the data.
@@ -63,6 +69,9 @@ The remaining source is the expert. Specifically, what the expert supplies is me
 This is the precise sense in which the expert is mathematically necessary. The expert is not a convenience that supplements an otherwise complete data-driven workflow. The expert is the source of information without which the workflow cannot, in principle, produce a unique causal structure.
 
 <!-- → [DIAGRAM: Two-panel illustration. Left panel: three structurally distinct DAGs — (A) X→Y, (B) Y→X, (C) X←Z→Y — each with the same conditional independence table shown beneath it. A label spanning all three: "Observational data: equally consistent with all three." Right panel: the same three DAGs, with DAG (A) X→Y highlighted and a callout labeled "Expert's mechanistic knowledge: 'X precedes Y by 6 months; mechanism passes through receptor class R; blocking R eliminates the correlation.'" The callout arrow points only to the highlighted DAG. Caption: "The data are equally consistent with all three structures. The expert's structural knowledge is consistent with exactly one." Reader should see that the expert is resolving a mathematical ambiguity — not improving an estimate, but eliminating structurally distinct alternatives.] -->
+
+![Figure 14.3 — Two-panel illustration. Left panel: three structurally distinct DAGs](images/14-the-expert-in-the-room-fig-03.jpg)
+
 
 ### What This Means for the Living Model Architecture
 
@@ -88,6 +97,9 @@ The third is the *recognition-explanation gap*. Experts often know that a relati
 
 <!-- → [DIAGRAM: Funnel diagram of the knowledge bottleneck. Top (wide end): "Expert's implicit knowledge" — four icons labeled "Compiled heuristics," "Pattern recognition," "Tacit understanding," "Decades of experience." Middle (narrow neck): three labeled obstacles stacked vertically — (1) "Combinatorial explosion of CPTs," (2) "Linguistic ambiguity," (3) "Recognition-explanation gap." Bottom (output, narrow): "Explicit structured knowledge" — icons labeled "Variables," "Directed edges," "Conditional probabilities." Large annotation spanning the neck: "The bottleneck is not a failure of expertise. It is a structural mismatch between how knowledge is stored in human memory and how Bayesian networks represent it." Reader should see that all three obstacles are structural, not intellectual — they affect expert experts.] -->
 
+![Figure 14.4 — Funnel diagram of the knowledge bottleneck. Top (wide end): "Expert's implicit knowledge"](images/14-the-expert-in-the-room-fig-04.jpg)
+
+
 A KEBN engagement is structured around five sequential phases. I will describe each precisely.
 
 ### Phase 1: Variable Identification
@@ -99,6 +111,16 @@ A variable belongs if three criteria are met. It must be *causally relevant* —
 The facilitator's tool at this phase is relentless clarification: *What does this variable mean precisely? How would you measure it? What would a one-unit change in it look like? Is this the same as the variable we called Y two minutes ago, or is it different?* Linguistic ambiguity is pinned down at this stage, not later.
 
 <!-- → [TABLE: Three-column worked example of variable identification for a corporate market entry model. Column 1: "Expert's initial variable" — 12 variables including "competitive position," "brand strength," "organizational capability," "customer trust," etc. Column 2: "Clarification question(s) applied" — specific facilitator questions for each: e.g., "What does 'competitive position' mean precisely? Is it market share, price premium, or something else?" Column 3: "Outcome" — one of three: "Refined and included" (variable redefined precisely), "Merged with another" (e.g., NPS merged into customer_satisfaction_score), or "Excluded" (e.g., "organizational capability" too broad, no agreed measure). Final row: summary row showing 12 → 8 variables. Caption: "Variable identification is the most underestimated phase. Every hour spent here saves three hours of structural confusion later."] -->
+
+*Figure 14.5*
+
+| | **Property** | **Value** |
+|---|---|---|
+| **Row 1** | _fill in_ | _fill in_ |
+| **Row 2** | _fill in_ | _fill in_ |
+
+: {.data-table}
+
 
 ### Phase 2: Edge Elicitation
 
@@ -126,6 +148,20 @@ The mathematical assumption underlying Noisy-OR is that the parental effects are
 
 <!-- → [TABLE: Side-by-side comparison of full CPT versus Noisy-OR parameterization for a node with four binary parents (P1, P2, P3, P4). Left table: full conditional probability table — 16 rows, one per combination of parent values (0000, 0001, ..., 1111), each row requiring one probability elicitation. Header: "Full CPT: 16 parameters required." Right table: Noisy-OR — 5 rows: one per parent (inhibition probability q1, q2, q3, q4) plus one background probability (q0 = base rate with no parents active). Header: "Noisy-OR: 5 parameters required." Below both tables: two annotations — (1) "When parental independence holds: Noisy-OR is dramatically more efficient." (2) "When parental independence fails: the model is wrong in a specific, diagnosable way — interactions between parents are invisible." Reader should understand both the efficiency gain and the price of the structural assumption.] -->
 
+*Figure 14.6*
+
+| | **Property** | **Value** |
+|---|---|---|
+| **One per parent (inhibition probability q1** | _fill in_ | _fill in_ |
+| **Q2** | _fill in_ | _fill in_ |
+| **Q3** | _fill in_ | _fill in_ |
+| **Q4) plus one background probability (q0 = base rate with no parents active). Header: "Noisy-OR: 5 parameters required." Below both tables: two annotations — (1) "When parental independence holds: Noisy-OR is dramatically more efficient." (2) "When parental independence fails: the model is wrong in a specific** | _fill in_ | _fill in_ |
+| **Diagnosable way — interactions between parents are invisible." Reader should understand both the efficiency gain** | _fill in_ | _fill in_ |
+| **The price of the structural assumption.** | _fill in_ | _fill in_ |
+
+: {.infographic-table}
+
+
 ### Phase 5: Confidence Calibration
 
 Experts vary substantially in how well-calibrated their confidence is. Some are overconfident — claiming high certainty about quantities that are genuinely uncertain. Some are underconfident — hedging on quantities they are actually quite sure about. Uncalibrated expert input produces a model whose uncertainty quantification cannot be trusted, regardless of how well the structure was elicited.
@@ -135,6 +171,9 @@ Calibration exercises address this before the substantive elicitation begins. Th
 For the substantive elicitation itself, the discipline asks for ranges rather than point estimates: *the true probability is between 0.2 and 0.4 with 80% confidence*. This allows the model to represent epistemic uncertainty — the expert's uncertainty about the probability itself — rather than treating elicited probabilities as facts. The resulting model has a richer uncertainty representation than a model whose inputs are point estimates, and it is more honest about what is and is not known.
 
 <!-- → [CHART: Calibration chart for two hypothetical experts. X-axis: stated confidence level (50%, 60%, 70%, 80%, 90%). Y-axis: actual coverage rate (proportion of intervals that contained the true answer). A diagonal line labeled "Perfect calibration." Expert A's curve bows below the diagonal — labeled "Overconfident: claims 80% confidence but only 55% of intervals contain the true answer." Expert B's curve bows above the diagonal — labeled "Underconfident: claims 80% confidence but 95% of intervals contain the true answer." Annotation: "Calibration exercises detect and correct these systematic biases before they enter the model." Reader should understand what miscalibration looks like and why it matters for the model's uncertainty representation.] -->
+
+![Figure 14.7 — Calibration chart for two hypothetical experts. X-axis: stated confidence level (50%, 60%, 70%, 80%, 90%). Y-axis: actual coverage rate (proportion of intervals that contained the true answer). A diagonal line labeled "Perfect calibration." Expert A's curve bows below the diagonal](images/14-the-expert-in-the-room-fig-07.jpg)
+
 
 ---
 
@@ -154,6 +193,9 @@ Delphi has a known failure mode: it can suppress legitimate dissent. An expert w
 
 <!-- → [DIAGRAM: Flow diagram of the Delphi method. Round 1: five expert icons → five private probability distributions (different shapes, indicating genuine disagreement) → aggregation box → combined distribution returned. Anonymization label on return arrow: "No expert sees individual estimates — only aggregate." Round 2: each expert icon receives the aggregate; three revise toward the center of the distribution; one holds position (labeled "Outlier holds — may have unique information"); one moves slightly. Final aggregation box → panel estimate. Annotation: "Committee dynamics suppressed by anonymity. Legitimate dissent protected by the right to hold position." Caption: "Delphi: optimal when social pressure is the primary threat to estimate quality."] -->
 
+![Figure 14.8 — Flow diagram of the Delphi method. Round 1: five expert icons → five private probability distributions (different shapes, indicating genuine disagreement) → aggregation box → combined distribution returned. Anonymization label on return arrow: "No expert sees individual estimates](images/14-the-expert-in-the-room-fig-08.jpg)
+
+
 ### The IDEA Protocol
 
 The IDEA protocol — Investigate, Discuss, Estimate, Aggregate — addresses Delphi's failure mode by adding a structured discussion phase.
@@ -171,6 +213,9 @@ IDEA targets the specific failure mode where the answer is known by one expert b
 The cost of IDEA relative to Delphi is primarily logistical: the structured discussion requires all experts to be present simultaneously, which Delphi does not. For geographically dispersed panels, or for elicitations that run over multiple weeks, Delphi's asynchronous structure is more practical.
 
 <!-- → [DIAGRAM: Four-phase flow diagram of the IDEA protocol. Phase 1 (Investigate): five expert icons shown separately with "research" icon — label "Independent preparation: no interaction." Phase 2 (Discuss): five experts shown in a group session with facilitator icon; four speech bubbles containing reasoning statements: "I'm relying on data from X...," "The key mechanism I see is...," "I disagree because Y shows...," "My assumption is..."; facilitator label "Moderated: all voices heard, no consensus forced." Phase 3 (Estimate): experts separated again, each providing a private distribution — label "Private estimation after public reasoning." Phase 4 (Aggregate): mathematical combination. Bottom comparison box: "IDEA vs. Delphi — IDEA: synchronous, surfaces reasoning, better when information is siloed. Delphi: asynchronous, anonymizes estimates, better when social pressure is the risk."] -->
+
+![Figure 14.9 — Four-phase flow diagram of the IDEA protocol. Phase 1 (Investigate): five expert icons shown separately with "research" icon](images/14-the-expert-in-the-room-fig-09.jpg)
+
 
 ### Choosing Between Them
 
@@ -204,6 +249,16 @@ Six structural barriers explain the gap. They are distinct. Addressing one of th
 
 <!-- → [TABLE: Six-barrier diagnostic reference table. Six rows, one per barrier. Four columns: (1) Barrier name and one-line description; (2) Why it is structural — why better data or algorithms would not address it; (3) Binding context — the types of corporate settings where this barrier is most likely to be the primary constraint; (4) Architectural response — the specific Living Model design feature that addresses it (e.g., Barrier 1 → Ch. 16 LLM-guided elicitation compression; Barrier 2 → structured scaffolding encoding facilitator protocols; Barrier 3 → Living Model output format; Barrier 4 → speed and visual legibility; Barrier 5 → governed reusable model artifact; Barrier 6 → continuous BN methods). Caption: "Each barrier is real. None is insuperable. The architecture of Chapters 15–17 is designed to address all six simultaneously — addressing any subset leaves the others blocking adoption."] -->
 
+*Figure 14.10*
+
+| | **Property** | **Value** |
+|---|---|---|
+| **(1) Barrier name** | _fill in_ | _fill in_ |
+| **One-line description** | _fill in_ | _fill in_ |
+
+: {.data-table}
+
+
 ### Why Better Data and Better Algorithms Would Not Solve This
 
 A natural response to the boardroom gap is to propose a data solution: better data, better algorithms, eventually the equivalence-class problem becomes tractable. This response mistakes the mathematical result for a practical limitation.
@@ -215,6 +270,9 @@ Better algorithms help with the computational challenge of searching over the eq
 The only things that shrink the equivalence class are intervention (which changes the data-generating process) and expert knowledge (which provides structural information not present in the observational data). Neither of these is a data or algorithm problem. Both require a different kind of architectural investment — in experimental design, in the case of intervention, and in expert elicitation, in the case of knowledge. The Living Model architecture invests in both, and in integrating them with the data-driven components that are genuinely valuable.
 
 <!-- → [DIAGRAM: Two-column diagram labeled "What more data / better algorithms resolve" vs. "What they do not resolve." Left column (green): "Parametric uncertainty — strength of known relationships" / "Statistical power — confidence in detected edges" / "Computational feasibility — speed of equivalence class search." Right column (red): "Structural uncertainty — which member of the equivalence class is true" / "Missing mechanistic knowledge — direction of edges between Markov-equivalent alternatives" / "The equivalence class itself — more data does not shrink it." Bottom annotation: "The boardroom gap is in the right column. Data investment addresses the left column. Expert elicitation and intervention address the right." Reader should use this diagram to rebut the common claim that more data will eventually solve the structural identification problem.] -->
+
+![Figure 14.11 — Two-column diagram labeled "What more data / better algorithms resolve" vs. "What they do not resolve." Left column (green): "Parametric uncertainty](images/14-the-expert-in-the-room-fig-11.jpg)
+
 
 ---
 

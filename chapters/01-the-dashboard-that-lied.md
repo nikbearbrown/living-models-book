@@ -12,6 +12,9 @@ A junior analyst, running a routine data quality check four days later, discover
 
 <!-- → [IMAGE: Side-by-side of two identical-looking dashboard line charts — one showing the false 18% WAU increase, one showing the corrected flat line after the 400,000 missing records are restored; caption reads "Same pipeline, different denominator"] -->
 
+![Figure 1.1 — Side-by-side of two identical-looking dashboard line charts](images/01-the-dashboard-that-lied-fig-01.jpg)
+
+
 The team's instinct, once the failure was identified, was to classify it as a technical problem with a technical fix. They were right as far as they went. The alert was added. The architecture was hardened. But the analyst who led the investigation noticed something that troubled her more than the pipeline itself. In the four days between the bad Thursday and the corrective Wednesday, no one had asked whether the data was reliable. The number had looked right, so it had been treated as right. The dashboard's authority had been borrowed from its appearance of precision, not from any demonstrated correspondence to the world it claimed to describe.
 
 This is not a story about a database query. It is a story about what an organization believed it was entitled to know — and how that belief, left unexamined, became the mechanism of its own deception.
@@ -32,6 +35,18 @@ The distinction has a precise mathematical form. $P(Y \mid X)$ is a conditional 
 
 <!-- → [TABLE: P(Y|X) vs P(Y|do(X)) — two-column comparison; rows: plain-language question each answers, what kind of data supports it, J.C. Penney example instantiation, whether historical transaction data can answer it (Yes / No); purpose is to make the operator distinction concrete before the Ladder is introduced] -->
 
+*Figure 1.2*
+
+| | **P(Y|X)** | **P(Y|do(X))** |
+|---|---|---|
+| **Plain-language question each answers** | _fill in_ | _fill in_ |
+| **What kind of data supports it** | _fill in_ | _fill in_ |
+| **J.C. Penney example instantiation** | _fill in_ | _fill in_ |
+| **Whether historical transaction data can answer it (Yes / No)** | _fill in_ | _fill in_ |
+
+: {.infographic-table}
+
+
 What the data could not reveal — what it *structurally* could not reveal — was that J.C. Penney's customers did not experience promotional pricing as a distortion of their true preference. For a significant portion of the customer base, the promotional event was the experience. The hunt for the deal, the satisfaction of the markdown, the social performance of having paid less than full price: these were not friction in the system. They were the system. Eliminating the promotions did not reveal latent demand for everyday low prices. It destroyed the mechanism through which customers had been choosing to shop at all. The causal structure of customer behavior was simply not visible in the observational record. And because Johnson's analytical framework had no language for the distinction between observing a world and making a world, he could not have known what he was missing.
 
 This is the central epistemological divide this book is built to cross. Every business decision of consequence is, at its core, a $do$ question: not "what tends to happen when $X$ is present in the data?" but "what would happen if we made $X$ happen?" Descriptive and correlational methods can answer the first question. The architecture this book calls a Living Model is built to answer the second.
@@ -50,6 +65,9 @@ The third rung is **counterfactual**: what would have happened if things had bee
 
 <!-- → [DIAGRAM: Pearl's Ladder as a vertical three-rung structure — each rung labeled with its question type (Association: "What does the data show?", Intervention: "What would happen if we acted?", Counterfactual: "What would have happened if things were different?"), its operator (observe, do(·), structural model), and one example question from the chapter; a barrier between rungs labeled "cannot be crossed by more data alone"] -->
 
+![Figure 1.3 — Pearl's Ladder as a vertical three-rung structure](images/01-the-dashboard-that-lied-fig-03.jpg)
+
+
 The hierarchy has one property that makes it unlike a progression of technical skills: no rung is reachable by accumulating more data, more compute, or more analytical sophistication at the rung below. This bears repeating because it runs against the grain of how most data organizations have been built. A team with a thousand-row dataset and a structural causal model can answer questions that a team with a billion-row dataset and a correlation engine cannot. The Ladder describes not a gradient of difficulty but a series of categorical shifts in what kind of question is even being asked. J.C. Penney did not need more historical transaction data. It needed a different kind of instrument.
 
 This book is a sustained ascent of that Ladder. The current chapter locates the problem at the first rung — it documents what association-level analytics can do, what it cannot, and what organizational damage results from conflating the two. The chapters in Part One map the broader failure modes of analytics that never leaves the first rung. Part Two builds the mathematical foundations of the second and third rungs. Part Three describes the Living Model — the analytical architecture this book is building toward, designed from the ground up to operate at the interventional and counterfactual levels, continuously updated as new data arrives, oriented toward decisions rather than descriptions. The Ladder is the book's spine. You will encounter it again.
@@ -64,6 +82,20 @@ This is what I mean by a **silent failure**. A system that crashes announces its
 
 <!-- → [TABLE: Silent failure modes — two columns (Mechanical vs. Epistemic), rows covering: what fails, why no error signal appears, example from the chapter, detection method, and recovery difficulty] -->
 
+*Figure 1.4*
+
+| | **Silent failure modes — two columns (Mechanical** | **Epistemic), rows covering: what fails, why no error signal appears, example from the chapter, detection method, and recovery difficulty** |
+|---|---|---|
+| **What fails** | _fill in_ | _fill in_ |
+| **Why no error signal appears** | _fill in_ | _fill in_ |
+| **Example from the chapter** | _fill in_ | _fill in_ |
+| **Detection method** | _fill in_ | _fill in_ |
+| **** | _fill in_ | _fill in_ |
+| **Recovery difficulty** | _fill in_ | _fill in_ |
+
+: {.infographic-table}
+
+
 The organizational cost of silent failures extends beyond the immediate decision. The WAU audit could establish what had gone wrong in the current reporting cycle, but it could not retroactively certify the integrity of the historical record. No one could answer how many prior decisions had been made on silently incomplete data. J.C. Penney's postmortem could reconstruct the inferential error, but it could not recover $4.3 billion or the institutional trust of a customer base that had been told, by a year of pricing policy, that their relationship with the brand was being renegotiated without their consent. Trust broken by a silent failure does not snap cleanly back — not because the failure was malicious, but because it was invisible for so long that the recovery itself becomes evidence that the visibility problem persists.
 
 The corrective posture — for both the technical and the epistemic versions — is what data engineers call **observability**: not a monitoring system bolted onto an analytics stack after the fact, but a measurement architecture that treats its own integrity as a first-class output. An observable analytics system does not just tell you what is happening to your users. It tells you what is happening to itself. An observable causal inference framework does not just tell you what the data shows. It tells you which questions the data is structurally capable of answering — and which it is not.
@@ -76,6 +108,9 @@ Pearl's Ladder describes classes of question. There is a parallel hierarchy that
 
 <!-- → [INFOGRAPHIC: Four-stage maturity model as a staircase — each step labeled with stage name, primary question, representative tool, and characteristic failure mode; color progression from gray (Descriptive) to deep blue (Prescriptive); stages arranged left-to-right with ascending height] -->
 
+![Figure 1.5 — Four-stage maturity model as a staircase](images/01-the-dashboard-that-lied-fig-05.jpg)
+
+
 The foundational stage is **descriptive analytics**: *what happened?* The tools are dashboards, aggregation queries, visualization platforms. The mindset is archival. An organization at this stage may have beautiful, interactive, real-time visualizations — and yet it is looking backward, at association-level data. The specific vulnerability of this stage is that it has no mechanism for distinguishing a true signal from an artifact of its own measurement process. A dashboard cannot ask whether its own output is reliable. It can only display what the pipeline returns.
 
 The **diagnostic stage** adds the question: *why did it happen?* This requires moving from correlation to causal mapping — tracing the structural drivers of observed patterns rather than documenting the patterns themselves. A diagnostic analyst looking at a margin squeeze does not just record that margins fell in Q3. She asks whether the compression came from procurement price increases, a shift in product mix, labor cost inflation, or pricing decisions made in response to competitive pressure. Each of these explanations implies a different intervention. Treating them as interchangeable is the descriptive stage error applied to management decisions. Diagnostic maturity requires that data not sit in silos — when the cost data, the pricing data, the headcount data, and the procurement data live in separate systems with no shared ontology, the causal mapping this stage requires is simply not possible. Organizations fail here not because they lack analytical talent but because their data architecture was built for record-keeping, and no one has built the bridges.
@@ -83,6 +118,9 @@ The **diagnostic stage** adds the question: *why did it happen?* This requires m
 The **predictive stage** asks: *what will happen?* This is where machine learning, time-series modeling, and statistical forecasting live. It is also where the relationship between models and the world becomes most consequential and most fragile. A predictive model is an assumption that the statistical relationships present in historical data will persist into the future. When that assumption holds, predictive models are extraordinarily powerful. When the world changes — a pandemic restructures consumer behavior, a competitor's collapse redistributes market share overnight — models trained on the old world continue to predict the old world's future. They are not aware of their own staleness. This phenomenon, known as **concept drift**, is the predictive stage's version of the silent failure: the model continues to produce outputs; those outputs no longer reflect reality; the model does not announce the change.
 
 <!-- → [CHART: Line chart illustrating concept drift — two lines over time: "model predictions" and "actual outcomes"; lines track closely in the training period, then diverge sharply after a structural break (labeled "world changes here"); student should see that the model's confidence interval does not widen despite the growing error] -->
+
+![Figure 1.6 — Line chart illustrating concept drift](images/01-the-dashboard-that-lied-fig-06.jpg)
+
 
 The **prescriptive stage** asks: *what should we do?* At this level, analytics is integrated directly into operational decision-making. A prescriptive procurement system does not generate a vendor risk score for a human to review next week — it monitors vendor performance in real time, evaluates risk against a continuously updated threshold, and triggers a specific downstream action within a defined response window. But prescriptive analytics carries an underappreciated danger: speed without a governor. On August 1, 2012, Knight Capital Group deployed an automated trading system that executed in error at algorithmic speed. In 45 minutes, the firm lost $440 million — because no human decision node existed between the system's execution loop and the market. The system was working exactly as designed. The design had no provision for stopping.
 
@@ -102,6 +140,9 @@ The second barrier is **data architecture**. Organizations accumulate data syste
 
 <!-- → [DIAGRAM: Fragmented data architecture — three isolated system bubbles (ERP 2009, CRM 2014, Marketing Automation 2018) each with their own schema islands; arrows showing where causal mapping, feature stores, and decision pipelines would need to cross those islands but cannot; contrast panel on the right showing a unified data model with the same three sources feeding a shared ontology layer] -->
 
+![Figure 1.7 — Fragmented data architecture](images/01-the-dashboard-that-lied-fig-07.jpg)
+
+
 The third barrier is **the comfort of the lagging indicator**. A dashboard showing last week's revenue, last month's churn rate, last quarter's customer acquisition cost is a record of what has already happened. It cannot be wrong in the way a forecast can be wrong. It does not require anyone to commit to a prediction and be held accountable if that prediction fails. For organizations whose reporting culture is built around the safety of the historical record, the move toward predictive and prescriptive analytics represents an acceptance of the risk of being visibly, attributably wrong — a fundamentally different relationship with uncertainty than the backward-looking dashboard affords.
 
 These three barriers interact. An organization that lacks diagnostic capability cannot validate the features its predictive models require. An organization that cannot predict cannot optimize. An organization whose leadership is rewarded for reporting last quarter's results has no structural incentive to invest in the capabilities that would allow it to influence next quarter's. The four stages are not just a technical progression — they describe a theory of organizational epistemology: what an enterprise believes it is entitled to know, and how much risk it is willing to accept in the pursuit of knowing it.
@@ -117,6 +158,18 @@ A **Living Model** is the analytical architecture this book is building toward. 
 A Living Model is *causal*: its structure encodes mechanisms, not correlations, and its recommendations are expressed as estimated interventional effects — $P(Y \mid do(X))$ — not as associations observed in the historical record. It is *counterfactual*: it can reason about what would have happened under conditions that did not occur, which means it can evaluate the cost of a decision not taken as rigorously as the benefit of a decision that was. It is *continually updated*: it maintains a live connection between incoming data and the parameters of its causal model, so that the estimates it produces reflect current conditions rather than the statistical properties of a training set assembled at some prior date. And it is *treatment-oriented*: its output is not a description or a prediction but a ranked list of interventions, evaluated by their expected causal effect under the organization's current constraints.
 
 <!-- → [TABLE: Four analytical system types compared — rows: Dashboard, Predictive Model, Prescriptive System, Living Model; columns: Causal structure, Counterfactual reasoning, Continuous updating, Treatment orientation; cells: Yes/No/Partial with one-sentence explanation each] -->
+
+*Figure 1.8*
+
+| | **Property** | **Value** |
+|---|---|---|
+| **Dashboard** | _fill in_ | _fill in_ |
+| **Predictive Model** | _fill in_ | _fill in_ |
+| **Prescriptive System** | _fill in_ | _fill in_ |
+| **Living Model** | _fill in_ | _fill in_ |
+
+: {.data-table}
+
 
 A dashboard is none of these things. A predictive model satisfies the third property and none of the others. A prescriptive system may approximate the fourth while still lacking the first two. A Living Model is not an upgrade to existing analytics infrastructure. It is a different kind of analytical object, built from different foundations, asking different questions. Those foundations are the subject of this book.
 

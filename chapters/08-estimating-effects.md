@@ -26,6 +26,9 @@ Now apply this to the pricing problem. Suppose the diagram has the following str
 
 <!-- → [DIAGRAM: Pricing causal diagram — nodes: Customer Characteristics (C), Price (P), Engagement (E), Renewal (R); arrows: C → P, C → R, P → E, E → R, P → R (direct); a red-highlighted path showing the backdoor path C → P and C → R; a label "block this" pointing to C with a box around it; a label "do NOT condition on this" pointing to E; caption: "The backdoor criterion identifies what to adjust for and what to leave alone"] -->
 
+![Figure 8.1 — Pricing causal diagram](images/08-estimating-effects-fig-01.jpg)
+
+
 This diagnosis tells the analyst exactly what to do: regress renewal on price, controlling for customer characteristics, but *not* for engagement. The result is the causal effect of price on renewal, identified up to the model's assumptions.
 
 The analyst's original regression — which controlled for engagement along with everything else — was not the causal effect. It was a partially closed estimate biased toward zero, because conditioning on a mediator blocks some of the causal path. The CFO's forecast was accordingly an underestimate. Whether the actual impact would have been good or bad is a separate question, but the analyst's number was the wrong number.
@@ -46,6 +49,17 @@ The backdoor criterion resolves both errors simultaneously. It identifies which 
 
 <!-- → [TABLE: Common regression errors classified by causal role — rows: Controlling for a Mediator, Omitting a Confounder, Controlling for a Collider; columns: Variable's causal role, What the analyst usually believes they are doing, Direction of resulting bias, What the backdoor criterion says instead; purpose is to make the three error types and their corrections scannable alongside the prose] -->
 
+*Figure 8.2*
+
+| | **Property** | **Value** |
+|---|---|---|
+| **Controlling for a Mediator** | _fill in_ | _fill in_ |
+| **Omitting a Confounder** | _fill in_ | _fill in_ |
+| **Controlling for a Collider** | _fill in_ | _fill in_ |
+
+: {.comparison-table}
+
+
 ---
 
 ## Double Machine Learning
@@ -61,6 +75,9 @@ The method has two important properties. First, it allows arbitrarily flexible m
 Double machine learning is one of the workhorses of modern causal inference in practice. It enables credible causal estimation in high-dimensional settings where ordinary regression fails. It is, however, only as good as the deconfounding set it adjusts for. If the diagram is wrong — if there is an unmeasured confounder — DML will produce a precise estimate of the wrong quantity, with the same false confidence as any other method.
 
 <!-- → [DIAGRAM: DML procedure as a three-step flow — left box: "Regress X on Z using ML → residual X̃"; middle box: "Regress Y on Z using ML → residual Ỹ"; right box: "Regress Ỹ on X̃ → causal effect τ̂"; arrows between boxes; below the flow, a note: "Z is determined by the causal diagram (backdoor criterion), not by the ML step"; caption: "DML separates the structural question (which Z to adjust for) from the statistical question (how to adjust for high-dimensional Z)"] -->
+
+![Figure 8.3 — DML procedure as a three-step flow](images/08-estimating-effects-fig-03.jpg)
+
 
 ---
 
@@ -93,6 +110,9 @@ The heterogeneous causal effect tells a different story. The enterprise segment 
 The average effect would have led to a worse decision than the heterogeneous effect. This is the rule, not the exception. Average effects are useful for population-level reasoning — what will overall renewal rates do? — but they are not what most decisions require. Decisions require knowing which subpopulations respond which way, which is exactly what the HTE provides.
 
 <!-- → [CHART: Heterogeneous treatment effect — a distribution plot or two-panel bar chart; left panel shows the average effect (−10.5%) as a single bar; right panel shows the CATE by segment: enterprise at 0%, small business at −15%, with segment sizes shown; a third element showing the resulting decision: "raise for enterprise, grandfather small business"; caption: "The average hides the segmentation that makes the decision tractable"] -->
+
+![Figure 8.4 — Heterogeneous treatment effect](images/08-estimating-effects-fig-04.jpg)
+
 
 ---
 

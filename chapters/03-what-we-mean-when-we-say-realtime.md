@@ -38,6 +38,9 @@ Three engineers, three meanings, one word. The problem is not that any of these 
 
 <!-- → [INFOGRAPHIC: Three-column portrait layout — one column per engineer, each showing their job title, their definition of "real-time," the specific latency they are describing (data / model / decision), and a callout box listing what their definition leaves unspecified. The infographic should make visible at a glance that three internally coherent definitions are mutually incompatible.] -->
 
+![Figure 3.1 — Three-column portrait layout](images/03-what-we-mean-when-we-say-realtime-fig-01.jpg)
+
+
 When you encounter a "real-time" claim in practice, your job as a practitioner is to decompose it. The word is a placeholder. Behind it are three independent numbers. Until you know all three, you do not know what the system can actually tell you or how quickly you can act on it.
 
 ---
@@ -60,6 +63,9 @@ Data latency is the most commonly measured and most frequently cited latency bec
 
 <!-- → [DIAGRAM: Horizontal pipeline — point of sale → authorization system → ingestion → feature store → model query — with two parallel tracks: one labeled "high-frequency (fraud detection)" showing ms-level latency at each hop, one labeled "batch analytics" showing hour-level latency at each hop. Reader should see that data latency is the sum of all hops, not just the final one, and that the two tracks share the same shape but differ by four orders of magnitude.] -->
 
+![Figure 3.2 — Horizontal pipeline](images/03-what-we-mean-when-we-say-realtime-fig-02.jpg)
+
+
 ### Model Latency
 
 Model latency is the time between the system having access to current data and the model that scores it being itself current.
@@ -74,6 +80,9 @@ This is not a hypothetical failure mode. It is the normal state of production ma
 
 <!-- → [DIAGRAM: Horizontal timeline — left anchor: model training cutoff; middle: deployment date; right: today. The gap between training cutoff and today is shaded and labeled "model latency." Two callout arrows point into the shaded gap: one labeled "new fraud patterns emerge," one labeled "distribution shift begins." A small UI mockup in the corner shows that nothing on the dashboard surface reflects this gap — the reader should see that model latency is invisible from the outside.] -->
 
+![Figure 3.3 — Horizontal timeline](images/03-what-we-mean-when-we-say-realtime-fig-03.jpg)
+
+
 ### Decision Latency
 
 Decision latency is the time between the model producing a recommendation and a human or another system acting on it.
@@ -86,6 +95,9 @@ Decision latency is frequently confused with organizational process because it o
 
 <!-- → [DIAGRAM: Swimlane flow — two lanes: "technical pipeline" (model scores → alert generated, elapsed: 100ms) and "organizational pipeline" (alert enters queue → analyst shift begins → analyst reviews → decision made → action taken, elapsed: up to 12 hours). The swimlane makes visible that the technical system finishes almost instantly and then waits. Annotate with a contrasting "well-designed" version in which the action lane runs in minutes.] -->
 
+![Figure 3.4 — Swimlane flow](images/03-what-we-mean-when-we-say-realtime-fig-04.jpg)
+
+
 ### The Pipeline Moves at the Rate of Its Slowest Segment
 
 The three latencies compound. A system with data latency of one hour, model latency of three months, and decision latency of one week is not a real-time system. The data layer is doing fine work; the other two layers are defeating it.
@@ -93,6 +105,9 @@ The three latencies compound. A system with data latency of one hour, model late
 Here is the structural principle: **the effective latency of a decision system is the sum of its three component latencies, not the minimum of them.** Low data latency does not compensate for high model latency. Fast scoring does not compensate for slow decision rights. The pipeline moves at the rate of its slowest segment.
 
 <!-- → [INFOGRAPHIC: Three stacked horizontal bars representing a single system — data latency (short, green), model latency (long, amber), decision latency (medium, red) — with a total effective latency bar at the bottom showing their sum. A callout reads: "The system is as fast as the longest bar, not the shortest." Include a second version of the same system with model latency reduced to match the others, showing how the binding constraint shifts.] -->
+
+![Figure 3.5 — Three stacked horizontal bars representing a single system](images/03-what-we-mean-when-we-say-realtime-fig-05.jpg)
+
 
 This principle has a practical corollary: when you are auditing a system and trying to identify where its real-time claim breaks down, you do not need to find all three failures. You need to find the binding constraint. Fix the binding constraint and the next-slowest segment becomes the new binding constraint. The audit is a search for the slowest segment, conducted in order from the most-visible (data latency) to the least-visible (model latency, then decision latency).
 
@@ -120,6 +135,9 @@ Auditing the technical layer means asking: at what frequency does fresh data bec
 
 <!-- → [DIAGRAM: Architecture diagram of a streaming system — event source → Kafka topic → Flink stream processor → feature store → model serving layer → scored output. Annotate each arrow with a latency budget (e.g., event capture: <1s; feature store write: <100ms; model inference: <50ms). Add a second "batch" version of the same architecture for contrast, showing where ETL and overnight jobs replace the streaming components. Reader should see which components are shared and which are swapped.] -->
 
+![Figure 3.6 — Architecture diagram of a streaming system](images/03-what-we-mean-when-we-say-realtime-fig-06.jpg)
+
+
 ### The Organizational Layer
 
 The organizational layer is where most continually-updated systems break down in practice. It covers decision latency — whether the people or systems authorized to act on the model's output can act at a speed that matches the technical layer.
@@ -131,6 +149,9 @@ This is a harder requirement than it sounds. Most organizational decision rights
 Auditing the organizational layer means asking: who has the authority to act on this model's output? What steps are required between the model producing a recommendation and action being taken? What is the typical elapsed time for each step? Draw the decision path as a process diagram and measure it. The answer will often surprise the people who work inside the process, because decision latency is rarely tracked explicitly.
 
 <!-- → [DIAGRAM: Two side-by-side process flowcharts using the same pricing model as input. Left ("authority pushed down"): model output → analyst acts directly → price updated; total elapsed: ~15 minutes. Right ("authority held above"): model output → analyst brief → pricing committee agenda → weekly meeting → approval → implementation; total elapsed: ~7 days. Both diagrams use identical model and data components — the only difference is the decision path. Callout: "The model is the same. The latency is determined entirely by where decision rights sit."] -->
+
+![Figure 3.7 — Two side-by-side process flowcharts using the same pricing model as input. Left ("authority pushed down"): model output → analyst acts directly → price updated; total elapsed: ~15 minutes. Right ("authority held above"): model output → analyst brief → pricing committee agenda → weekly meeting → approval → implementation; total elapsed: ~7 days. Both diagrams use identical model and data components](images/03-what-we-mean-when-we-say-realtime-fig-07.jpg)
+
 
 ### The Epistemic Layer
 
@@ -147,6 +168,16 @@ I want to be precise about what the epistemic layer demands. It does not demand 
 Auditing the epistemic layer means asking: when the model produces an output, what does the practitioner do with the uncertainty? Do they wait for additional confirmation that may never come in time? Do they escalate to a level of authority that introduces latency? Do they have a framework for deciding when the signal is strong enough to act on? The answer will often reveal that the technical and organizational layers are fine and the binding constraint is that the people using the system have never learned to operate in a posture of calibrated uncertainty.
 
 <!-- → [TABLE: Three-column table contrasting batch-reporting posture vs. continually-updated posture across five dimensions: (1) information standard before acting, (2) tolerance for being wrong, (3) relationship to uncertainty, (4) how confidence is expressed, (5) what "waiting" costs. Reader should be able to use this as a quick diagnostic for which posture their organization operates in.] -->
+
+*Figure 3.8*
+
+| | **Three-column table contrasting batch-reporting posture** | **Continually-updated posture across five dimensions: (1) information standard before acting, (2) tolerance for being wrong, (3) relationship to uncertainty, (4) how confidence is expressed, (5) what "waiting" costs. Reader should be able to use this as a quick diagnostic for which posture their organization operates in.** |
+|---|---|---|
+| **Row 1** | _fill in_ | _fill in_ |
+| **Row 2** | _fill in_ | _fill in_ |
+
+: {.infographic-table}
+
 
 ---
 
@@ -190,6 +221,20 @@ The audit finding is not "this system needs better technology." It is "this syst
 
 <!-- → [TABLE: Audit summary for the retail forecasting system — three rows (data latency, model latency, decision latency) × four columns: (1) measured value, (2) acceptable threshold for a weekly ordering decision, (3) binding constraint? (yes/no), (4) layer responsible (technical / organizational / epistemic). The binding constraint row should be visually distinct — e.g., shaded. Reader should see that the audit produces a structured, scannable finding rather than a narrative verdict.] -->
 
+*Figure 3.9*
+
+| | **Property** | **Value** |
+|---|---|---|
+| **(1) measured value** | _fill in_ | _fill in_ |
+| **(2) acceptable threshold for a weekly ordering decision** | _fill in_ | _fill in_ |
+| **(3) binding constraint? (yes/no)** | _fill in_ | _fill in_ |
+| **(4) layer responsible (technical / organizational / epistemic). The binding constraint row should be visually distinct — e.g.** | _fill in_ | _fill in_ |
+| **Shaded. Reader should see that the audit produces a structured** | _fill in_ | _fill in_ |
+| **Scannable finding rather than a narrative verdict.** | _fill in_ | _fill in_ |
+
+: {.data-table}
+
+
 ### The Audit Protocol in General Form
 
 The worked example generalizes. Here is the protocol in its abstract form:
@@ -205,6 +250,9 @@ The worked example generalizes. Here is the protocol in its abstract form:
 The protocol produces a diagnosis, not a verdict. The diagnosis names the specific place where the system's claim and its actual capability diverge, and the specific layer where the fix needs to happen.
 
 <!-- → [INFOGRAPHIC: The seven-step audit protocol as a vertical checklist — each step numbered and labeled, with a one-line description of the output each step produces (e.g., Step 1 output: "a number in seconds, minutes, or hours"; Step 7 output: "a structured finding statement"). This should be designed as a reference card the practitioner can return to when auditing a real system.] -->
+
+![Figure 3.10 — The seven-step audit protocol as a vertical checklist](images/03-what-we-mean-when-we-say-realtime-fig-10.jpg)
+
 
 ---
 
@@ -229,6 +277,16 @@ The replacing term — *continually updated* — forces these questions into the
 This is the structural move the chapter has been building toward. "Real-time" forecloses inquiry. "Continually updated" opens it.
 
 <!-- → [TABLE: Two-column comparison — "real-time" claim vs. "continually updated" claim — showing how each term responds to five practitioner questions: (1) What is the data latency? (2) What is the model latency? (3) What is the decision latency? (4) Is this adequate for my decision? (5) What would make it better? "Real-time" column shows the label terminating the conversation at each question. "Continually updated" column shows each question producing a specific, answerable specification. Reader should see that the second term is more useful precisely because it refuses to foreclose inquiry.] -->
+
+*Figure 3.11*
+
+| | **Two-column comparison — "real-time" claim** | **"continually updated" claim** |
+|---|---|---|
+| **Row 1** | _fill in_ | _fill in_ |
+| **Row 2** | _fill in_ | _fill in_ |
+
+: {.infographic-table}
+
 
 ---
 

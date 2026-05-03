@@ -14,6 +14,9 @@ She needs a portfolio. She needs the model to tell her not just which interventi
 
 <!-- → [DIAGRAM: Four-step pipeline overview — four boxes in a horizontal sequence: (1) Parameterize the Graph, (2) Run the Counterfactual, (3) Rank by Expected Value, (4) Constrained-Knapsack Portfolio; below each box, a one-line description of its input and output; arrows between boxes; a label at the far left "Validated Graph (Ch. 17)" and at the far right "Structured Package → Ch. 19"; purpose is to orient the reader to the chapter's architecture before the steps are developed individually] -->
 
+![Figure 18.1 — Four-step pipeline overview](images/18-from-graph-to-decision-fig-01.jpg)
+
+
 ---
 
 ## Step One: Parameterizing the Graph
@@ -40,6 +43,9 @@ The second is **uncertainty representation**. Every parameter in the model has u
 
 <!-- → [DIAGRAM: Parameterization pipeline — a DAG fragment showing two parent nodes X1 and X2 pointing into Y; beside the arrows, coefficients β1 and β2 with illustrative confidence intervals; beside the node Y, the structural equation Y = β1 X1 + β2 X2 + ε; a second panel showing the same structure with a nonlinear curve replacing the linear relationship, labeled "use when mechanism is nonlinear in decision range"; caption: "The graph specifies structure; the parameters specify magnitude and uncertainty"] -->
 
+![Figure 18.2 — Parameterization pipeline](images/18-from-graph-to-decision-fig-02.jpg)
+
+
 ---
 
 ## Step Two: Running the Counterfactual
@@ -57,6 +63,17 @@ Abduction: take the observed evidence — the actual production rates, the actua
 For the operations head's question — *what should we do this quarter?* — the relevant query is mostly Rung 2. She is choosing among interventions that have not yet been taken. The Rung 3 machinery becomes relevant later, when the chosen interventions have been deployed and the team is reviewing what happened: *given that we did this and got this outcome, would we have done better with a different choice?* The auditability that Chapter 17 emphasized depends on Rung 3 queries; the immediate recommendation depends on Rung 2.
 
 <!-- → [TABLE: Three query types mapped to the Ladder — rows: Rung 1 (Association), Rung 2 (Intervention), Rung 3 (Counterfactual); columns: Question form, Operations example from this chapter, What the SCM does to answer it, When in the pipeline it's used (recommendation vs. retrospective audit); purpose is to connect Chapter 5's abstract hierarchy to the concrete queries the counterfactual engine actually runs] -->
+
+*Figure 18.3*
+
+| | **Three query types mapped to the Ladder — rows: Rung 1 (Association), Rung 2 (Intervention), Rung 3 (Counterfactual); columns: Question form, Operations example from this chapter, What the SCM does to answer it, When in the pipeline it's used (recommendation** | **Retrospective audit); purpose is to connect Chapter 5's abstract hierarchy to the concrete queries the counterfactual engine actually runs** |
+|---|---|---|
+| **Rung 1 (Association)** | _fill in_ | _fill in_ |
+| **Rung 2 (Intervention)** | _fill in_ | _fill in_ |
+| **Rung 3 (Counterfactual)** | _fill in_ | _fill in_ |
+
+: {.infographic-table}
+
 
 The implementation move that turns the parameterized graph into a counterfactual engine is operationally straightforward. Modern causal inference libraries — DoWhy, EconML, CausalML — support the do-operator and the three-step procedure as primary operations. Given a parameterized SCM, the libraries compute interventional and counterfactual distributions with a few lines of code. The intellectual work is in the graph and the parameters; the engineering work of running the queries is comparatively light.
 
@@ -88,6 +105,9 @@ A methodological point worth underlining: the EV ranking depends on the paramete
 
 <!-- → [CHART: EV ranking visualization — horizontal bar chart with 10 candidate interventions ranked by EV; each bar shows the point estimate with a horizontal error bar representing the 90% confidence interval; bars color-coded by confidence width (narrow = high confidence, wide = low confidence); a vertical dashed line at zero; four bars color-coded by response segment (persuadable, sure thing, lost cause, do-not-disturb) with a legend; caption: "The ranking is a distribution, not a list; uncertainty determines which interventions are robustly ranked above alternatives"] -->
 
+![Figure 18.4 — EV ranking visualization](images/18-from-graph-to-decision-fig-04.jpg)
+
+
 ---
 
 ## Step Four: The Constrained-Knapsack Portfolio
@@ -115,6 +135,19 @@ The 0-1 knapsack is rarely sufficient for actual portfolio selection. Real inter
 The four extensions can be combined. The full operational formulation for a typical Living Model recommendation is a multidimensional, logical-dependency, multiple-choice, chance-constrained knapsack. Modern mixed-integer linear programming solvers handle problems of this complexity with hundreds of variables in seconds. The intellectual work is in formulating the constraints correctly. The computational work is comparatively light.
 
 <!-- → [TABLE: Knapsack variants — rows: 0-1 Knapsack, Multidimensional, Logical-Dependency, Multiple-Choice, Chance-Constrained; columns: What it adds to the basic formulation, Constraint type (mathematical form), Operations example, When the simpler formulation fails; caption: "Each variant addresses a class of real operational constraint; the full portfolio optimization typically needs all four combined"] -->
+
+*Figure 18.5*
+
+| | **Property** | **Value** |
+|---|---|---|
+| **0-1 Knapsack** | _fill in_ | _fill in_ |
+| **Multidimensional** | _fill in_ | _fill in_ |
+| **Logical-Dependency** | _fill in_ | _fill in_ |
+| **Multiple-Choice** | _fill in_ | _fill in_ |
+| **Chance-Constrained** | _fill in_ | _fill in_ |
+
+: {.comparison-table}
+
 
 The output of the optimization is a portfolio — a subset of interventions, satisfying all the constraints, that maximizes total Expected Value. For the operations head, the portfolio specifies which six or seven of the thirty-one candidate interventions to do, in what order, on which lines, with what budget allocation. The portfolio comes with its own EV bounds (the sum of the bounds on its constituent interventions, with appropriate covariance corrections), its own sensitivity analysis (which interventions in the portfolio are most sensitive to parameter perturbations), and its own counterfactual statement (the predicted outcome relative to doing nothing and to the next-best portfolio).
 

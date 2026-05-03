@@ -32,6 +32,9 @@ LTCM's principals built position sizes calibrated to a comfortable VaR. The posi
 
 <!-- → [DIAGRAM: Timeline of LTCM's 1998 crisis — horizontal axis: months (Jan–Dec 1998); vertical axis: cumulative loss ($B). Mark key events: Russian default (Aug 17), Fed-organized consortium (Sep 23), peak loss (~$4.6B). Overlay a flat "VaR comfort zone" band showing what the model predicted as the typical daily loss range. The diagram should make visible that the catastrophic loss was not in a different magnitude from the VaR band — it was in a different regime entirely, one the framework had no language for.] -->
 
+![Figure 4.1 — Timeline of LTCM's 1998 crisis](images/04-risk-is-two-numbers-not-one-fig-01.jpg)
+
+
 This is not a story about exotic finance. The same structural error runs through the risk register on your organization's intranet, the heat map your risk officer presents at the quarterly review, the verbal summary — "medium risk" — that travels upward to the board and arrives there stripped of the information that would have changed the decision. LTCM is the case where the failure was large enough to require Federal Reserve intervention. Yours will probably be smaller. The failure mode is the same.
 
 ---
@@ -49,6 +52,9 @@ Risk has exactly two components. They are not interchangeable, and they do not r
 The two numbers are independent in the sense that knowing one tells you almost nothing about the other. A 1% probability of a $1 billion loss and a 50% probability of a $20 million loss have the same expected value: $10 million. They have very different probability numbers and very different impact numbers. Any framework that summarizes both as "$10 million expected loss," or as "medium risk," has discarded the distinction. It has replaced two numbers with one. The decision-maker is now working with less information than they started with.
 
 <!-- → [DIAGRAM: Two-axis scatter plot — probability (0–100%) on X-axis, impact ($0–$1B) on Y-axis, divided into four quadrants labeled: upper-left "catastrophic tail" (low probability, high impact), upper-right "urgent crises" (high probability, high impact), lower-left "negligible" (low probability, low impact), lower-right "routine costs" (high probability, low impact). Plot two labeled points: "50% / $20M" in the lower-right quadrant and "1% / $1B" in the upper-left quadrant. Add a curved iso-EV line passing through both points, labeled "equal expected value = $10M." Reader should see that two points with equal expected value occupy completely different quadrants — and that the iso-EV line crosses all four quadrants, showing how expected value alone cannot locate a risk in this space.] -->
+
+![Figure 4.2 — Two-axis scatter plot](images/04-risk-is-two-numbers-not-one-fig-02.jpg)
+
 
 ### The Expected Value of a Distribution
 
@@ -73,6 +79,9 @@ This is the first place the single-number summary fails. The expected value is a
 
 <!-- → [CHART: Vertical bar chart — three bars representing the three outcome states: $5M (bar height proportional to probability 0.90, colored green), -$10M (height 0.09, yellow), -$500M (height 0.01, red). X-axis: outcome value; Y-axis: probability. Add a vertical dashed line at -$1.4M labeled "expected value." Add a shaded red region to the left of -$200M labeled "insolvency zone." Reader should see that the expected value line sits far from the catastrophic bar, and that the catastrophic bar — though short (low probability) — extends well into the insolvency zone. A single number cannot represent both the expected value and the insolvency risk simultaneously.] -->
 
+![Figure 4.3 — Vertical bar chart](images/04-risk-is-two-numbers-not-one-fig-03.jpg)
+
+
 ### The Collapse and What It Destroys
 
 When a framework collapses probability and impact into a single score, it destroys three specific pieces of information.
@@ -84,6 +93,21 @@ Second, it destroys **recoverability information**. Some outcomes are recoverabl
 Third, it destroys **the separation between typical and tail behavior**. The typical day's behavior determines how often you are dealing with routine consequences. The tail behavior determines whether you survive. These require different decision rules, different capital reserves, different governance structures. A framework that cannot distinguish them cannot recommend the right rule, because it has collapsed the information that determines which rule applies.
 
 <!-- → [TABLE: Three-row reference table — rows: "Distributional shape," "Recoverability," "Typical vs. tail behavior." Two columns: "Visible in collapsed score?" (all: No, with a brief note on what is lost) and "Visible in distributional analysis?" (all: Yes, with a brief note on what is preserved and why it matters). Each cell includes a one-line concrete example. Reader should keep this table as a checklist to deploy the next time they receive a heat map score.] -->
+
+*Figure 4.4*
+
+| | **Three-row reference table — rows: "Distributional shape," "Recoverability," "Typical** | **Tail behavior." Two columns: "Visible in collapsed score?" (all: No, with a brief note on what is lost) and "Visible in distributional analysis?" (all: Yes, with a brief note on what is preserved and why it matters). Each cell includes a one-line concrete example. Reader should keep this table as a checklist to deploy the next time they receive a heat map score.** |
+|---|---|---|
+| **"Distributional shape** | _fill in_ | _fill in_ |
+| **" "Recoverability** | _fill in_ | _fill in_ |
+| **" "Typical vs. tail behavior." Two columns: "Visible in collapsed score?" (all: No** | _fill in_ | _fill in_ |
+| **With a brief note on what is lost)** | _fill in_ | _fill in_ |
+| **"Visible in distributional analysis?" (all: Yes** | _fill in_ | _fill in_ |
+| **With a brief note on what is preserved** | _fill in_ | _fill in_ |
+| **Why it matters). Each cell includes a one-line concrete example. Reader should keep this table as a checklist to deploy the next time they receive a heat map score.** | _fill in_ | _fill in_ |
+
+: {.infographic-table}
+
 
 ---
 
@@ -97,6 +121,32 @@ The register looks like a decision tool. It is partly a communication tool and p
 
 <!-- → [TABLE: Sample risk register with five rows — mix of real risk types: billing errors (P=5, I=1, score=5), critical infrastructure breach (P=1, I=5, score=5), vendor contract dispute (P=4, I=2, score=8), regulatory audit failure (P=2, I=4, score=8), routine system downtime (P=3, I=3, score=9). Sort by score descending. Highlight in red: the two pairs with equal scores (5 and 8) whose risk types require categorically different responses. Callout: "Sorted by score, the register treats billing errors and infrastructure breach as equal priority." Reader should see that the sort order — the operative output of the register — actively misleads.] -->
 
+*Figure 4.5*
+
+| | **Property** | **Value** |
+|---|---|---|
+| **Billing errors (P=5** | _fill in_ | _fill in_ |
+| **I=1** | _fill in_ | _fill in_ |
+| **Score=5)** | _fill in_ | _fill in_ |
+| **Critical infrastructure breach (P=1** | _fill in_ | _fill in_ |
+| **I=5** | _fill in_ | _fill in_ |
+| **Score=5)** | _fill in_ | _fill in_ |
+| **Vendor contract dispute (P=4** | _fill in_ | _fill in_ |
+| **I=2** | _fill in_ | _fill in_ |
+| **Score=8)** | _fill in_ | _fill in_ |
+| **Regulatory audit failure (P=2** | _fill in_ | _fill in_ |
+| **I=4** | _fill in_ | _fill in_ |
+| **Score=8)** | _fill in_ | _fill in_ |
+| **Routine system downtime (P=3** | _fill in_ | _fill in_ |
+| **I=3** | _fill in_ | _fill in_ |
+| **Score=9). Sort by score descending. Highlight in red: the two pairs with equal scores (5** | _fill in_ | _fill in_ |
+| **8) whose risk types require categorically different responses. Callout: "Sorted by score** | _fill in_ | _fill in_ |
+| **The register treats billing errors** | _fill in_ | _fill in_ |
+| **Infrastructure breach as equal priority." Reader should see that the sort order — the operative output of the register — actively misleads.** | _fill in_ | _fill in_ |
+
+: {.data-table}
+
+
 ### The Heat Map
 
 The 5×5 heat map is the risk register's visualization. Probability on one axis, impact on the other. Color-coded by product: red in the upper-right corner, green near the origin, yellow in between. The heat map is at once the most widely used risk visualization in enterprise settings and the clearest representation of the collapse.
@@ -104,6 +154,9 @@ The 5×5 heat map is the risk register's visualization. Probability on one axis,
 The heat map does something the register does not: it shows both axes simultaneously. In principle, this means the decision-maker can see the factors before they are collapsed. In practice, the color-coding is what transmits the priority signal, and the color-coding is the product. The axes are visible but not the operative instruction. The operative instruction is: attend to red cells, regardless of which axis put them there.
 
 <!-- → [DIAGRAM: 5×5 heat map — probability (1–5) on X-axis labeled "Probability →", impact (1–5) on Y-axis labeled "Impact →." Cells colored by product: green (1–4), yellow (5–9), orange (10–16), red (17–25). Two cells highlighted with distinct border styles: cell (5,1) labeled "billing errors" and cell (1,5) labeled "infrastructure breach." Both cells are the same yellow color (product = 5). A callout arrow points to both cells: "Same color. Different decision." A second callout points to the color legend: "Color = product. Product = collapse." Reader should see that the visual encoding — the thing the eye follows — is the product, not the axes.] -->
+
+![Figure 4.6 — 5×5 heat map](images/04-risk-is-two-numbers-not-one-fig-06.jpg)
+
 
 The heat map's specific failure runs deeper than priority order. It lives in the ordinal scale used for the impact axis.
 
@@ -122,6 +175,9 @@ The label is the terminal form of the collapse. The board takes action against t
 The label is not malicious. It is a compression for an audience with limited time. The problem is that it is the wrong compression. The right compression for a board considering a risk is "what is the worst realistic case, and can we survive it?" The label answers neither question.
 
 <!-- → [DIAGRAM: Horizontal information-degradation flow — four stages connected by right-arrows: (1) "Underlying distribution" (icon: probability distribution curve with tail visible, labeled "all information present"); (2) "Risk register" (icon: table with P column, I column, Score column, labeled "product added; factors still visible"); (3) "Heat map" (icon: small 5×5 grid with color, labeled "color encodes product; axes deprioritized"); (4) "Verbal label" (icon: single word "MEDIUM" in large type, labeled "all quantitative information erased"). Annotate each arrow with what is lost at that transition: arrow 1→2: "factors multiplied into score"; arrow 2→3: "color replaces numerical comparison; ordinal scale compresses tail"; arrow 3→4: "single word replaces both axes." Reader should see the collapse as a progressive, staged destruction of information rather than a single moment of failure.] -->
+
+![Figure 4.7 — Horizontal information-degradation flow](images/04-risk-is-two-numbers-not-one-fig-07.jpg)
+
 
 ---
 
@@ -150,6 +206,9 @@ This matters because it blocks the observational fallacy. An organization might 
 EVI is still a single number — it is a difference of two expectations. But it is the right single number, and the analysis that produces it surfaces the distributional information the decision-maker needs alongside the number.
 
 <!-- → [DIAGRAM: Side-by-side comparison — left panel: heat map cell showing a single colored square labeled "Risk score: 4 (out of 5)" with no other information; right panel: EVI analysis showing two overlapping distribution curves — do(X) in blue, do(¬X) in red — on the same outcome axis. Vertical dashed lines mark each curve's expected value; a bracket between them is labeled "EVI = $2.4M." The tail region of the do(¬X) curve is shaded red and labeled "catastrophic tail: 1% at -$200M." The tail of do(X) is shaded lighter blue and labeled "catastrophic tail: 0.5% at -$200M." Callout: "EVI gives you two distributions. The heat map gives you one color." Reader should see that EVI's output is richer not just in quantity but in kind — it makes the tail visible.] -->
+
+![Figure 4.8 — Side-by-side comparison](images/04-risk-is-two-numbers-not-one-fig-08.jpg)
+
 
 ### Computing EVI: A Worked Example
 
@@ -202,6 +261,9 @@ This is what EVI gives you that the heat map does not. The heat map would score 
 
 <!-- → [CHART: Grouped bar chart — four outcome levels on X-axis ($0, $5M, $40M, $200M); probability on Y-axis. For each outcome level, two bars side by side: dark bar = without intervention, light bar = with intervention. The $200M bar pair is annotated: "1.0% → 0.5%." A vertical dashed line at the organization's survival threshold (e.g., $150M) is labeled "survival threshold." Expected value markers (vertical lines) for each scenario are shown above the chart. Reader should see both the expected value shift and the tail shift simultaneously, and understand that the tail shift matters independently of the EV shift.] -->
 
+![Figure 4.9 — Grouped bar chart](images/04-risk-is-two-numbers-not-one-fig-09.jpg)
+
+
 ### What EVI Does Not Fix
 
 EVI is the right metric for comparing interventions. It is not a solution to the estimation problem.
@@ -231,6 +293,9 @@ When you present an EVI analysis alongside the distributional features it was co
 A heat map answers none of these questions. A risk score answers none of them. A verbal label answers none of them. EVI, accompanied by the distributional analysis it was computed from, answers all three.
 
 <!-- → [IMAGE: Dashboard mockup showing the complete EVI deliverable for the vendor security audit program — four panels arranged in a 2×2 grid: (1) top-left: expected cost comparison — two horizontal bars labeled "Without program: $4.35M" and "With program: $1.95M," with EVI = $2.4M labeled as the gap; (2) top-right: full distribution grouped bar chart (same as the figure above); (3) bottom-left: tail probability comparison — two large numerals, "1.0%" and "0.5%," with an arrow between them and a label "catastrophic breach probability"; (4) bottom-right: decision summary box — "EVI: $2.4M ± [range]. Program cost: $0.5M. Net benefit in expectation: ~$1.9M. Tail probability reduction: 50%. Survival threshold: [org value]." This is the artifact the practitioner produces instead of a heat map cell. Reader should see the complete output format.] -->
+
+![Figure 4.10 — Dashboard mockup showing the complete EVI deliverable for the vendor security audit program](images/04-risk-is-two-numbers-not-one-fig-10.jpg)
+
 
 The LTCM case, revisited with this lens: the fund's VaR framework answered question 1 and ignored questions 2 and 3 entirely. The positions were sized on expected value grounds (or frequency-of-loss grounds, which is a proxy). The tail behavior — the conditional magnitude of loss in the tail — had no separate representation in the framework. The survival question — can the fund absorb the loss in the tail case? — was never asked by the framework because the framework had no language for it. EVI, applied to the position-sizing decision, would have required construction of the full outcome distribution, including the tail. The tail would have been visible. The position size that looked comfortable on the single-number metric would have looked like an existential risk on the distributional metric.
 

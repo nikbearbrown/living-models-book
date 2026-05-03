@@ -22,6 +22,9 @@ Rung 1 admits only observational data — what we saw happen in the world. Rung 
 
 <!-- → [DIAGRAM: Pearl's Ladder revisited from Chapter 1, now annotated for Chapter 9 — three rungs with their standard labels; Rung 3 highlighted; beside it, a two-column annotation: "What you need" (Rung 1: observations, Rung 2: intervention records, Rung 3: SCM + abduction) and "What you cannot get by staying below" (Rung 2: causal direction, Rung 3: case-specific noise); purpose is to show why the SCM is a strict requirement for counterfactuals, not an optional upgrade] -->
 
+![Figure 9.1 — Pearl's Ladder revisited from Chapter 1, now annotated for Chapter 9](images/09-the-counterfactual-fig-01.jpg)
+
+
 That model is the structural causal model we built in Chapter 6. The SCM is more than a diagram; it is a diagram plus the functions that determine each variable from its parents and an exogenous noise term. The functions encode the *mechanism* by which the system works. Given the mechanism, we can ask: in this specific case, with its specific circumstances, what would the outcome have been if the input had been different? That is a counterfactual question. The SCM gives us a procedure for answering it.
 
 The procedure is called abduction-action-prediction, after its three steps. It is short, mechanical, and one of the most beautiful results in causal inference.
@@ -78,6 +81,16 @@ In this specific case, with this specific campaign's idiosyncrasies, doubling th
 
 <!-- → [TABLE: Worked counterfactual — four columns: Step, Operation, Equation, Result; rows: (1) Abduction / recover noise / plug observations into SCM / U_L=10, U_R=−50; (2) Action / modify SCM / set M=200 / new system; (3) Prediction / run modified SCM with case-specific noise / compute L_cf and R_cf / L=90, R=400; a footer row showing the average-case prediction without abduction for contrast] -->
 
+*Figure 9.2*
+
+| | **Property** | **Value** |
+|---|---|---|
+| **(1) Abduction / recover noise / plug observations into SCM / U_L=10** | _fill in_ | _fill in_ |
+| **U_R=−50** | _fill in_ | _fill in_ |
+
+: {.infographic-table}
+
+
 Notice what abduction did. In the average case, doubling investment from 100 to 200 should produce 80 leads and \$400 in revenue. In *this* case, abduction told us we got 10 extra leads and \$50 less per lead. The counterfactual carries those case-specific quirks forward into the new investment level — 90 leads (10 more than average), \$400 in revenue (90 × 5 − 50). The idiosyncrasies of the case survive into the counterfactual world, because the counterfactual is asking about *this* case, not about an average.
 
 This is the defining feature of Rung 3. Counterfactuals are not predictions about populations; they are predictions about specific cases, with all the particularity of the case preserved. The board chair's question is exactly this kind: given the specific situation our company was in — this team, these market conditions, this competitive landscape — what would have happened under a different decision? The abduction step is what makes that question answerable.
@@ -98,6 +111,20 @@ In practice, the retrospective form is what most decision-makers want when they 
 
 <!-- → [TABLE: Pre-factual vs. retrospective counterfactuals — rows: when evaluated, what is conditioned on, what abduction recovers, precision of noise recovery, primary use case, example from the chapter; columns: Pre-factual, Retrospective; purpose is to make the structural distinction concrete before the legal material that follows depends on it] -->
 
+*Figure 9.3*
+
+| | **Pre-factual** | **Retrospective counterfactuals** |
+|---|---|---|
+| **When evaluated** | _fill in_ | _fill in_ |
+| **What is conditioned on** | _fill in_ | _fill in_ |
+| **What abduction recovers** | _fill in_ | _fill in_ |
+| **Precision of noise recovery** | _fill in_ | _fill in_ |
+| **Primary use case** | _fill in_ | _fill in_ |
+| **Example from the chapter** | _fill in_ | _fill in_ |
+
+: {.infographic-table}
+
+
 ---
 
 ## The Individual-Level Counterfactual
@@ -114,6 +141,9 @@ There is a caveat. The individual-level counterfactual is fully identifiable onl
 
 <!-- → [DIAGRAM: Three-level counterfactual hierarchy — nested circles or stacked bars: outermost is Population (average causal effect, no abduction needed), middle is Subgroup (conditional average, partial conditioning), innermost is Individual (case-specific, full abduction); each layer labeled with the method that reaches it and what information it requires; caption: "Each inner ring requires strictly more from the model than the ring outside it"] -->
 
+![Figure 9.4 — Three-level counterfactual hierarchy](images/09-the-counterfactual-fig-04.jpg)
+
+
 ---
 
 ## Necessity and Sufficiency
@@ -127,6 +157,22 @@ A is a **sufficient cause** of B if, whenever A occurs, B also occurs. The proba
 The two probabilities are different, and the distinction matters. A drug can be necessary for a patient's recovery — the patient would not have recovered without it — but not sufficient, since taking the drug does not guarantee recovery. A flame can be necessary for a fire but not sufficient; ignition without oxygen produces no fire.
 
 <!-- → [TABLE: Necessary vs. sufficient causation — rows: formal definition, counterfactual query, probability measure (PN vs PS), legal/ethical standard it supports, example from the chapter (drug recovery, warehouse fire), what a high value implies, what a low value implies; columns: Necessary Cause, Sufficient Cause; purpose is to make the PN/PS distinction scannable before Chapter 10's attribution application] -->
+
+*Figure 9.5*
+
+| | **Necessary** | **PS), legal/ethical standard it supports, example from the chapter (drug recovery, warehouse fire), what a high value implies, what a low value implies; columns: Necessary Cause, Sufficient Cause; purpose is to make the PN/PS distinction scannable before Chapter 10's attribution application** |
+|---|---|---|
+| **Formal definition** | _fill in_ | _fill in_ |
+| **Counterfactual query** | _fill in_ | _fill in_ |
+| **Probability measure (PN vs PS)** | _fill in_ | _fill in_ |
+| **Legal/ethical standard it supports** | _fill in_ | _fill in_ |
+| **Example from the chapter (drug recovery** | _fill in_ | _fill in_ |
+| **Warehouse fire)** | _fill in_ | _fill in_ |
+| **What a high value implies** | _fill in_ | _fill in_ |
+| **What a low value implies** | _fill in_ | _fill in_ |
+
+: {.infographic-table}
+
 
 The legal and ethical implications differ accordingly. Necessary cause is the standard for assigning blame for outcomes that did occur. Sufficient cause is the standard for assigning credit for outcomes that did not occur but might have. In policy contexts, both matter: $PN$ tells you what made the difference in the past; $PS$ tells you what would make the difference in the future.
 

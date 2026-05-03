@@ -18,6 +18,9 @@ Take-up in the treatment group was 69%. The same households, faced with the same
 
 <!-- → [CHART: Bar chart comparing take-up rates — three bars: Control group (~10%), Treatment group (69%), and a reference bar at 100% labeled "Model prediction (near-universal)"; purpose is to make visceral the scale of the gap between correct causal estimate and actual take-up before the chapter names why] -->
 
+![Figure 12.1 — Bar chart comparing take-up rates](images/12-the-plumbers-objection-fig-01.jpg)
+
+
 The Tangier study is a small example of a large pattern. The model said the loan would produce piped water connections. The model was correct on the causal structure — the loan does cause connections in households where the loan is taken. The implementation produced almost no connections, because the path between loan availability and loan acceptance was clogged with administrative steps that no model on Earth would have predicted to matter at the scale they did. The distance between *correct causal estimate* and *effective organizational change* turned out to be enormous, and what filled it was something the modeling apparatus had given the practitioners no preparation for.
 
 This chapter is about that gap, what fills it, and what a Living Model architecture has to do beyond what we have so far described.
@@ -33,6 +36,9 @@ Duflo's argument was that neither role captures what is actually needed when an 
 Plumbers, in Duflo's framing, do not have the prestige of scientists or the elegance of engineers. They get their hands dirty. They tinker. They make decisions without complete knowledge of the system they are working in, because no one has complete knowledge of the system they are working in. They monitor for leaks after the installation is done, because installations always leak somewhere, and the leaks tell them where the next intervention has to go.
 
 <!-- → [DIAGRAM: Three-role progression — Scientist → Engineer → Plumber; each role labeled with its question ("What are the laws?", "How do we build it?", "How do we make it work here?"), its primary output (causal knowledge, system design, working installation), and its characteristic limitation (doesn't address deployment, doesn't address context, no prestige but indispensable); an arrow spanning all three labeled "gap between estimate and outcome grows as you move right"] -->
+
+![Figure 12.2 — Three-role progression](images/12-the-plumbers-objection-fig-02.jpg)
+
 
 The plumber metaphor has resonated because it names something practitioners had felt for decades and lacked a vocabulary for. Most policy interventions, most strategic initiatives, most organizational changes do not fail because the underlying analysis was wrong. They fail because the implementation was poor. The model said *do X*. The organization did something that looked like X from the outside and was structurally different on the inside, and the result was not what the model had predicted. The plumber's work is the work of making the implementation actually be X, in the messy organization where X has to live.
 
@@ -58,6 +64,19 @@ The plumber's objection is that the modeling apparatus developed in Part Two giv
 
 <!-- → [TABLE: Five plumbing factors — rows: Administrative Friction, Default Architectures, Incentive Architectures, Behavioral Biases, Institutional Inertia; columns: Definition, Classic example from the literature, Why causal models miss it, Plumbing fix category; purpose is to make the gap between causal estimate and effective change concrete and scannable] -->
 
+*Figure 12.3*
+
+| | **Property** | **Value** |
+|---|---|---|
+| **Administrative Friction** | _fill in_ | _fill in_ |
+| **Default Architectures** | _fill in_ | _fill in_ |
+| **Incentive Architectures** | _fill in_ | _fill in_ |
+| **Behavioral Biases** | _fill in_ | _fill in_ |
+| **Institutional Inertia** | _fill in_ | _fill in_ |
+
+: {.comparison-table}
+
+
 ---
 
 ## Ne-FMS: A Worked Example
@@ -75,6 +94,9 @@ Note carefully what the reform did not do. It did not change the policy. The 100
 The results were striking. Funds reached beneficiaries faster. Leakage — measured by the gap between funds disbursed and funds received — declined substantially. The cost of the program, per beneficiary served, dropped, because less money was disappearing into the pipes. The reform's success in Bihar was sufficiently clear that the Indian Union Cabinet approved a national rollout of the Ne-FMS architecture in 2015.
 
 <!-- → [DIAGRAM: MGNREGA fund flow before and after Ne-FMS — left panel: four-layer hierarchy with labeled leak points at each layer (delay, corruption, friction); right panel: direct electronic transfer from central account to laborer's bank account, with the intermediate layers removed; amounts or percentages of leakage at each point if estimable; caption: "The plumbing fix did not change the policy — it rerouted the pipes"] -->
+
+![Figure 12.4 — MGNREGA fund flow before and after Ne-FMS](images/12-the-plumbers-objection-fig-04.jpg)
+
 
 The structural lesson is exactly what Duflo had been arguing for. The intervention's effect — the causal estimate produced by careful analysis of MGNREGA — was real. The intervention's outcome — what laborers actually received — was a fraction of the estimate, because the plumbing leaked. Fixing the plumbing did not require new policy or new analysis. It required attention to the architecture of fund flow, the points where intermediaries had control, and the design of mechanisms that bypassed the leaks. Once the plumbing was fixed, the gap between estimate and outcome closed substantially, and the intervention's potential was realized in the field.
 
@@ -122,6 +144,9 @@ After the plumbing fixes, the program produced retention lifts in the range the 
 
 <!-- → [DIAGRAM: Three-plumbing-problem anatomy for the B2B onboarding case — a horizontal flow from Causal Recommendation ("drive 3 interactions in 30 days") through three labeled leak points (Sales-to-CSM Handoff Delay, CSM Workload Squeeze, Metric Definition Mismatch) to Observed Outcome (2pp lift); below the leak points, a second flow showing the same path after plumbing fixes with the 14pp projected lift; purpose is to show concretely that all three gaps are delivery failures, not model failures] -->
 
+![Figure 12.5 — Three-plumbing-problem anatomy for the B2B onboarding case](images/12-the-plumbers-objection-fig-05.jpg)
+
+
 ---
 
 ## What This Demands of the Living Model
@@ -135,6 +160,17 @@ The second is **continual structural updating**. The Living Model has to update 
 The third is **human-in-the-loop orchestration**. The discovery of leaks is not currently automatable. It requires people who go and look at what is happening — sales-to-success handoffs, CSM workloads, metric definitions — and who can recognize when the gap between estimate and outcome is the result of plumbing. The Living Model architecture has to support the work of these people, not replace it. It has to flag where leaks are likely, surface deployment metrics that make leaks visible, and route the resulting plumbing fixes back into the model's structural commitments. Chapter 19's executive report and Chapter 20's continual update protocol both depend on this human-machine collaboration.
 
 <!-- → [TABLE: Three Living Model demands from the plumber's objection — rows: Deployment Instrumentation, Continual Structural Updating, Human-in-the-Loop Orchestration; columns: What it requires, What breaks without it, Which Part Three chapter operationalizes it; purpose is to connect the plumber's objection directly to the architecture of Part Three before the reader enters it] -->
+
+*Figure 12.6*
+
+| | **Property** | **Value** |
+|---|---|---|
+| **Deployment Instrumentation** | _fill in_ | _fill in_ |
+| **Continual Structural Updating** | _fill in_ | _fill in_ |
+| **Human-in-the-Loop Orchestration** | _fill in_ | _fill in_ |
+
+: {.comparison-table}
+
 
 The plumber's objection is not that causal modeling is wrong. It is that causal modeling is a starting point, not an endpoint. The architecture in Part Three is, in part, a response to the objection. The four properties of a Living Model — causal, counterfactual, continually updated, treatment-oriented — together with the orchestration that ties them into a closed loop, are what allow a deployed model to do the plumbing work that a static model cannot. The development economics literature has, over the past two decades, given us the most rigorous examples of plumbing in action. The Living Model is the corporate inheritance of that tradition.
 

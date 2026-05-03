@@ -46,6 +46,9 @@ The result is that the distribution of outcomes in the treated group, $P(Y | X=1
 
 <!-- → [DIAGRAM: Two causal graphs side by side. Left graph (observational): node U (unmeasured confounder, shown as dashed circle) with arrows pointing to both X (treatment) and Y (outcome); X has an arrow to Y; the path X ← U → Y is highlighted in red and labeled "backdoor path: unblockable (U unmeasured)." Right graph (after randomization): the U→X arrow is replaced by R→X (R = random assignment, shown as a box); U still points to Y but has no path to X; the former backdoor path is marked with an X and labeled "eliminated: X has no parents except R." Caption: "Randomization does not condition on U — it removes the arrow from U to X entirely."] -->
 
+![Figure 11.1 — Two causal graphs side by side. Left graph (observational): node U (unmeasured confounder, shown as dashed circle) with arrows pointing to both X (treatment) and Y (outcome); X has an arrow to Y; the path X ← U → Y is highlighted in red and labeled "backdoor path: unblockable (U unmeasured)." Right graph (after randomization): the U→X arrow is replaced by R→X (R = random assignment, shown as a box); U still points to Y but has no path to X; the former backdoor path is marked with an X and labeled "eliminated: X has no parents except R." Caption: "Randomization does not condition on U](images/11-treatments-fig-01.jpg)
+
+
 ### Randomization Is Do-Calculus in Practice
 
 There is a precise sense in which running a randomized trial is the physical implementation of the *do*-operator. The *do*-operator is a mathematical instruction: "set $X$ to this value, cutting all incoming arrows." A randomized trial implements that instruction physically: the random assignment mechanism sets the treatment, cutting any influence from the subject's background characteristics, preferences, or health status on which group they are in.
@@ -55,6 +58,9 @@ This is why the randomized trial answers the question $P(Y | do(X))$ directly, w
 The formal account has a practical implication: randomization is as strong as the physical implementation of the random assignment. If assignment is truly random — if there is no way for background characteristics to influence which group a subject ends up in — then the confounding structure is fully severed. If assignment is only approximately random, or if there is any possibility of selective compliance or dropout that correlates with background characteristics, the strength of the design is reduced.
 
 <!-- → [DIAGRAM: Two-panel correspondence diagram. Left panel (mathematical): the expression P(Y | do(X=1)) with annotation "set X by fiat; sever all incoming arrows." Right panel (physical): a flowchart — subjects enter → random number generator assigns group → treatment applied — with annotation "assignment mechanism severs any influence of subject characteristics on group membership." A horizontal double-headed arrow between the panels is labeled "the trial is the physical realization of the do-operator." Below both panels: a note reading "Strength of equivalence = strength of the physical randomization."] -->
+
+![Figure 11.2 — Two-panel correspondence diagram. Left panel (mathematical): the expression P(Y | do(X=1)) with annotation "set X by fiat; sever all incoming arrows." Right panel (physical): a flowchart](images/11-treatments-fig-02.jpg)
+
 
 ### What Randomization Does Not Do
 
@@ -82,6 +88,16 @@ These two components address different failure modes. No-interference fails when
 
 <!-- → [TABLE: Two-column reference table for SUTVA components. Row headers: Component 1 (No interference) and Component 2 (No hidden variations). Columns: (1) Formal statement in plain language, (2) What it requires in practice, (3) Canonical failure mode, (4) Direction of bias when violated. Component 1 / Direction of bias: typically toward zero (control group benefits from spillover). Component 2 / Direction of bias: unpredictable (depends on whether high- or low-quality implementations dominate the trial). Reader should use this as a diagnostic reference when auditing any trial.] -->
 
+*Figure 11.3*
+
+| | **Property** | **Value** |
+|---|---|---|
+| **Row 1** | _fill in_ | _fill in_ |
+| **Row 2** | _fill in_ | _fill in_ |
+
+: {.comparison-table}
+
+
 ### Where Component 1 Fails: Interference and Spillover
 
 The vaccine example is the canonical illustration of interference. When some members of a community are vaccinated against an infectious disease, the unvaccinated members benefit through reduced transmission. The probability that an unvaccinated person contracts the disease depends not just on their own vaccination status but on how many of their contacts are vaccinated. This is exactly what SUTVA's no-interference component prohibits: unit $i$'s outcome (disease status) depends on unit $j$'s treatment (vaccination status).
@@ -100,6 +116,9 @@ In each case, the standard analysis — comparing treated to untreated units as 
 
 <!-- → [DIAGRAM: Network diagram illustrating interference in a social spillover scenario. Nodes = individuals arranged in a social graph; edges = connections. Left panel (assignment): half the nodes are filled (treated) and half are open (control) — randomly assigned. Right panel (spillover): red arrows flow from treated nodes to adjacent control nodes; control nodes with many treated neighbors are shaded light red to indicate partial contamination. Two annotations: (1) "SUTVA requires: Y_i depends only on own treatment." (2) "Actual: Y_i depends on neighbors' treatment — control group is partially treated by spillover." Bottom annotation: "Estimated effect = true effect − spillover benefit to controls." Reader should see that SUTVA violation is a structural feature of the network, not a measurement error.] -->
 
+![Figure 11.4 — Network diagram illustrating interference in a social spillover scenario. Nodes = individuals arranged in a social graph; edges = connections. Left panel (assignment): half the nodes are filled (treated) and half are open (control)](images/11-treatments-fig-04.jpg)
+
+
 ### Where Component 2 Fails: Hidden Variations of Treatment
 
 The second SUTVA component fails more quietly. The training program assigned to the treatment group is not one treatment — it is many treatments, one for each combination of instructor, employee, and organizational context. The drug in a clinical trial is one treatment at the correct dose; but if patients vary in compliance, the "treatment" is a mixture of the intended dose, partial doses, and missed doses. The software rollout to treated stores is one treatment in the protocol; but if stores vary in how they configure and use the software, the effective treatment varies across stores.
@@ -109,6 +128,9 @@ Hidden variations of treatment create heterogeneity in the treatment effect. If 
 The problem is compounded when the variation in implementation is correlated with other variables. Suppose experienced managers implement a training program well, and inexperienced managers implement it poorly. The treatment effect in experienced-manager teams is large; in inexperienced-manager teams, it is small. If we estimate a single average effect without accounting for this, we will misattribute the manager-experience effect to the training program itself. The "treatment" appears to work better in some settings than others — but the reason is not the treatment; it is who is delivering it.
 
 <!-- → [DIAGRAM: Side-by-side comparison of treatment variation in clinical vs. organizational settings. Left column (clinical trial): a single bottle labeled "Drug A, 10mg daily." Below it, a compliance bar chart — 90% full dose, 8% partial dose, 2% no dose. The variation is narrow and measurable. Right column (organizational training program): a single document labeled "Program X, 2-day workshop." Below it, an implementation quality bar chart across 12 instructors, rated 1–5 — wide variation from 1.5 to 4.8. The variation is wide and partially unmeasured. Caption: "What was assigned (top) vs. what was received (bottom). In organizational settings, the gap is structural." Both columns annotated with: "SUTVA requires: one version of treatment. Reality: many versions."] -->
+
+![Figure 11.5 — Side-by-side comparison of treatment variation in clinical vs. organizational settings. Left column (clinical trial): a single bottle labeled "Drug A, 10mg daily." Below it, a compliance bar chart](images/11-treatments-fig-05.jpg)
+
 
 ### The Combined Failure: When Both Components Break
 
@@ -123,6 +145,15 @@ In dense local labor markets, training enough workers may depress wages for prog
 The JTPA study has been re-analyzed many times using methods that address one or more of these violations. Each re-analysis produces different effect estimates, depending on which assumptions it invokes. The headline number — "job training raises earnings by X percent" — is not a fact about the training. It is a fact about the training, the compliance, the site, and the labor market, under a specific set of assumptions about SUTVA violations. The analyst who reports a single number without flagging these assumptions is, at best, simplifying, and at worst, misleading.
 
 <!-- → [TABLE: JTPA study SUTVA audit — three rows, one per violation: (1) Cross-site variation in services (Component 2 — hidden variations; mechanism: different training types across sites; effect on estimate: attenuates average, masks heterogeneity). (2) Imperfect compliance (Component 2 — hidden variations; mechanism: some treated individuals received no training; effect on estimate: ITT < TOT, both valid but answer different questions). (3) Local labor market wage spillover (Component 1 — interference; mechanism: program graduates compete with each other, depressing local wages; effect on estimate: underestimates individual skill gain, overestimates market-level wage impact). Each row also lists what design change or analytic adjustment would address it. Reader should see the JTPA case as a structured audit, not a narrative of failures.] -->
+
+*Figure 11.6*
+
+| | **Property** | **Value** |
+|---|---|---|
+| **(1) Cross-site variation in services (Component 2 — hidden variations** | _fill in_ | _fill in_ |
+
+: {.comparison-table}
+
 
 ---
 
@@ -146,6 +177,9 @@ Cluster randomization is the standard design for evaluation of community-level i
 
 <!-- → [DIAGRAM: Two-panel diagram contrasting individual and cluster randomization for a school deworming intervention. Left panel (individual randomization): three school outlines, each containing a mix of treated (filled circles) and control (open circles) children; red transmission arrows cross between treated and control children within each school — SUTVA violation annotated. Right panel (cluster randomization): three school outlines — two fully filled (treated schools) and one fully open (control school); transmission arrows are contained within each school and therefore within treatment status — SUTVA holds at school level. Below both panels: "Unit of randomization must match unit of interference." Annotation pointing to the cluster design: "Spillover is now contained within the treatment group — it affects the estimate of the cluster-level effect, not the between-cluster comparison."] -->
 
+![Figure 11.7 — Two-panel diagram contrasting individual and cluster randomization for a school deworming intervention. Left panel (individual randomization): three school outlines, each containing a mix of treated (filled circles) and control (open circles) children; red transmission arrows cross between treated and control children within each school](images/11-treatments-fig-07.jpg)
+
+
 ### Time-Staggered Rollouts
 
 Some interventions cannot be cluster-randomized because the organization requires that the intervention eventually reach all units. A company rolling out a new software platform to all offices cannot randomize half of them to never receive it. But it can randomize the *order* in which offices receive it — which offices go first, which go second, which go last.
@@ -158,6 +192,9 @@ The validity of difference-in-differences rests on the parallel trends assumptio
 
 <!-- → [CHART: Time-series line chart for a difference-in-differences illustration. X-axis: time periods, divided into pre-treatment and post-treatment by a vertical dashed line. Y-axis: outcome level. Two lines: solid line = treated unit; dashed line = not-yet-treated unit. Pre-period: both lines are parallel (parallel trends). Post-period: solid line rises (treatment effect); dashed line continues at the same slope. Annotations: (1) A bracket labeled "DiD estimator" spanning the gap between the treated unit's actual post-treatment level and its projected counterfactual trend (dashed line extended). (2) "Parallel trends assumption: what treated unit would have done without treatment = dashed line's slope." (3) "Assumption not guaranteed by design — must be argued or tested using pre-period data."] -->
 
+![Figure 11.8 — Time-series line chart for a difference-in-differences illustration. X-axis: time periods, divided into pre-treatment and post-treatment by a vertical dashed line. Y-axis: outcome level. Two lines: solid line = treated unit; dashed line = not-yet-treated unit. Pre-period: both lines are parallel (parallel trends). Post-period: solid line rises (treatment effect); dashed line continues at the same slope. Annotations: (1) A bracket labeled "DiD estimator" spanning the gap between the treated unit's actual post-treatment level and its projected counterfactual trend (dashed line extended). (2) "Parallel trends assumption: what treated unit would have done without treatment = dashed line's slope." (3) "Assumption not guaranteed by design](images/11-treatments-fig-08.jpg)
+
+
 ### Encouragement Designs
 
 Sometimes neither cluster randomization nor staggered rollout is feasible, and the organization cannot randomize treatment directly. The treatment is a choice — participation in a training program, adoption of a new tool, enrollment in a benefit — and the organization cannot mandate who takes it. But it can randomize who is *encouraged* to take it.
@@ -169,6 +206,9 @@ This is exactly the instrumental variables design from Chapter 8, applied in the
 The encouragement design estimates the *local average treatment effect* (LATE) — the average effect for compliers specifically — not the average effect for the entire population. This is a genuine limitation: if compliers are not representative of the population of interest, the LATE may not be the number the decision-maker wants. The LATE is still a valid causal estimate, and it is often the best available estimate in settings where direct randomization is infeasible.
 
 <!-- → [DIAGRAM: 2×2 schematic of the encouragement design. Rows: Encouraged / Not Encouraged. Columns: Takes Treatment / Does Not Take Treatment. Four cells labeled: (Encouraged, Takes Treatment) = Compliers; (Encouraged, Does Not Take) = Never-takers; (Not Encouraged, Takes Treatment) = Always-takers; (Not Encouraged, Does Not Take) = Never-takers. Highlight the Complier cell. Annotations: (1) "LATE is estimated for compliers only — those whose treatment decision changes with encouragement." (2) "First stage: encouraged group has higher uptake rate than not-encouraged group — this difference is the instrument's strength." (3) "Exclusion restriction: encouragement affects outcome only through treatment, not directly." Mapping to Chapter 8 instrumental variables: "Encouragement = instrument; treatment = endogenous variable."] -->
+
+![Figure 11.9 — 2×2 schematic of the encouragement design. Rows: Encouraged / Not Encouraged. Columns: Takes Treatment / Does Not Take Treatment. Four cells labeled: (Encouraged, Takes Treatment) = Compliers; (Encouraged, Does Not Take) = Never-takers; (Not Encouraged, Takes Treatment) = Always-takers; (Not Encouraged, Does Not Take) = Never-takers. Highlight the Complier cell. Annotations: (1) "LATE is estimated for compliers only](images/11-treatments-fig-09.jpg)
+
 
 ### Choosing Among the Alternatives
 
@@ -183,6 +223,21 @@ When the treatment is a choice and the timing is not stageable, the encouragemen
 These are not always clean choices. Real organizational settings often have multiple violations simultaneously. The JTPA study had compliance heterogeneity (hidden variations), market-level spillover (interference), and cross-site variation (more hidden variations). No single design addresses all three. The appropriate response is to address the most consequential violation by design and handle the others through modeling, sensitivity analysis, and explicit acknowledgment in the analysis.
 
 <!-- → [TABLE: Design selection guide — three rows, one per design alternative (Cluster-randomized trial, Time-staggered rollout, Encouragement design). Four columns: (1) SUTVA violation addressed, (2) Key diagnostic question to determine applicability, (3) What the design estimates, (4) Primary limitation. The table should be formatted as a decision aid — a practitioner facing a new evaluation question should be able to read across the row of the recommended design and understand both what it buys and what it costs. Final row: a note reading "When multiple violations are present, address the most consequential by design; handle residual violations analytically."] -->
+
+*Figure 11.10*
+
+| | **Property** | **Value** |
+|---|---|---|
+| **(1) SUTVA violation addressed** | _fill in_ | _fill in_ |
+| **(2) Key diagnostic question to determine applicability** | _fill in_ | _fill in_ |
+| **(3) What the design estimates** | _fill in_ | _fill in_ |
+| **(4) Primary limitation. The table should be formatted as a decision aid — a practitioner facing a new evaluation question should be able to read across the row of the recommended design** | _fill in_ | _fill in_ |
+| **Understand both what it buys** | _fill in_ | _fill in_ |
+| **What it costs. Final row: a note reading "When multiple violations are present** | _fill in_ | _fill in_ |
+| **Address the most consequential by design** | _fill in_ | _fill in_ |
+
+: {.comparison-table}
+
 
 ---
 
@@ -205,6 +260,9 @@ The trial result tells you: under trial conditions, with this population, with t
 The Living Model architecture in Part Three formalizes this. A recommendation that emerges from the model does not just report the trial effect. It reports the trial effect, the deployment conditions assumed, the expected attenuation factors, and the uncertainty around the deployed effect. The recommendation is honest about what it does not know. What the trial established with confidence, and what the deployment projection required further assumptions to produce, are separated in the output.
 
 <!-- → [DIAGRAM: Horizontal deployment gap diagram. Left anchor: box labeled "Trial result: δ̂ (estimated effect under trial conditions)." Right anchor: box labeled "Deployed effect: δ_deploy (actual effect in production)." Between them: four labeled wedges opening downward (the gap factors), each annotated with the chapter concept that addresses it: (1) Condition gap → transportability (Ch. 8); (2) Population gap → transportability (Ch. 8); (3) Implementation gap → hidden variations of treatment (Concept 2, this chapter); (4) SUTVA gap → design alternatives (Concept 3, this chapter). Below each wedge: a one-line question the practitioner should ask (e.g., "Are trial site conditions reproducible?"; "Does the deployment population match the trial population?"; "Who is delivering the intervention in deployment?"; "Does the deployment context have more spillover than the trial?"). Caption: "The gap is not noise. It is a set of addressable questions."] -->
+
+![Figure 11.11 — Horizontal deployment gap diagram. Left anchor: box labeled "Trial result: δ̂ (estimated effect under trial conditions)." Right anchor: box labeled "Deployed effect: δ_deploy (actual effect in production)." Between them: four labeled wedges opening downward (the gap factors), each annotated with the chapter concept that addresses it: (1) Condition gap → transportability (Ch. 8)](images/11-treatments-fig-11.jpg)
+
 
 The worked comparison from the JTPA study is worth revisiting in this integrated frame. The study randomized job training eligibility — a clean design for its core causal question. The reported effect was positive: job training raised earnings. But four attenuation factors were present. Implementation varied across sites. Compliance was imperfect, shrinking the intent-to-treat estimate. Local labor market spillover depressed wages for graduates in dense markets. And the study population — low-income adults in the late 1980s — may not be perfectly transportable to a different population in a different decade.
 
