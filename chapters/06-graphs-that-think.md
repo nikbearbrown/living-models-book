@@ -136,7 +136,14 @@ The graph **makes assumptions explicit**. A regression equation buries its causa
 
 The graph **supports a global view**. Regression analyzes one outcome variable at a time. The graph represents the entire system of variables and their relationships, and supports queries about any of them. The Living Model architecture in Part Three is built on this global view.
 
-<!-- → [TABLE: Regression equation vs. structural causal model — rows: distinguishes cause from effect, handles direct vs. indirect effects, supports do-operator, supports counterfactuals, makes assumptions visible, global vs. single-outcome scope; columns: Regression Equation, DAG, SCM; cells: Yes/No/Partial with a one-sentence explanation each] -->
+| Property | Regression Equation | DAG | SCM |
+|---|---|---|---|
+| **Distinguishes cause from effect** | No — symmetric in $X$ and $Y$ | **Yes** — arrows are asymmetric | **Yes** — structural equations are asymmetric |
+| **Handles direct vs. indirect effects** | Partial — coefficients confound direct + indirect | **Yes** — paths are decomposable | **Yes** — direct, indirect, and total effects all computable |
+| **Supports the do-operator** | No | Partial — the graph supports the calculus, but parameters live elsewhere | **Yes** — full parametric counterfactual computation |
+| **Supports counterfactuals** | No | No — the graph alone is not enough for Rung 3 | **Yes** — abduction-action-prediction runs on the SCM |
+| **Makes assumptions visible** | No — assumptions hide in functional form | **Yes** — every absent arrow is a falsifiable assumption | **Yes** — equations + absent arrows + noise structure |
+| **Scope** | Single-outcome, fitted to data | Global — represents the joint mechanism for all variables | Global — augmented with parametric mechanism |
 
 *Figure 6.5*
 
@@ -277,3 +284,29 @@ End with a one-paragraph honesty section: which 2–3 edges am I least confident
 **Connection to previous chapters:** Chapters 1–5 told you what decision to model and what sub-questions matter. This chapter gives you the structural object every subsequent chapter operates on. From here forward, "the DAG" means this DAG.
 
 **Preview of next chapter:** Chapter 7 takes your DAG and asks: which edges are determined by the data you have, and which are mathematically underdetermined and require expert input? You'll convert your DAG into a CPDAG — the honest output of observational analysis.
+
+---
+
+## 🕰️ AI Wayback Machine
+
+The ideas in this chapter didn't appear from nowhere. **Sewall Wright** was inventing *path analysis* in 1918 — the diagrammatic method whose path coefficients are the direct ancestor of every directed acyclic graph in this book decades before most people had heard of DAGs as maps of mechanism. Here's a prompt to find out more — and then make it better.
+
+![Sewall Wright, c. 1920s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/sewall-wright.jpg)
+*Sewall Wright, c. 1920s. AI-generated portrait based on a public domain photograph.*
+
+**Run this:**
+
+```
+Who was Sewall Wright, and how does his 1918 invention of path analysis — and the long debate it provoked with R. A. Fisher and Karl Pearson — connect to the chapter's argument that a DAG is a map of mechanism, not a picture of correlations? Keep it to three paragraphs. End with the single most surprising thing about his career or ideas.
+```
+
+→ Search **"Sewall Wright"** on Wikipedia after you run this. See what the model got right, got wrong, or left out.
+
+**Now make the prompt better.** Try one of these:
+
+- Ask it to explain *path coefficients* in plain language, as if you've only ever seen regression coefficients
+- Ask it to compare Wright's path diagrams (1918) to the modern DAGs in this chapter
+- Add a constraint: "Answer as if you're writing the rationale for using a DAG instead of a regression equation in a board memo"
+
+What changes? What gets better? What gets worse?
+

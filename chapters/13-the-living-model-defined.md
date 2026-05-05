@@ -377,3 +377,29 @@ End with the most important honesty question: which property is currently weakes
 **Connection to previous chapters:** This is the Part One→Part Two→Part Three pivot. It synthesizes the diagnosis (Part One), the math layer (Part Two), and sets the architectural agenda (Part Three).
 
 **Preview of next chapter:** Chapter 14 picks up the expert-elicitation thread. You'll run your first real Knowledge Engineering with Bayesian Networks (KEBN) session — using the IDEA or Delphi protocol — to refine the parts of your CPDAG that the data couldn't orient.
+
+---
+
+## 🕰️ AI Wayback Machine
+
+The ideas in this chapter didn't appear from nowhere. **Kenneth Boulding** was publishing *General Systems Theory: The Skeleton of Science* in 1956 — the foundational case that a system is defined by the integrated operation of its properties, not by any property in isolation decades before most people had heard of the four properties of a Living Model operating together as one system. Here's a prompt to find out more — and then make it better.
+
+![Kenneth Boulding, c. 1950s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/kenneth-boulding.jpg)
+*Kenneth Boulding, c. 1950s. AI-generated portrait based on a public domain photograph.*
+
+**Run this:**
+
+```
+Who was Kenneth Boulding, and how does his 1956 *General Systems Theory* — the argument that systems are defined by integration across levels, not by any single property — connect to the chapter's claim that a Living Model's four properties (causal, counterfactual, continually updated, treatment-oriented) only deliver decision intelligence when they operate together? Keep it to three paragraphs. End with the single most surprising thing about his career or ideas.
+```
+
+→ Search **"Kenneth Boulding"** on Wikipedia after you run this. See what the model got right, got wrong, or left out.
+
+**Now make the prompt better.** Try one of these:
+
+- Ask it to explain Boulding's *hierarchy of systems* in plain language, as if you've never read systems theory
+- Ask it to compare Boulding's integration argument to the orchestrated-outcomes claim in this chapter
+- Add a constraint: "Answer as if you're writing the architectural rationale for why all four Living Model properties have to operate together"
+
+What changes? What gets better? What gets worse?
+

@@ -59,3 +59,4 @@ ISBN: [INSERT ISBN]
      - Any biographical context that establishes credibility
      - Brief acknowledgment of what the book does NOT cover
 -->
+

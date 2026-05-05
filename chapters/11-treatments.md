@@ -86,7 +86,12 @@ SUTVA has two components. I will state each precisely, then show where it fails.
 
 These two components address different failure modes. No-interference fails when units affect each other through spillover, social networks, markets, or shared environments. No-hidden-variations fails when the "same" treatment is actually delivered differently to different units — through variable implementation, compliance, or context-dependence.
 
-<!-- → [TABLE: Two-column reference table for SUTVA components. Row headers: Component 1 (No interference) and Component 2 (No hidden variations). Columns: (1) Formal statement in plain language, (2) What it requires in practice, (3) Canonical failure mode, (4) Direction of bias when violated. Component 1 / Direction of bias: typically toward zero (control group benefits from spillover). Component 2 / Direction of bias: unpredictable (depends on whether high- or low-quality implementations dominate the trial). Reader should use this as a diagnostic reference when auditing any trial.] -->
+| | Component 1 — No interference | Component 2 — No hidden variations |
+|---|---|---|
+| **Formal statement (plain language)** | One unit's treatment status does not affect another unit's outcome | The treatment is the same thing everywhere it is applied |
+| **What it requires in practice** | The units are independent of each other in the relevant causal pathways | The mechanism, dosage, and conditions are standardized across the trial |
+| **Canonical failure mode** | Spillover — the treatment effect leaks through social, market, or network ties | Heterogeneous implementation — the same nominal treatment is delivered differently in different places |
+| **Direction of bias when violated** | Toward zero (control benefits from spillover, attenuating the difference) | Unpredictable — depends on whether high- or low-quality implementations dominate the trial |
 
 *Figure 11.3*
 
@@ -144,7 +149,11 @@ In dense local labor markets, training enough workers may depress wages for prog
 
 The JTPA study has been re-analyzed many times using methods that address one or more of these violations. Each re-analysis produces different effect estimates, depending on which assumptions it invokes. The headline number — "job training raises earnings by X percent" — is not a fact about the training. It is a fact about the training, the compliance, the site, and the labor market, under a specific set of assumptions about SUTVA violations. The analyst who reports a single number without flagging these assumptions is, at best, simplifying, and at worst, misleading.
 
-<!-- → [TABLE: JTPA study SUTVA audit — three rows, one per violation: (1) Cross-site variation in services (Component 2 — hidden variations; mechanism: different training types across sites; effect on estimate: attenuates average, masks heterogeneity). (2) Imperfect compliance (Component 2 — hidden variations; mechanism: some treated individuals received no training; effect on estimate: ITT < TOT, both valid but answer different questions). (3) Local labor market wage spillover (Component 1 — interference; mechanism: program graduates compete with each other, depressing local wages; effect on estimate: underestimates individual skill gain, overestimates market-level wage impact). Each row also lists what design change or analytic adjustment would address it. Reader should see the JTPA case as a structured audit, not a narrative of failures.] -->
+| Violation in JTPA | Component | Mechanism | Effect on the estimate | Design / analytic remedy |
+|---|---|---|---|---|
+| **Cross-site variation in services** | Component 2 — hidden variations | Different sites delivered different training types under the same JTPA banner | Attenuates the average; masks heterogeneity across site types | Stratify or cluster-randomize at the site level; report site-conditional effects |
+| **Imperfect compliance** | Component 2 — hidden variations | Some treated individuals received no training | ITT < TOT — both estimands are valid, but they answer different questions | Report ITT *and* TOT; encouragement design if compliance is itself the lever |
+| **Local labor market wage spillover** | Component 1 — interference | Program graduates compete with each other in local labor markets, depressing local wages | Underestimates individual skill gain; overestimates market-level wage impact | Cluster-randomize at the labor-market level; supplement with general-equilibrium analysis |
 
 *Figure 11.6*
 
@@ -222,7 +231,12 @@ When the treatment is a choice and the timing is not stageable, the encouragemen
 
 These are not always clean choices. Real organizational settings often have multiple violations simultaneously. The JTPA study had compliance heterogeneity (hidden variations), market-level spillover (interference), and cross-site variation (more hidden variations). No single design addresses all three. The appropriate response is to address the most consequential violation by design and handle the others through modeling, sensitivity analysis, and explicit acknowledgment in the analysis.
 
-<!-- → [TABLE: Design selection guide — three rows, one per design alternative (Cluster-randomized trial, Time-staggered rollout, Encouragement design). Four columns: (1) SUTVA violation addressed, (2) Key diagnostic question to determine applicability, (3) What the design estimates, (4) Primary limitation. The table should be formatted as a decision aid — a practitioner facing a new evaluation question should be able to read across the row of the recommended design and understand both what it buys and what it costs. Final row: a note reading "When multiple violations are present, address the most consequential by design; handle residual violations analytically."] -->
+| Design alternative | SUTVA violation addressed | Key diagnostic question to determine applicability | What the design estimates | Primary limitation |
+|---|---|---|---|---|
+| **Cluster-randomized trial** | Component 1 — interference | "Within what unit boundary do treated and control units interact?" | Cluster-level average treatment effect | Lower power per unit; requires many clusters |
+| **Time-staggered rollout** | Component 1 — interference | "Can we sequence the rollout so adjacent cohorts don't overlap?" | Difference-in-differences across phased cohorts | Confounded with time trends; requires modeling time effects |
+| **Encouragement design** | Component 2 — hidden variations (compliance) | "Can we randomly *encourage* treatment without forcing it?" | Local average treatment effect (LATE) on compliers | Only the complier subgroup is identified; external validity caveat |
+| *When multiple violations are present* | — | Address the most consequential by design; handle residual violations analytically | — | — |
 
 *Figure 11.10*
 
@@ -513,3 +527,29 @@ End with: a one-page trial protocol I could hand to my team or an academic colla
 **Connection to previous chapters:** Chapter 10 said your observational estimate is fragile to unmeasured confounding. This chapter shows you the design that would resolve that — and warns you that even a clean RCT doesn't survive the trip from trial to deployment.
 
 **Preview of next chapter:** Chapter 12 takes the deployment gap seriously — even if the intervention works in trial, the path between "correct estimate" and "actual change" is full of plumbing problems. You'll build the friction map that names what would block deployment of your intervention even if everything in the model is right.
+
+---
+
+## 🕰️ AI Wayback Machine
+
+The ideas in this chapter didn't appear from nowhere. **Janet Lane-Claypon** was designing the first modern cohort and case-control studies in the 1910s and 1920s — the experimental templates that the RCT would refine and the SUTVA framework would later formalize decades before most people had heard of randomized controlled trials and the SUTVA assumption. Here's a prompt to find out more — and then make it better.
+
+![Janet Lane-Claypon, c. 1920s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/janet-lane-claypon.jpg)
+*Janet Lane-Claypon, c. 1920s. AI-generated portrait based on a public domain photograph.*
+
+**Run this:**
+
+```
+Who was Janet Lane-Claypon, and how do her early-twentieth-century cohort and case-control study designs connect to the chapter's argument that randomization establishes causation where observational methods cannot — and to the SUTVA assumptions every trial silently makes? Keep it to three paragraphs. End with the single most surprising thing about her career or ideas.
+```
+
+→ Search **"Janet Lane-Claypon"** on Wikipedia after you run this. See what the model got right, got wrong, or left out.
+
+**Now make the prompt better.** Try one of these:
+
+- Ask it to explain *case-control design* in plain language, as if you've never seen an epidemiology textbook
+- Ask it to compare Lane-Claypon's 1926 breast-cancer case-control study to a modern A/B test against the SUTVA criterion
+- Add a constraint: "Answer as if you're writing the design rationale for an organizational intervention trial"
+
+What changes? What gets better? What gets worse?
+

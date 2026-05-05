@@ -433,3 +433,29 @@ End with a verdict on the Chapter 8 estimate: STRONG (E-value high, no plausible
 **Connection to previous chapters:** Chapter 8 produced the headline number. This chapter tests how durable that number is to the worst plausible thing you didn't measure — and gives you a defensible vocabulary for telling a decision-maker exactly how confident to be.
 
 **Preview of next chapter:** Chapter 11 designs the experiment that would settle the question — an RCT or quasi-experiment for testing your top intervention — and audits it for SUTVA violations (interference, spillover, hidden treatment variations) that quietly invalidate most organizational A/B tests.
+
+---
+
+## 🕰️ AI Wayback Machine
+
+The ideas in this chapter didn't appear from nowhere. **Jerome Cornfield** was deriving the bound that bears his name in 1959 — the original sensitivity analysis showing that an unmeasured confounder would have to be implausibly strong to overturn the observed association between smoking and lung cancer decades before most people had heard of the unconfoundedness assumption and how to bound the influence of latent confounders. Here's a prompt to find out more — and then make it better.
+
+![Jerome Cornfield, c. 1960s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/jerome-cornfield.jpg)
+*Jerome Cornfield, c. 1960s. AI-generated portrait based on a public domain photograph.*
+
+**Run this:**
+
+```
+Who was Jerome Cornfield, and how does his 1959 sensitivity bound — used to defend the smoking-cancer causal claim against tobacco-industry critics — connect to the chapter's E-value approach for stress-testing causal claims against unmeasured confounders? Keep it to three paragraphs. End with the single most surprising thing about his career or ideas.
+```
+
+→ Search **"Jerome Cornfield"** on Wikipedia after you run this. See what the model got right, got wrong, or left out.
+
+**Now make the prompt better.** Try one of these:
+
+- Ask it to explain *the Cornfield bound* in plain language, as if you've never seen a sensitivity analysis
+- Ask it to compare Cornfield's 1959 reasoning about smoking and lung cancer to a modern E-value computed for a contemporary causal claim
+- Add a constraint: "Answer as if you're writing the assumptions section of a model card"
+
+What changes? What gets better? What gets worse?
+

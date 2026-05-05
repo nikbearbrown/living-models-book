@@ -79,7 +79,12 @@ $$R_{\text{cf}} = 5 \times 90 + (-50) = 400$$
 
 In this specific case, with this specific campaign's idiosyncrasies, doubling the investment from 100 to 200 would have doubled revenue from 200 to 400.
 
-<!-- → [TABLE: Worked counterfactual — four columns: Step, Operation, Equation, Result; rows: (1) Abduction / recover noise / plug observations into SCM / U_L=10, U_R=−50; (2) Action / modify SCM / set M=200 / new system; (3) Prediction / run modified SCM with case-specific noise / compute L_cf and R_cf / L=90, R=400; a footer row showing the average-case prediction without abduction for contrast] -->
+| Step | Operation | Equation | Result |
+|---|---|---|---|
+| **1. Abduction** | Recover the case-specific noise terms by plugging the observed values into the SCM | $L_\text{obs} = \beta_M M + U_L \Rightarrow U_L = L_\text{obs} - \beta_M M$ ; same for $U_R$ | $U_L = 10$, $U_R = -50$ |
+| **2. Action** | Modify the SCM by replacing the structural equation for $M$ with a fixed assignment | Replace $M = f_M(\cdot)$ with $M := 200$ | New SCM with $M$ fixed at the counterfactual value |
+| **3. Prediction** | Run the modified SCM forward, holding the recovered noise terms fixed | $L_\text{cf} = \beta_M \cdot 200 + U_L$ ; $R_\text{cf} = \gamma_M \cdot 200 + U_R$ | $L_\text{cf} = 90$, $R_\text{cf} = 400$ |
+| *Average-case prediction (no abduction, for contrast)* | *Run the modified SCM with population-average noise* | $L = \beta_M \cdot 200 + E[U_L]$ | *$L = 80$ — misses the case-specific signal* |
 
 *Figure 9.2*
 
@@ -109,7 +114,14 @@ Both flavors use the same three steps. The difference is what we condition on. P
 
 In practice, the retrospective form is what most decision-makers want when they ask "what would have happened if." It supports learning from experience. It also, on the second front, supports legal arguments about causation, attribution of responsibility, and the but-for test — whether the harm would have occurred in the absence of the defendant's action.
 
-<!-- → [TABLE: Pre-factual vs. retrospective counterfactuals — rows: when evaluated, what is conditioned on, what abduction recovers, precision of noise recovery, primary use case, example from the chapter; columns: Pre-factual, Retrospective; purpose is to make the structural distinction concrete before the legal material that follows depends on it] -->
+| | Pre-factual counterfactual | Retrospective counterfactual |
+|---|---|---|
+| **When evaluated** | Before the action is taken; a forward question | After the action and outcome have both occurred |
+| **What is conditioned on** | Pre-action characteristics of the case | Both the pre-action characteristics *and* the observed outcome |
+| **What abduction recovers** | Distributional noise consistent with the pre-action evidence | Noise sharpened by the observed outcome — case-specific information that the pre-action data did not contain |
+| **Precision of noise recovery** | Lower — many noise vectors are consistent with the pre-action data | Higher — the observed outcome eliminates the noise vectors that would have produced different outcomes |
+| **Primary use case** | Decision support: *what should I do?* | Audit / accountability: *what would have happened if we had done differently?* |
+| **Example from the chapter** | Before prescribing the drug: *what would $L$ and $R$ be at $M = 200$?* | After the recovery: *given the observed $L, R$ at $M = 100$, what would they have been at $M = 200$?* |
 
 *Figure 9.3*
 
@@ -156,7 +168,15 @@ A is a **sufficient cause** of B if, whenever A occurs, B also occurs. The proba
 
 The two probabilities are different, and the distinction matters. A drug can be necessary for a patient's recovery — the patient would not have recovered without it — but not sufficient, since taking the drug does not guarantee recovery. A flame can be necessary for a fire but not sufficient; ignition without oxygen produces no fire.
 
-<!-- → [TABLE: Necessary vs. sufficient causation — rows: formal definition, counterfactual query, probability measure (PN vs PS), legal/ethical standard it supports, example from the chapter (drug recovery, warehouse fire), what a high value implies, what a low value implies; columns: Necessary Cause, Sufficient Cause; purpose is to make the PN/PS distinction scannable before Chapter 10's attribution application] -->
+| | Necessary cause | Sufficient cause |
+|---|---|---|
+| **Formal definition** | The outcome would not have occurred without the cause | The cause would have produced the outcome on its own |
+| **Counterfactual query** | $P(Y_{X=0} = 0 \mid X = 1, Y = 1)$ — would the outcome *not* have occurred if the cause hadn't? | $P(Y_{X=1} = 1 \mid X = 0, Y = 0)$ — would the cause have produced the outcome if it had been applied? |
+| **Probability measure** | **PN** (Probability of Necessity) | **PS** (Probability of Sufficiency) |
+| **Legal / ethical standard it supports** | The but-for test in tort law; attribution of responsibility | Predictive reliability of the causal mechanism; warranty claims |
+| **Example from the chapter** | The drug recovery — would the patient have recovered without the drug? | The warehouse fire — would the smoldering rag have caused the fire on its own? |
+| **What a high value implies** | The cause was load-bearing — without it, the outcome would not have occurred | The cause is reliable — when it occurs, the outcome follows |
+| **What a low value implies** | The outcome would have occurred anyway — the cause was not load-bearing | The cause is unreliable — sometimes the outcome does not follow |
 
 *Figure 9.5*
 
@@ -326,3 +346,29 @@ End with: a one-paragraph honest assessment — does this counterfactual hold up
 **Connection to previous chapters:** Chapter 6 gave you the SCM. Chapter 8 estimated some of its parameters. This chapter uses the SCM to answer the hardest class of question — what would have happened in a world that didn't occur — and reveals where your model is too thin to support strong counterfactuals.
 
 **Preview of next chapter:** Chapter 10 audits your DAG for latent confounders — the variables you didn't include because you couldn't measure them — and computes an E-value for your strongest causal claim, giving you an honest measure of how fragile your conclusion is.
+
+---
+
+## 🕰️ AI Wayback Machine
+
+The ideas in this chapter didn't appear from nowhere. **Charles Sanders Peirce** was naming and developing the inferential move he called *abduction* — the same name Pearl gives to the first step of the abduction-action-prediction procedure decades before most people had heard of Pearl's abduction-action-prediction procedure for individual-level counterfactuals. Here's a prompt to find out more — and then make it better.
+
+![Charles Sanders Peirce, c. 1890s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/charles-sanders-peirce.jpg)
+*Charles Sanders Peirce, c. 1890s. AI-generated portrait based on a public domain photograph.*
+
+**Run this:**
+
+```
+Who was Charles Sanders Peirce, and how does his concept of *abduction* — the inference from a surprising observation to the hypothesis that would make it unsurprising — connect to the first step of Pearl's abduction-action-prediction procedure for computing individual-level counterfactuals? Keep it to three paragraphs. End with the single most surprising thing about his career or ideas.
+```
+
+→ Search **"Charles Sanders Peirce"** on Wikipedia after you run this. See what the model got right, got wrong, or left out.
+
+**Now make the prompt better.** Try one of these:
+
+- Ask it to explain Peirce's *abduction* in plain language, as if you've never read pragmatist philosophy
+- Ask it to compare Peirce's three-step inference (abduction, deduction, induction) to Pearl's three-step counterfactual (abduction, action, prediction)
+- Add a constraint: "Answer as if you're writing a footnote in a chapter on the but-for test"
+
+What changes? What gets better? What gets worse?
+

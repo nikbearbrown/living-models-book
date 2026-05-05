@@ -62,7 +62,11 @@ Abduction: take the observed evidence — the actual production rates, the actua
 
 For the operations head's question — *what should we do this quarter?* — the relevant query is mostly Rung 2. She is choosing among interventions that have not yet been taken. The Rung 3 machinery becomes relevant later, when the chosen interventions have been deployed and the team is reviewing what happened: *given that we did this and got this outcome, would we have done better with a different choice?* The auditability that Chapter 17 emphasized depends on Rung 3 queries; the immediate recommendation depends on Rung 2.
 
-<!-- → [TABLE: Three query types mapped to the Ladder — rows: Rung 1 (Association), Rung 2 (Intervention), Rung 3 (Counterfactual); columns: Question form, Operations example from this chapter, What the SCM does to answer it, When in the pipeline it's used (recommendation vs. retrospective audit); purpose is to connect Chapter 5's abstract hierarchy to the concrete queries the counterfactual engine actually runs] -->
+| Rung | Question form | Operations example from this chapter | What the SCM does to answer it | When in the pipeline |
+|---|---|---|---|---|
+| **Rung 1 — Association** | $P(Y \mid X)$ — what tends to co-occur? | "Among customers who saw the price change, what was the retention rate?" | Reads from the joint distribution implied by the parameterized SCM | Recommendation context — calibrating the baseline |
+| **Rung 2 — Intervention** | $P(Y \mid do(X))$ — what happens if we act? | "If we *set* the price 12% higher, what is the projected retention rate?" | Modifies the SCM by replacing the structural equation for $X$, propagates forward | Recommendation core — EV ranking lives here |
+| **Rung 3 — Counterfactual** | $P(Y_{X'} \mid X, Y)$ — what would have happened if we'd acted differently? | "Given that we raised the price 12% last quarter and saw the observed retention, what would retention have been at 6%?" | Abduction-action-prediction on the parameterized SCM with case-specific noise recovered | Retrospective audit — the section of the executive report that defends the recommendation |
 
 *Figure 18.3*
 
@@ -134,7 +138,15 @@ The 0-1 knapsack is rarely sufficient for actual portfolio selection. Real inter
 
 The four extensions can be combined. The full operational formulation for a typical Living Model recommendation is a multidimensional, logical-dependency, multiple-choice, chance-constrained knapsack. Modern mixed-integer linear programming solvers handle problems of this complexity with hundreds of variables in seconds. The intellectual work is in formulating the constraints correctly. The computational work is comparatively light.
 
-<!-- → [TABLE: Knapsack variants — rows: 0-1 Knapsack, Multidimensional, Logical-Dependency, Multiple-Choice, Chance-Constrained; columns: What it adds to the basic formulation, Constraint type (mathematical form), Operations example, When the simpler formulation fails; caption: "Each variant addresses a class of real operational constraint; the full portfolio optimization typically needs all four combined"] -->
+| Variant | What it adds to the basic formulation | Constraint type | Operations example | When the simpler formulation fails |
+|---|---|---|---|---|
+| **0-1 Knapsack** | Each intervention is included or excluded — no fractional adoption | $\sum_i x_i c_i \leq B$, $x_i \in \{0, 1\}$ | Pick which product launches to fund this quarter | When indivisibility is binding (most strategic interventions) |
+| **Multidimensional** | Multiple budget dimensions — money, headcount, calendar weeks | $\sum_i x_i c_{ij} \leq B_j$ for each resource $j$ | A project that needs both engineering capacity and legal review time | When a single budget hides binding non-monetary constraints |
+| **Logical-dependency** | Some interventions require others as prerequisites | $x_i \leq x_j$ if $i$ depends on $j$ | "Pricing change requires a contract template update first" | When dependencies make some "EV-positive" interventions infeasible alone |
+| **Multiple-choice** | Mutually exclusive groups of interventions | $\sum_{i \in g} x_i \leq 1$ for each group $g$ | "Pick at most one of A/B/C pricing strategies" | When alternatives genuinely conflict — not all positives can stack |
+| **Chance-constrained** | Constraints hold with probability $\geq 1-\alpha$ rather than deterministically | $P(\sum_i x_i c_i \leq B) \geq 1 - \alpha$ | Budget that must hold under uncertain costs at 95% confidence | When deterministic budgets ignore the uncertainty in the underlying parameters |
+
+*Each variant addresses a class of real operational constraint; the full portfolio optimization typically needs all four combined.*
 
 *Figure 18.5*
 
@@ -312,3 +324,29 @@ Save everything to the Living Model folder. Print a one-paragraph summary of the
 **Connection to previous chapters:** Every prior chapter has been building toward this. The DAG (Ch 6) becomes parameterized (here); the CPDAG (Ch 7, 14, 15, 16, 17) becomes operational; the EVI framework (Ch 4) becomes the ranking criterion; the friction map (Ch 12) appears as the cost side of the EV calculation. From this chapter forward, the project is producing real recommendations.
 
 **Preview of next chapter:** Chapter 19 takes the recommendation package and produces the four-part executive report — recommendation, evidence, assumptions, counterfactual — with LLM narration audited against the must-do and must-never-do rules.
+
+---
+
+## 🕰️ AI Wayback Machine
+
+The ideas in this chapter didn't appear from nowhere. **Prasanta Chandra Mahalanobis** was founding the Indian Statistical Institute in 1931 and using statistical models to drive the 1950s Indian Five-Year Plans — operationalizing a graph-to-decision pipeline at the scale of a national economy decades before most people had heard of parameterizing the validated graph and ranking interventions by Expected Value under budget constraints. Here's a prompt to find out more — and then make it better.
+
+![Prasanta Chandra Mahalanobis, c. 1950s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/prasanta-chandra-mahalanobis.jpg)
+*Prasanta Chandra Mahalanobis, c. 1950s. AI-generated portrait based on a public domain photograph.*
+
+**Run this:**
+
+```
+Who was Prasanta Chandra Mahalanobis, and how does his work using statistical-economic models to drive the Indian Five-Year Plans — translating quantified relationships into policy choices under hard resource constraints — connect to the chapter's pipeline from a parameterized causal graph through EV-ranked interventions to a budget-constrained portfolio? Keep it to three paragraphs. End with the single most surprising thing about his career or ideas.
+```
+
+→ Search **"Prasanta Chandra Mahalanobis"** on Wikipedia after you run this. See what the model got right, got wrong, or left out.
+
+**Now make the prompt better.** Try one of these:
+
+- Ask it to explain the *Mahalanobis distance* in plain language, as if you've never seen a multivariate statistics textbook
+- Ask it to compare Mahalanobis's planning-model approach to the modern budget-constrained-knapsack step in this chapter
+- Add a constraint: "Answer as if you're writing the policy memo that accompanies an EV-ranked portfolio"
+
+What changes? What gets better? What gets worse?
+

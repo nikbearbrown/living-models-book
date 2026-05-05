@@ -167,7 +167,13 @@ I want to be precise about what the epistemic layer demands. It does not demand 
 
 Auditing the epistemic layer means asking: when the model produces an output, what does the practitioner do with the uncertainty? Do they wait for additional confirmation that may never come in time? Do they escalate to a level of authority that introduces latency? Do they have a framework for deciding when the signal is strong enough to act on? The answer will often reveal that the technical and organizational layers are fine and the binding constraint is that the people using the system have never learned to operate in a posture of calibrated uncertainty.
 
-<!-- → [TABLE: Three-column table contrasting batch-reporting posture vs. continually-updated posture across five dimensions: (1) information standard before acting, (2) tolerance for being wrong, (3) relationship to uncertainty, (4) how confidence is expressed, (5) what "waiting" costs. Reader should be able to use this as a quick diagnostic for which posture their organization operates in.] -->
+| Dimension | Batch-reporting posture | Continually-updated posture |
+|---|---|---|
+| **Information standard before acting** | Wait for the next report cycle; act on what was true at last refresh | Act on the freshest reading the latency budget allows; the question is whether *this* number is good enough for *this* decision |
+| **Tolerance for being wrong** | Low at the level of the report; the report is taken as authoritative | High at any single reading; the loop is what produces correctness over time |
+| **Relationship to uncertainty** | Hides uncertainty inside the cycle gap; the report shows a number without an interval | Carries uncertainty as a first-class output — every reading has a confidence band |
+| **How confidence is expressed** | A single decimal place, no interval | An interval and a freshness timestamp on every figure |
+| **What "waiting" costs** | Nothing visible — the cycle is the heartbeat | A specific opportunity cost named in the latency budget |
 
 *Figure 3.8*
 
@@ -219,7 +225,13 @@ Why is the model only retrained quarterly? On investigation: the retraining pipe
 
 The audit finding is not "this system needs better technology." It is "this system's model latency is organizationally constrained. To reduce model latency from eight weeks to one week, the organization needs either to automate the validation step or to add capacity to the validation team."
 
-<!-- → [TABLE: Audit summary for the retail forecasting system — three rows (data latency, model latency, decision latency) × four columns: (1) measured value, (2) acceptable threshold for a weekly ordering decision, (3) binding constraint? (yes/no), (4) layer responsible (technical / organizational / epistemic). The binding constraint row should be visually distinct — e.g., shaded. Reader should see that the audit produces a structured, scannable finding rather than a narrative verdict.] -->
+| Latency | Measured value | Acceptable threshold for a weekly ordering decision | **Binding constraint?** | Layer responsible |
+|---|---|---|---|---|
+| **Data latency** | ~2 hours from POS event to warehouse | < 24 hours | No | Technical |
+| **Model latency** | Re-scored every 6 hours | Within the cycle | No | Technical |
+| **Decision latency** | **5 days from updated forecast to acted-on order** (waits for Tuesday review) | < 24 hours | **Yes** | **Organizational** |
+
+*The binding constraint is decision latency, not data or model latency. The technical pipeline is faster than the organizational cadence that consumes it.*
 
 *Figure 3.9*
 
@@ -276,7 +288,15 @@ The replacing term — *continually updated* — forces these questions into the
 
 This is the structural move the chapter has been building toward. "Real-time" forecloses inquiry. "Continually updated" opens it.
 
-<!-- → [TABLE: Two-column comparison — "real-time" claim vs. "continually updated" claim — showing how each term responds to five practitioner questions: (1) What is the data latency? (2) What is the model latency? (3) What is the decision latency? (4) Is this adequate for my decision? (5) What would make it better? "Real-time" column shows the label terminating the conversation at each question. "Continually updated" column shows each question producing a specific, answerable specification. Reader should see that the second term is more useful precisely because it refuses to foreclose inquiry.] -->
+| Practitioner question | "Real-time" answer | "Continually updated" answer |
+|---|---|---|
+| **What is the data latency?** | "It's real-time." (terminates the conversation) | "Two hours from event to dataset, with a freshness timestamp on every reading." |
+| **What is the model latency?** | "It's real-time." | "Re-scored every six hours; the staleness alarm fires at twelve." |
+| **What is the decision latency?** | "It's real-time." | "Five days from updated output to acted-on decision, gated by the Tuesday review." |
+| **Is this adequate for my decision?** | "It's real-time." | "Adequate for a weekly ordering decision; inadequate for a same-day routing decision." |
+| **What would make it better?** | "It's real-time." | "Move the Tuesday review to a daily standing item; data and model latency are not the bottleneck." |
+
+*"Real-time" forecloses every question. "Continually updated" answers each one specifically.*
 
 *Figure 3.11*
 
@@ -506,3 +526,29 @@ End with a one-page audit report I can save to my Living Model folder, formatted
 **Connection to previous chapters:** Chapter 2 named *what* the data cannot tell you about your intervention. This chapter names *when* the data tells you anything at all — and the answers compound. A correctly causal model that updates monthly may be useless for a decision that needs to be made daily.
 
 **Preview of next chapter:** Chapter 4 takes any risk analysis you currently use for this decision and rebuilds it as a probability × impact distribution, replacing the heat map with Expected Value of Intervention.
+
+---
+
+## 🕰️ AI Wayback Machine
+
+The ideas in this chapter didn't appear from nowhere. **Konrad Zuse** was designing the Z3 in 1941 — the first programmable, fully automatic digital computer — under conditions where every notion of *real-time* had to be invented from scratch decades before most people had heard of the three latencies hiding inside any 'real-time' claim. Here's a prompt to find out more — and then make it better.
+
+![Konrad Zuse, c. 1940s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/konrad-zuse.jpg)
+*Konrad Zuse, c. 1940s. AI-generated portrait based on a public domain photograph.*
+
+**Run this:**
+
+```
+Who was Konrad Zuse, and how do the design choices in the Z3 (1941) and the Plankalkül connect to the chapter's argument that *real-time* is three independent latencies — data, model, and decision — not one? Keep it to three paragraphs. End with the single most surprising thing about his career or ideas.
+```
+
+→ Search **"Konrad Zuse"** on Wikipedia after you run this. See what the model got right, got wrong, or left out.
+
+**Now make the prompt better.** Try one of these:
+
+- Ask it to explain *Plankalkül* in plain language, as if you've never seen a programming language
+- Ask it to compare Zuse's hand-built relay timing to the data / model / decision latencies named in this chapter
+- Add a constraint: "Answer as if you're auditing a vendor's claim that their system is real-time"
+
+What changes? What gets better? What gets worse?
+

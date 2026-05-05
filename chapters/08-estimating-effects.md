@@ -47,7 +47,11 @@ The two most common errors follow a predictable structure.
 
 The backdoor criterion resolves both errors simultaneously. It identifies which variables to control for and which to leave alone. Variables to control for are those that block all backdoor paths and are not on the causal pathway. Variables to *not* control for are mediators and colliders. The last category — do not control for colliders — is the one most analysts have not internalized. Conditioning on a collider opens a path that was previously closed and introduces a new bias. The criterion identifies this in advance.
 
-<!-- → [TABLE: Common regression errors classified by causal role — rows: Controlling for a Mediator, Omitting a Confounder, Controlling for a Collider; columns: Variable's causal role, What the analyst usually believes they are doing, Direction of resulting bias, What the backdoor criterion says instead; purpose is to make the three error types and their corrections scannable alongside the prose] -->
+| Error | Variable's causal role | What the analyst usually believes they are doing | Direction of resulting bias | What the backdoor criterion says instead |
+|---|---|---|---|---|
+| **Controlling for a mediator** | $M$ lies on the causal path $X \to M \to Y$ | "I'm controlling for everything that varies with $X$" — assumed to make the estimate cleaner | Toward zero — the indirect effect is partialled out | Mediators must *not* be conditioned on when estimating the total effect; condition on them only when isolating direct effects |
+| **Omitting a confounder** | $Z$ is a common cause of $X$ and $Y$ | "I'm running the simplest model that fits" | Direction depends on the sign of the confounding; magnitude can dwarf the true effect | The backdoor criterion identifies a sufficient $Z$; estimate is identifiable only if all backdoor paths are blocked |
+| **Controlling for a collider** | $C$ is caused by both $X$ and $Y$ (or their descendants) | "I'm adjusting for as much as possible" — adding more controls assumed to be safer | Opens a backdoor path that was previously closed; *introduces* spurious association | Colliders must *not* be conditioned on; doing so makes the estimate worse, not better |
 
 *Figure 8.2*
 
@@ -257,3 +261,29 @@ Here is my DAG and the candidate intervention X and outcome Y: [PASTE FROM CHAPT
 **Connection to previous chapters:** Chapter 7's CPDAG told you which edges in your DAG are defensible. This chapter operationalizes the defensible portion — turning the graph into a number you can put in a recommendation.
 
 **Preview of next chapter:** Chapter 9 takes one historical decision in your domain that turned out badly and runs the abduction-action-prediction counterfactual on it — answering "what would have happened if we had done the other thing?"
+
+---
+
+## 🕰️ AI Wayback Machine
+
+The ideas in this chapter didn't appear from nowhere. **Gertrude Cox** was co-authoring *Experimental Designs* (1950, with William Cochran) — the foundational textbook on factorial experiments and adjustment for confounding that the modern backdoor and DML estimators inherit from decades before most people had heard of the backdoor criterion and the deconfounded effect estimate. Here's a prompt to find out more — and then make it better.
+
+![Gertrude Cox, c. 1940s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/gertrude-cox.jpg)
+*Gertrude Cox, c. 1940s. AI-generated portrait based on a public domain photograph.*
+
+**Run this:**
+
+```
+Who was Gertrude Cox, and how does her work on experimental design and statistical adjustment connect to the modern apparatus of the backdoor criterion and double machine learning for estimating causal effects from observational data? Keep it to three paragraphs. End with the single most surprising thing about her career or ideas.
+```
+
+→ Search **"Gertrude Cox"** on Wikipedia after you run this. See what the model got right, got wrong, or left out.
+
+**Now make the prompt better.** Try one of these:
+
+- Ask it to explain *adjustment for confounding* in plain language, as if you've never run a regression
+- Ask it to compare Cox's hand-tabulated factorial designs to a modern double-machine-learning pipeline
+- Add a constraint: "Answer as if you're writing the introduction to a chapter on identifying causal effects from observational data"
+
+What changes? What gets better? What gets worse?
+

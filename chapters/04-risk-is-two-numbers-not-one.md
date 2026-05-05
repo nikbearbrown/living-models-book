@@ -92,7 +92,11 @@ Second, it destroys **recoverability information**. Some outcomes are recoverabl
 
 Third, it destroys **the separation between typical and tail behavior**. The typical day's behavior determines how often you are dealing with routine consequences. The tail behavior determines whether you survive. These require different decision rules, different capital reserves, different governance structures. A framework that cannot distinguish them cannot recommend the right rule, because it has collapsed the information that determines which rule applies.
 
-<!-- → [TABLE: Three-row reference table — rows: "Distributional shape," "Recoverability," "Typical vs. tail behavior." Two columns: "Visible in collapsed score?" (all: No, with a brief note on what is lost) and "Visible in distributional analysis?" (all: Yes, with a brief note on what is preserved and why it matters). Each cell includes a one-line concrete example. Reader should keep this table as a checklist to deploy the next time they receive a heat map score.] -->
+| Property of the risk | Visible in the collapsed score? | Visible in distributional analysis? |
+|---|---|---|
+| **Distributional shape** | **No** — the score reduces shape to a single number; bimodal, fat-tailed, and unimodal risks read identical | **Yes** — the histogram, density, or full distribution preserves shape directly. *Example: a bimodal supply-chain risk that scores 9 looks identical to a unimodal one until you plot it.* |
+| **Recoverability** | **No** — the score does not distinguish a $1M loss that compounds into ruin from one that is absorbed in a quarter | **Yes** — the analysis carries the conditional path forward. *Example: a 5% probability of $20M loss is survivable for a $1B firm, fatal for a $50M firm — the score cannot tell them apart.* |
+| **Typical vs. tail behavior** | **No** — the score averages tail and median into the same cell; a low-probability catastrophic outcome is hidden inside the same number as a high-probability moderate outcome | **Yes** — VaR, CVaR, and the full distribution surface tail behavior explicitly. *Example: a heat-map score of "high" can mean a 50% chance of a $1M loss or a 1% chance of a $50M loss — operationally different decisions.* |
 
 *Figure 4.4*
 
@@ -119,7 +123,15 @@ The canonical artifact of enterprise risk management is the risk register. You h
 
 The register looks like a decision tool. It is partly a communication tool and partly a compliance artifact. Its problem, as a decision tool, is that the risk score column destroys the information in the probability and impact columns. The decision-maker is handed the product, not the factors. The product is sorted. The top of the sort is the agenda. A 5×1 (high probability, low impact) and a 1×5 (low probability, high impact) both score 5. They sit at the same rank in the register. The decision rules they require are categorically different.
 
-<!-- → [TABLE: Sample risk register with five rows — mix of real risk types: billing errors (P=5, I=1, score=5), critical infrastructure breach (P=1, I=5, score=5), vendor contract dispute (P=4, I=2, score=8), regulatory audit failure (P=2, I=4, score=8), routine system downtime (P=3, I=3, score=9). Sort by score descending. Highlight in red: the two pairs with equal scores (5 and 8) whose risk types require categorically different responses. Callout: "Sorted by score, the register treats billing errors and infrastructure breach as equal priority." Reader should see that the sort order — the operative output of the register — actively misleads.] -->
+| Rank | Risk | Probability (1–5) | Impact (1–5) | Score | The decision the score gets wrong |
+|---|---|---|---|---|---|
+| 1 | **Routine system downtime** | 3 | 3 | **9** | Treated as top priority despite being recoverable in hours |
+| 2 (tie) | **Vendor contract dispute** | 4 | 2 | 8 | Likely, modest cost — operational handling |
+| 2 (tie) | **Regulatory audit failure** | 2 | 4 | 8 | Rare but reputation-altering — requires a different response than a vendor dispute |
+| 4 (tie) | **Billing errors** | 5 | 1 | 5 | Frequent annoyance — distributed handling, low priority |
+| 4 (tie) | **Critical infrastructure breach** | 1 | 5 | 5 | Catastrophic and possibly existential — sorted equal to billing errors |
+
+*Sorted by score, the register treats billing errors and an infrastructure breach as equal priority. The two pairs at scores 8 and 5 each contain risks whose appropriate responses are categorically different. The collapse to one number actively misleads the prioritization the register exists to support.*
 
 *Figure 4.5*
 
@@ -560,3 +572,29 @@ End with a side-by-side comparison table: Intervention | P(success) | E[Value] |
 **Connection to previous chapters:** Chapter 2 told you the do-X your decision actually represents. This chapter teaches you to value the do-X correctly — both its expectation and its tail. Together they replace the "intuition + heat map" stack most decisions currently rest on.
 
 **Preview of next chapter:** Chapter 5 leaves Part One and starts Part Two — the math layer. You'll classify each sub-question of your decision onto Pearl's three-rung Ladder and identify which rung your current analysis lives on versus which the decision actually requires.
+
+---
+
+## 🕰️ AI Wayback Machine
+
+The ideas in this chapter didn't appear from nowhere. **Frank Knight** was drawing the foundational distinction between *measurable risk* and *Knightian uncertainty* in *Risk, Uncertainty and Profit* (1921) decades before most people had heard of probability and impact as two independent numbers, not one. Here's a prompt to find out more — and then make it better.
+
+![Frank Knight, c. 1930s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/frank-knight.jpg)
+*Frank Knight, c. 1930s. AI-generated portrait based on a public domain photograph.*
+
+**Run this:**
+
+```
+Who was Frank Knight, and how does his 1921 distinction between measurable risk and Knightian uncertainty connect to the chapter's argument that collapsing probability and impact into a single risk score destroys the information a decision requires? Keep it to three paragraphs. End with the single most surprising thing about his career or ideas.
+```
+
+→ Search **"Frank Knight economist"** on Wikipedia after you run this. See what the model got right, got wrong, or left out.
+
+**Now make the prompt better.** Try one of these:
+
+- Ask it to explain *Knightian uncertainty* in plain language, as if you've never taken an economics course
+- Ask it to compare Knight's distinction to what a heat-map collapse hides about a tail risk
+- Add a constraint: "Answer as if you're writing the case against COSO ERM-style heat maps for a board"
+
+What changes? What gets better? What gets worse?
+

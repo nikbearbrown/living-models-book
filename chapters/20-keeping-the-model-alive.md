@@ -428,3 +428,29 @@ End with a one-paragraph "graduation" note: what does this Living Model now do t
 **Connection to previous chapters:** This chapter closes every loop. The DAG (Ch 6) is now under version control with drift detection. The parameters (Ch 8, 18) update as new data arrives. The recommendations (Ch 18, 19) get re-evaluated each cycle. The named owner (Ch 19) has a runbook. The four properties from Chapter 13 are now operationalized rather than aspirational.
 
 **Preview of next chapter:** There is no next chapter — this is where the book hands you the model and the discipline to keep it alive. The next thing is to point this same architecture at the next decision in your organization that deserves it.
+
+---
+
+## 🕰️ AI Wayback Machine
+
+The ideas in this chapter didn't appear from nowhere. **Gregory Bateson** was writing *Steps to an Ecology of Mind* (1972) on feedback, learning, and what it takes for a system to remain *alive* — adaptive to a changing environment rather than calcified into the conditions it was built for decades before most people had heard of DecisionOps: keeping the Living Model adaptive over its operational life. Here's a prompt to find out more — and then make it better.
+
+![Gregory Bateson, c. 1960s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/gregory-bateson.jpg)
+*Gregory Bateson, c. 1960s. AI-generated portrait based on a public domain photograph.*
+
+**Run this:**
+
+```
+Who was Gregory Bateson, and how does his work on feedback, learning, and *the difference that makes a difference* connect to the chapter's three modes of Living Model decay (parametric drift, structural drift, mechanism failure) and the four-stage feedback loop that keeps the model honest? Keep it to three paragraphs. End with the single most surprising thing about his career or ideas.
+```
+
+→ Search **"Gregory Bateson"** on Wikipedia after you run this. See what the model got right, got wrong, or left out.
+
+**Now make the prompt better.** Try one of these:
+
+- Ask it to explain Bateson's *deutero-learning* (learning to learn) in plain language, as if you've never read cybernetics
+- Ask it to compare Bateson's account of adaptive systems to the DecisionOps disciplines in this chapter
+- Add a constraint: "Answer as if you're writing the on-call runbook for a Living Model that just fired its drift detector"
+
+What changes? What gets better? What gets worse?
+

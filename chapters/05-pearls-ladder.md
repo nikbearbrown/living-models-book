@@ -455,3 +455,29 @@ Then answer the synthesis question: which sub-questions, if I could only resolve
 **Connection to previous chapters:** The intervention diagnostic in Chapter 2 told you which questions cannot be answered observationally. This chapter generalizes that — you now have a principled classification scheme for every question your decision contains and a clear view of how far your current analysis is from where it needs to be.
 
 **Preview of next chapter:** Chapter 6 takes the prioritized sub-questions and turns them into your first directed acyclic graph (DAG) — the structural object the rest of the math layer operates on.
+
+---
+
+## 🕰️ AI Wayback Machine
+
+The ideas in this chapter didn't appear from nowhere. **Karl Pearson** was arguing in *The Grammar of Science* (1892) that *all science is description of association* — the position Pearl's Ladder is, structurally, a refutation of decades before most people had heard of the categorical distinction between association, intervention, and counterfactual. Here's a prompt to find out more — and then make it better.
+
+![Karl Pearson, c. 1890s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/karl-pearson.jpg)
+*Karl Pearson, c. 1890s. AI-generated portrait based on a public domain photograph.*
+
+**Run this:**
+
+```
+Who was Karl Pearson, and how does his program — that science consists of describing associations, not mechanisms — connect, by contrast, to Pearl's argument that observational data alone cannot answer interventional questions? Keep it to three paragraphs. End with the single most surprising thing about his career or ideas.
+```
+
+→ Search **"Karl Pearson"** on Wikipedia after you run this. See what the model got right, got wrong, or left out.
+
+**Now make the prompt better.** Try one of these:
+
+- Ask it to explain why *correlation is not causation* was once a contested rather than obvious claim, in plain language
+- Ask it to compare Pearson's correlationist program to Pearl's Rung 1 / Rung 2 distinction
+- Add a constraint: "Answer as if you're writing the historical preface to a chapter on the do-operator"
+
+What changes? What gets better? What gets worse?
+

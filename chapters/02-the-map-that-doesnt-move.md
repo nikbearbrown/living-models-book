@@ -429,3 +429,29 @@ End with: a numbered list of the THREE most dangerous intervention risks for my 
 **Connection to previous chapters:** Builds directly on the decision and data sources defined in Chapter 1. Without that anchoring this exercise produces generic answers.
 
 **Preview of next chapter:** Chapter 3 audits the *time dimension* of the systems you currently use for this decision — whether they are continually updated in any meaningful sense, and which of three latencies (data, model, decision) is the actual bottleneck.
+
+---
+
+## 🕰️ AI Wayback Machine
+
+The ideas in this chapter didn't appear from nowhere. **Trygve Haavelmo** was publishing *The Probability Approach in Econometrics* in 1944 to argue that observational econometric models cannot, by themselves, support claims about deliberate intervention decades before most people had heard of predictive models breaking under intervention. Here's a prompt to find out more — and then make it better.
+
+![Trygve Haavelmo, c. 1950s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/trygve-haavelmo.jpg)
+*Trygve Haavelmo, c. 1950s. AI-generated portrait based on a public domain photograph.*
+
+**Run this:**
+
+```
+Who was Trygve Haavelmo, and how does his 1944 distinction between observational fit and intervention-supporting structure connect to why predictive models break when used to recommend deliberate action? Keep it to three paragraphs. End with the single most surprising thing about his career or ideas.
+```
+
+→ Search **"Trygve Haavelmo"** on Wikipedia after you run this. See what the model got right, got wrong, or left out.
+
+**Now make the prompt better.** Try one of these:
+
+- Ask it to explain the *autonomy of structural equations* in plain language, as if you've never seen an economic model
+- Ask it to compare Haavelmo's structural-vs-reduced-form distinction to today's predictive-vs-causal model debate
+- Add a constraint: "Answer as if you're writing the warning label on a forecast that will be used to set policy"
+
+What changes? What gets better? What gets worse?
+

@@ -600,3 +600,29 @@ Save everything to the Living Model folder.
 **Connection to previous chapters:** Chapter 16 produced the expert v3 CPDAG. Chapter 8 produced the estimation pipeline. This chapter brings the algorithmic perspective and resolves it against the expert one — closing the structure-learning loop. The output (validated DAG under version control) is what Chapter 18's parameterization pipeline operates on.
 
 **Preview of next chapter:** Chapter 18 takes the validated DAG and turns it into actual recommendations. You'll parameterize it, run the counterfactual engine, rank candidate interventions by Expected Value, and solve the constrained-knapsack portfolio problem to produce the package that the executive report will consume.
+
+---
+
+## 🕰️ AI Wayback Machine
+
+The ideas in this chapter didn't appear from nowhere. **Bruno de Finetti** was founding subjective Bayesianism in the 1930s — the formal account of how a coherent probabilistic agent updates beliefs given evidence, which is exactly what discovery algorithms (PC, GES, NOTEARS, FCI) operationalize decades before most people had heard of running causal-discovery algorithms on data and reconciling their output with expert structure. Here's a prompt to find out more — and then make it better.
+
+![Bruno de Finetti, c. 1950s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/bruno-de-finetti.jpg)
+*Bruno de Finetti, c. 1950s. AI-generated portrait based on a public domain photograph.*
+
+**Run this:**
+
+```
+Who was Bruno de Finetti, and how does his subjective Bayesian framework — particularly his exchangeability theorem — connect to the chapter's argument that resolving a CPDAG requires reconciling expert priors with data-driven discovery algorithms like PC, GES, and NOTEARS? Keep it to three paragraphs. End with the single most surprising thing about his career or ideas.
+```
+
+→ Search **"Bruno de Finetti"** on Wikipedia after you run this. See what the model got right, got wrong, or left out.
+
+**Now make the prompt better.** Try one of these:
+
+- Ask it to explain *exchangeability* in plain language, as if you've never seen a Bayesian textbook
+- Ask it to compare de Finetti's expert-prior-plus-data framework to the three-step expert-vs-algorithm resolution protocol in this chapter
+- Add a constraint: "Answer as if you're writing the documentation for a CPDAG resolution tool"
+
+What changes? What gets better? What gets worse?
+

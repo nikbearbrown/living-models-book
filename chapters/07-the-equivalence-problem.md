@@ -419,3 +419,29 @@ End with: a prioritized list of UNDIRECTED edges ordered by decision-impact, and
 **Connection to previous chapters:** Chapter 6 gave you the DAG you currently believe in. This chapter shows you which parts of that belief are actually defensible from data alone and which require expert judgment — setting up Chapter 8's effect estimation and Chapter 14's expert interview.
 
 **Preview of next chapter:** Chapter 8 turns the structural problem into a measurement problem — given the DAG, you'll specify the backdoor adjustment set and write a plan to estimate the causal effect of your candidate intervention using double machine learning and causal forests.
+
+---
+
+## 🕰️ AI Wayback Machine
+
+The ideas in this chapter didn't appear from nowhere. **Bertrand Russell** was arguing in *On the Notion of Cause* (1913) that observational data could not, in principle, distinguish A→B from B→A from a common cause — the philosophical anticipation of what Markov equivalence formalizes decades before most people had heard of Markov equivalence and the necessity of expert input. Here's a prompt to find out more — and then make it better.
+
+![Bertrand Russell, c. 1910s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/bertrand-russell.jpg)
+*Bertrand Russell, c. 1910s. AI-generated portrait based on a public domain photograph.*
+
+**Run this:**
+
+```
+Who was Bertrand Russell, and how does his 1913 essay *On the Notion of Cause* — arguing that observation cannot distinguish causal direction from common-cause explanations — connect to the chapter's claim that Markov-equivalence makes expert input mathematically necessary, not merely useful? Keep it to three paragraphs. End with the single most surprising thing about his career or ideas.
+```
+
+→ Search **"Bertrand Russell"** on Wikipedia after you run this. See what the model got right, got wrong, or left out.
+
+**Now make the prompt better.** Try one of these:
+
+- Ask it to explain why Russell wanted to *eliminate* the notion of cause from physics, in plain language
+- Ask it to compare Russell's 1913 critique to the formal Markov-equivalence theorem proved decades later
+- Add a constraint: "Answer as if you're writing the introduction to a chapter on why DAGs require domain experts"
+
+What changes? What gets better? What gets worse?
+

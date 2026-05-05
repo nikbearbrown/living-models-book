@@ -110,7 +110,23 @@ A variable belongs if three criteria are met. It must be *causally relevant* —
 
 The facilitator's tool at this phase is relentless clarification: *What does this variable mean precisely? How would you measure it? What would a one-unit change in it look like? Is this the same as the variable we called Y two minutes ago, or is it different?* Linguistic ambiguity is pinned down at this stage, not later.
 
-<!-- → [TABLE: Three-column worked example of variable identification for a corporate market entry model. Column 1: "Expert's initial variable" — 12 variables including "competitive position," "brand strength," "organizational capability," "customer trust," etc. Column 2: "Clarification question(s) applied" — specific facilitator questions for each: e.g., "What does 'competitive position' mean precisely? Is it market share, price premium, or something else?" Column 3: "Outcome" — one of three: "Refined and included" (variable redefined precisely), "Merged with another" (e.g., NPS merged into customer_satisfaction_score), or "Excluded" (e.g., "organizational capability" too broad, no agreed measure). Final row: summary row showing 12 → 8 variables. Caption: "Variable identification is the most underestimated phase. Every hour spent here saves three hours of structural confusion later."] -->
+| Expert's initial variable | Clarification question(s) applied | Outcome |
+|---|---|---|
+| Competitive position | "What does *competitive position* mean precisely? Market share, price premium, or something else?" | **Refined and included** as `relative_price_premium` |
+| Brand strength | "Brand awareness, brand preference, or brand loyalty? Which one drives the decision you're modeling?" | **Refined and included** as `brand_preference_index` |
+| Organizational capability | "Capability to do what, specifically? Engineering throughput? Sales conversion? Operations cost control?" | **Excluded** — too broad, no agreed measurement; replaced by three specific capability variables introduced later |
+| Customer trust | "Trust as measured by NPS, by repeat-purchase rate, or by some other instrument?" | **Merged** with `customer_satisfaction_score` |
+| Customer satisfaction | (covered above) | **Refined and included** as `customer_satisfaction_score` |
+| Market opportunity | "What's the unit — addressable market size in dollars, in segment count, in growth rate?" | **Refined and included** as `addressable_market_dollars` |
+| Channel strength | "Direct sales, partner channel, or both? Which one is the variable that matters?" | **Refined and included** as `partner_channel_coverage` |
+| Pricing power | "Price elasticity? Margin? Floor price?" | **Merged** with `relative_price_premium` |
+| Product fit | "Fit to whose needs? The buyer's, the user's, the regulator's?" | **Refined and included** as `buyer_jtbd_fit` |
+| Operational readiness | "Ready to do what specifically? Ship in volume? Support 24×7? Localize?" | **Refined and included** as `support_sla_capacity` |
+| Risk profile | "Financial risk, regulatory risk, or operational risk?" | **Excluded** — three different things; will appear as three separate downstream variables if needed |
+| Speed to market | "Time from decision to first revenue? Or to general availability?" | **Refined and included** as `time_to_first_revenue_weeks` |
+| **Result** | 12 → 8 variables | — |
+
+*Variable identification is the most underestimated phase. Every hour spent here saves three hours of structural confusion later.*
 
 *Figure 14.5*
 
@@ -146,7 +162,39 @@ For nodes with many parents, the combinatorial explosion makes direct elicitatio
 
 The mathematical assumption underlying Noisy-OR is that the parental effects are independent: parent A's contribution to the outcome does not depend on whether parent B is also active. This assumption does not always hold. When it holds, Noisy-OR reduces an exponentially large table to a linearly small set of parameters; when it fails, the model misrepresents the conditional structure. The facilitator's job is to assess, for each node, whether the independence assumption is defensible and to flag cases where it is not.
 
-<!-- → [TABLE: Side-by-side comparison of full CPT versus Noisy-OR parameterization for a node with four binary parents (P1, P2, P3, P4). Left table: full conditional probability table — 16 rows, one per combination of parent values (0000, 0001, ..., 1111), each row requiring one probability elicitation. Header: "Full CPT: 16 parameters required." Right table: Noisy-OR — 5 rows: one per parent (inhibition probability q1, q2, q3, q4) plus one background probability (q0 = base rate with no parents active). Header: "Noisy-OR: 5 parameters required." Below both tables: two annotations — (1) "When parental independence holds: Noisy-OR is dramatically more efficient." (2) "When parental independence fails: the model is wrong in a specific, diagnosable way — interactions between parents are invisible." Reader should understand both the efficiency gain and the price of the structural assumption.] -->
+**Full CPT — 16 parameters required (one per row)**
+
+| $P_1$ | $P_2$ | $P_3$ | $P_4$ | $P(Y = 1 \mid \text{parents})$ |
+|:---:|:---:|:---:|:---:|---|
+| 0 | 0 | 0 | 0 | $p_{0000}$ |
+| 0 | 0 | 0 | 1 | $p_{0001}$ |
+| 0 | 0 | 1 | 0 | $p_{0010}$ |
+| 0 | 0 | 1 | 1 | $p_{0011}$ |
+| 0 | 1 | 0 | 0 | $p_{0100}$ |
+| 0 | 1 | 0 | 1 | $p_{0101}$ |
+| 0 | 1 | 1 | 0 | $p_{0110}$ |
+| 0 | 1 | 1 | 1 | $p_{0111}$ |
+| 1 | 0 | 0 | 0 | $p_{1000}$ |
+| 1 | 0 | 0 | 1 | $p_{1001}$ |
+| 1 | 0 | 1 | 0 | $p_{1010}$ |
+| 1 | 0 | 1 | 1 | $p_{1011}$ |
+| 1 | 1 | 0 | 0 | $p_{1100}$ |
+| 1 | 1 | 0 | 1 | $p_{1101}$ |
+| 1 | 1 | 1 | 0 | $p_{1110}$ |
+| 1 | 1 | 1 | 1 | $p_{1111}$ |
+
+**Noisy-OR — 5 parameters required**
+
+| Parameter | Meaning |
+|---|---|
+| $q_0$ | Background probability of $Y=1$ when no parent is active |
+| $q_1$ | Inhibition probability for $P_1$ — probability $P_1$ fails to activate $Y$ when $P_1=1$ |
+| $q_2$ | Inhibition probability for $P_2$ |
+| $q_3$ | Inhibition probability for $P_3$ |
+| $q_4$ | Inhibition probability for $P_4$ |
+
+- *When parental independence holds:* Noisy-OR is dramatically more efficient — 5 elicitations instead of 16.
+- *When parental independence fails:* the model is wrong in a specific, diagnosable way — interactions between parents are invisible. The price of the structural assumption is paid in the residuals.
 
 *Figure 14.6*
 
@@ -247,7 +295,16 @@ Six structural barriers explain the gap. They are distinct. Addressing one of th
 
 **Barrier 6: Discretization of continuous variables.** Many BN tools require continuous variables to be discretized into bins for computational tractability. The choice of bins is arbitrary and affects the model's outputs. Stakeholders who discover this lose trust in models whose conclusions are sensitive to the discretization. Modern BN methods have made progress on this, but the perception persists, and it is a real barrier to adoption in contexts where the audience is technically sophisticated enough to ask about it.
 
-<!-- → [TABLE: Six-barrier diagnostic reference table. Six rows, one per barrier. Four columns: (1) Barrier name and one-line description; (2) Why it is structural — why better data or algorithms would not address it; (3) Binding context — the types of corporate settings where this barrier is most likely to be the primary constraint; (4) Architectural response — the specific Living Model design feature that addresses it (e.g., Barrier 1 → Ch. 16 LLM-guided elicitation compression; Barrier 2 → structured scaffolding encoding facilitator protocols; Barrier 3 → Living Model output format; Barrier 4 → speed and visual legibility; Barrier 5 → governed reusable model artifact; Barrier 6 → continuous BN methods). Caption: "Each barrier is real. None is insuperable. The architecture of Chapters 15–17 is designed to address all six simultaneously — addressing any subset leaves the others blocking adoption."] -->
+| Barrier | Why it is structural | Binding context | Architectural response |
+|---|---|---|---|
+| **1. Engagement duration** — KEBN takes weeks to months per session | The bottleneck is human attention, not algorithmic speed; better algorithms don't compress an expert's time budget | Fast-moving corporate decisions where leadership cannot commit eight weeks | Ch 16 — LLM-guided 45-minute first-pass interview |
+| **2. Methodological skepticism** — corporate experts trust intuition over structured probabilistic protocols | A discipline gap, not a tooling gap; better software does not bridge it | Senior leadership accustomed to qualitative judgment over formal models | Structured scaffolding that encodes facilitator protocols inside the tool, not the user |
+| **3. Output legibility** — KEBN outputs are static documents, not living artifacts | The decision-maker needs an artifact that updates, not a snapshot | Organizations whose decisions recur and whose models therefore must persist | Ch 19 — Living Model output format with audit record + versioning |
+| **4. Visualization barrier** — DAGs in current tooling are slow, ugly, and intimidating to non-technical viewers | The viewer's experience determines adoption; the math doesn't care | Boardroom and executive audiences with no graph-theory background | Speed and visual legibility built into the rendering layer |
+| **5. Single-use modeling** — each engagement produces a one-off model that is not reused | Without a governance model, knowledge accumulated in one session does not transfer | Organizations with related decisions across business units | Governed reusable model artifact with version control and re-elicitation triggers |
+| **6. Static parameterization** — once parameters are set, they don't update with new evidence | Bayesian updating is mathematically simple but operationally absent from KEBN tooling | Any deployment where the world changes between elicitations | Ch 20 — Continuous Bayesian methods on edge parameters; structural drift detector |
+
+*Each barrier is real. None is insuperable. The architecture of Chapters 15–17 is designed to address all six simultaneously — addressing any subset leaves the others blocking adoption.*
 
 *Figure 14.10*
 
@@ -523,3 +580,29 @@ End with a recommendation: which 1–2 of the still-uncertain edges most need ei
 **Connection to previous chapters:** Chapter 7 said expert input is mathematically required. Chapter 13 said the elicitation gap was the weakest property of your model. This chapter starts closing it.
 
 **Preview of next chapter:** Chapter 15 audits your v2 CPDAG against the three errors expert reasoners systematically make — collider blindness, feedback-loop simplification, domain-matching heuristics — and stress-tests the orientations you just committed.
+
+---
+
+## 🕰️ AI Wayback Machine
+
+The ideas in this chapter didn't appear from nowhere. **Michael Polanyi** was naming and analyzing *tacit knowledge* in *Personal Knowledge* (1958) — the form of expert knowledge that, by definition, cannot be transferred without a structured elicitation discipline decades before most people had heard of Knowledge Engineering with Bayesian Networks and the necessity of structured expert elicitation. Here's a prompt to find out more — and then make it better.
+
+![Michael Polanyi, c. 1950s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/michael-polanyi.jpg)
+*Michael Polanyi, c. 1950s. AI-generated portrait based on a public domain photograph.*
+
+**Run this:**
+
+```
+Who was Michael Polanyi, and how does his concept of *tacit knowledge* — the claim that experts know more than they can articulate — connect to the chapter's argument that causal-graph construction requires structured elicitation protocols (Delphi, IDEA, KEBN), not just an expert in the room? Keep it to three paragraphs. End with the single most surprising thing about his career or ideas.
+```
+
+→ Search **"Michael Polanyi"** on Wikipedia after you run this. See what the model got right, got wrong, or left out.
+
+**Now make the prompt better.** Try one of these:
+
+- Ask it to explain *tacit knowledge* in plain language, as if you've never read philosophy of science
+- Ask it to compare Polanyi's claim that experts know more than they can articulate to the structured probes a KEBN session uses to extract causal claims
+- Add a constraint: "Answer as if you're writing the rationale for the elicitation budget in a Living Model proposal"
+
+What changes? What gets better? What gets worse?
+

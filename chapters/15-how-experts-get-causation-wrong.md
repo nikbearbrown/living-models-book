@@ -94,7 +94,12 @@ Domain-matching is not always a mistake. Genuine cross-domain transfer of mechan
 
 The architectural response is to make the domain transfer explicit. When an expert proposes a causal mechanism, the elicitation should ask: *what is the source of this mechanism — direct observation in this domain, or analogy from another domain?* If the answer is analogy, the elicitation should probe whether the assumptions that make the analogy work in the source domain also hold in the target domain. Often they do not, and the expert recognizes this when forced to articulate them. Surfacing the heuristic is half the work of correcting it.
 
-<!-- → [TABLE: Domain-matching audit framework — rows: Physics → Finance (physics envy), Engineering → Medicine (device reliability → patient outcomes), Economics → Ecology, Military → Business strategy; columns: Source domain, Target domain, Assumptions that hold in source but not target, Canonical failure case, Elicitation probe to surface the mismatch; purpose is to give elicitors a concrete reference for the most common cross-domain imports in organizational decision-making] -->
+| Source domain | Target domain | Assumptions that hold in source but not target | Canonical failure | Elicitation probe to surface the mismatch |
+|---|---|---|---|---|
+| **Physics** | Finance | Time-invariant laws; stationary distributions; no reflexivity between observer and observed | "Physics envy" — Black–Scholes assumed lognormal returns; the 2008 crash showed the distribution wasn't stationary | "What about this domain would invalidate a closed-form physical-style model?" |
+| **Engineering** | Medicine | Components have specifications; failure modes are characterizable; tests are non-destructive | A device-reliability mindset applied to drug efficacy ignores patient heterogeneity and adherence | "If we treated this patient as a *component*, what would we be missing?" |
+| **Economics** | Ecology | Agents optimize; preferences are stable; equilibrium exists | Cap-and-trade designs assume substitutability that ecosystem services don't actually have | "What about this system makes substitution between units of [outcome] not equivalent?" |
+| **Military** | Business strategy | Adversary is rational; objectives are clear; engagement is bounded in time | "Crush the competition" rhetoric masks that customers, regulators, and partners are not adversaries | "Who in this picture isn't trying to win — and what does that change?" |
 
 *Figure 15.3*
 
@@ -124,7 +129,14 @@ The architectural implication is that expert intuition is *context-dependent rel
 
 This is one of the deepest practical lessons of the entire elicitation literature. The question is not whether to trust the expert; it is *which intuitions* to trust and *which to interrogate*. A blanket policy of trusting expert judgment is wrong; a blanket policy of distrusting it is also wrong. The right policy is differentiated — calibrated to the environment in which the intuition was formed and the type of judgment being asked for. The elicitation architecture in Chapter 16 implements this differentiation.
 
-<!-- → [TABLE: Kind vs. wicked environments applied to expert causal judgment — rows: Diagnostic clinical reasoning, Prognostic clinical reasoning, Chess, Macroeconomic forecasting, Supply chain operations, Strategic management; columns: Environment type (Kind/Wicked/Mixed), Feedback characteristics, Reliability of expert intuition, Elicitation posture (lean on intuition vs. interrogate formally); purpose is to make the kind/wicked distinction concrete across domains the book's audience will recognize] -->
+| Domain | Environment type | Feedback characteristics | Reliability of expert intuition | Elicitation posture |
+|---|---|---|---|---|
+| **Diagnostic clinical reasoning** | Kind | Fast, accurate, repeatable feedback per case | High — pattern-matching after thousands of cases is reliable | Lean on intuition; probe for the specific feature triggering the diagnosis |
+| **Prognostic clinical reasoning** | Mixed | Slow feedback (months / years); hidden by survival bias | Mixed — calibration on long horizons is poor even for skilled clinicians | Interrogate formally; require the expert to commit numbers and revisit |
+| **Chess** | Kind | Fast, deterministic outcome per move | High — deliberate practice over years yields reliable intuition | Lean on intuition; surface the move tree only when the position is novel |
+| **Macroeconomic forecasting** | Wicked | Decade-scale feedback; non-stationary regimes; reflexive | Low — even credentialed experts perform near chance on out-of-sample forecasts | Interrogate formally; ensemble across experts; require sensitivity bounds |
+| **Supply chain operations** | Mixed | Some feedback weekly, some only after rare events | Mixed — strong on routine, weak on tail risk | Lean on intuition for routine flow; interrogate formally for tail-risk parameters |
+| **Strategic management** | Wicked | Years-long feedback loops; confounded by everything | Low — overconfidence is the dominant failure mode | Interrogate formally; structured Delphi or IDEA; never accept a point estimate |
 
 *Figure 15.4*
 
@@ -269,3 +281,29 @@ End with: which of the three errors is the biggest risk for MY domain specifical
 **Connection to previous chapters:** Chapter 14 produced the expert-refined graph. This chapter says the expert is human and audits accordingly. Together they give you a model that has been built deliberately AND stress-tested against the predictable failure modes of expert judgment.
 
 **Preview of next chapter:** Chapter 16 turns expert elicitation into software. You'll set up the four-agent architecture (Interviewer, Consistency, Equivalence, Bias-Watch) and run a 45-minute multi-agent interview that produces a refined CPDAG with all three of this chapter's errors actively monitored.
+
+---
+
+## 🕰️ AI Wayback Machine
+
+The ideas in this chapter didn't appear from nowhere. **Amos Tversky** was co-developing the heuristics-and-biases program with Daniel Kahneman in the 1970s — the foundational catalog of the cognitive failures the chapter's elicitation probes are designed to surface decades before most people had heard of the cognitive failures (collider blindness, feedback simplification, anchoring) that an expert elicitation has to detect. Here's a prompt to find out more — and then make it better.
+
+![Amos Tversky, c. 1980s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/amos-tversky.jpg)
+*Amos Tversky, c. 1980s. AI-generated portrait based on a public domain photograph.*
+
+**Run this:**
+
+```
+Who was Amos Tversky, and how does his work with Kahneman on heuristics and biases — anchoring, availability, representativeness — connect to the specific cognitive failures (collider blindness, feedback-loop simplification, domain-matching, anchoring) the chapter teaches you to design probes for? Keep it to three paragraphs. End with the single most surprising thing about his career or ideas.
+```
+
+→ Search **"Amos Tversky"** on Wikipedia after you run this. See what the model got right, got wrong, or left out.
+
+**Now make the prompt better.** Try one of these:
+
+- Ask it to explain *the anchoring effect* in plain language, as if you've never seen a behavioral economics paper
+- Ask it to compare Tversky's general anchoring research to the specific anchoring failure that the first edge in an elicitation imposes on every later edge
+- Add a constraint: "Answer as if you're writing the cognitive-bias-watch agent's system prompt"
+
+What changes? What gets better? What gets worse?
+

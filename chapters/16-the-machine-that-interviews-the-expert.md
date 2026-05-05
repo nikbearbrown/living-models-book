@@ -429,3 +429,29 @@ Output:
 **Connection to previous chapters:** Chapter 14 ran a single-expert KEBN session. Chapter 15 audited the orientation choices. This chapter wraps both into a structured architecture that works in 45 minutes instead of weeks — the key bottleneck-removal that makes the rest of the Living Model architecture deployable at organizational scale.
 
 **Preview of next chapter:** Chapter 17 brings algorithmic causal discovery into the loop. You'll run PC, GES, and (on synthetic data from your SCM) NOTEARS over your variable list and resolve disagreements between the algorithmic CPDAG and your expert v3 CPDAG using the three-step protocol.
+
+---
+
+## 🕰️ AI Wayback Machine
+
+The ideas in this chapter didn't appear from nowhere. **Margaret Mead** was developing structured ethnographic interviewing in *Coming of Age in Samoa* (1928) and the methodological work that followed — the disciplined elicitation of tacit knowledge from a domain expert who is, in this case, a culture decades before most people had heard of an LLM-guided multi-agent interview that elicits expert causal knowledge in 45 minutes. Here's a prompt to find out more — and then make it better.
+
+![Margaret Mead, c. 1930s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/margaret-mead.jpg)
+*Margaret Mead, c. 1930s. AI-generated portrait based on a public domain photograph.*
+
+**Run this:**
+
+```
+Who was Margaret Mead, and how does her structured ethnographic interviewing — the disciplined elicitation of cultural knowledge from informants who couldn't articulate it directly — connect to the multi-agent LLM interview architecture (Interviewer, Consistency, Equivalence, Bias-Watch) the chapter specifies? Keep it to three paragraphs. End with the single most surprising thing about her career or ideas.
+```
+
+→ Search **"Margaret Mead"** on Wikipedia after you run this. See what the model got right, got wrong, or left out.
+
+**Now make the prompt better.** Try one of these:
+
+- Ask it to explain *participant observation* in plain language, as if you've never read anthropology
+- Ask it to compare Mead's structured field-interview protocol to the four-agent role split in the chapter
+- Add a constraint: "Answer as if you're writing the system prompt for the Interviewer agent"
+
+What changes? What gets better? What gets worse?
+

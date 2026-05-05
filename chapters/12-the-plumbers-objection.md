@@ -62,7 +62,13 @@ If the plumber is right that there is a gap between correct estimate and effecti
 
 The plumber's objection is that the modeling apparatus developed in Part Two gives the practitioner no guidance on any of these factors. The apparatus tells her what would happen if the intervention were delivered cleanly. The plumbing factors determine whether the intervention is delivered cleanly. The bridge between *would happen* and *will happen* is the work of the plumber, and the modeling apparatus is silent on it.
 
-<!-- → [TABLE: Five plumbing factors — rows: Administrative Friction, Default Architectures, Incentive Architectures, Behavioral Biases, Institutional Inertia; columns: Definition, Classic example from the literature, Why causal models miss it, Plumbing fix category; purpose is to make the gap between causal estimate and effective change concrete and scannable] -->
+| Plumbing factor | Definition | Classic example | Why causal models miss it | Plumbing-fix category |
+|---|---|---|---|---|
+| **Administrative friction** | Procedural steps (forms, approvals, manual entry) that reduce take-up out of proportion to monetary cost | Tangier study: removing forms increased take-up sevenfold without changing economic terms | The model parameterizes the *intervention*, not the *steps* that gate it | Process redesign — remove steps |
+| **Default architectures** | The choice that operates absent active opt-in | Save More Tomorrow (default-on retirement saving) | Defaults are upstream of the variables most models include | Set the default to the action you want |
+| **Incentive architectures** | The schedule under which actors receive rewards or sanctions | Sales-team commissions that distort intervention behavior | The model treats incentives as constants, not as instruments | Align the incentive with the intended behavior |
+| **Behavioral biases** | Systematic deviations from the rational agent assumed by the causal model | Loss aversion, hyperbolic discounting | The model assumes the response is the rational best-response | Frame the intervention to the bias rather than against it |
+| **Institutional inertia** | The resistance of the organization to changing its routines | A pricing change blocked by a six-month legal review cycle | The model has no representation of the organization's clock | Sequence the intervention to the institution's actual cadence |
 
 *Figure 12.3*
 
@@ -159,7 +165,11 @@ The second is **continual structural updating**. The Living Model has to update 
 
 The third is **human-in-the-loop orchestration**. The discovery of leaks is not currently automatable. It requires people who go and look at what is happening — sales-to-success handoffs, CSM workloads, metric definitions — and who can recognize when the gap between estimate and outcome is the result of plumbing. The Living Model architecture has to support the work of these people, not replace it. It has to flag where leaks are likely, surface deployment metrics that make leaks visible, and route the resulting plumbing fixes back into the model's structural commitments. Chapter 19's executive report and Chapter 20's continual update protocol both depend on this human-machine collaboration.
 
-<!-- → [TABLE: Three Living Model demands from the plumber's objection — rows: Deployment Instrumentation, Continual Structural Updating, Human-in-the-Loop Orchestration; columns: What it requires, What breaks without it, Which Part Three chapter operationalizes it; purpose is to connect the plumber's objection directly to the architecture of Part Three before the reader enters it] -->
+| Demand | What it requires | What breaks without it | Part Three chapter |
+|---|---|---|---|
+| **Deployment Instrumentation** | Logging at the point of action — what was recommended, what was done, what happened | The plumber's gap is invisible; the model cannot self-correct | Ch 19 (Causal Brain Executive Report) and Ch 20 (DecisionOps) |
+| **Continual Structural Updating** | Drift detection on edges, not just parameters; re-elicitation triggers | The graph drifts past its valid window without anyone noticing | Ch 17 (Resolving the Graph) and Ch 20 (Keeping the Model Alive) |
+| **Human-in-the-Loop Orchestration** | Named accountability at each stage; the model recommends, the human decides | The recommendation gets executed without the judgment that licenses it | Ch 19 (Executive Report named-owner block) |
 
 *Figure 12.6*
 
@@ -294,3 +304,29 @@ Output:
 **Connection to previous chapters:** Chapter 11 designed the trial. This chapter says the trial result is an upper bound — the deployment effect will be less, and the friction map tells you by how much and where. Together they give you a defensible deployment forecast rather than the over-optimistic projection that produces most disappointed executives.
 
 **Preview of next chapter:** Chapter 13 closes Part Two and opens Part Three. You'll audit everything you've built so far against the four properties of a Living Model — causal, counterfactual, continually updated, treatment-oriented — and identify which properties are present and which still need to be built in Part Three.
+
+---
+
+## 🕰️ AI Wayback Machine
+
+The ideas in this chapter didn't appear from nowhere. **Esther Boserup** was documenting in *The Conditions of Agricultural Growth* (1965) how interventions that look correct on paper run aground on the implementation realities of the populations they target decades before most people had heard of the gap between a correct causal estimate and an effective organizational change. Here's a prompt to find out more — and then make it better.
+
+![Esther Boserup, c. 1960s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/esther-boserup.jpg)
+*Esther Boserup, c. 1960s. AI-generated portrait based on a public domain photograph.*
+
+**Run this:**
+
+```
+Who was Esther Boserup, and how does her work on agricultural intensification — particularly her insistence on documenting how peasants actually responded to interventions, not how they were modeled to respond — connect to the chapter's argument that a clean causal estimate does not survive contact with the implementation cascade? Keep it to three paragraphs. End with the single most surprising thing about her career or ideas.
+```
+
+→ Search **"Esther Boserup"** on Wikipedia after you run this. See what the model got right, got wrong, or left out.
+
+**Now make the prompt better.** Try one of these:
+
+- Ask it to explain *induced intensification* in plain language, as if you've never read development economics
+- Ask it to compare Boserup's field-level documentation of take-up to the *plumber* discipline this chapter teaches
+- Add a constraint: "Answer as if you're writing the implementation section of a deployment plan"
+
+What changes? What gets better? What gets worse?
+

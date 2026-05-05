@@ -66,7 +66,10 @@ If the recommendation is unsized — *the model suggests raising prices* without
 
 If the recommendation is unowned — *management should consider raising prices* — the accountability structure of the decision is diffuse before it even begins. Who is management? Who decides? The report has produced a discussion topic rather than a recommendation.
 
-<!-- → [TABLE: Three-column recommendation quality rubric. Column headers: "Unspecific," "Unsized," "Well-formed." Row 1 — Example text: "Management should consider pricing actions." / "Raise enterprise prices by 12% in Europe." / "Raise enterprise prices by 12% in Europe before Sept 15. Owner: Head of Enterprise Pricing. Expected revenue impact: $12M (90% CI: $7M–$17M). Expected churn impact: +1.4 pp (90% CI: +0.8–+2.1 pp)." Row 2 — What the executive cannot do: (Unspecific) "Cannot form an execution plan — no lever, timing, or scope." / (Unsized) "Cannot evaluate whether action is worth organizational cost." / (Well-formed) "Has everything needed for execution and accountability." Each column is a checklist for recommendations the practitioner produces or reviews.] -->
+| | Unspecific | Unsized | Well-formed |
+|---|---|---|---|
+| **Example text** | "Management should consider pricing actions." | "Raise enterprise prices by 12% in Europe." | "Raise enterprise prices by 12% in Europe before Sept 15. Owner: Head of Enterprise Pricing. Expected revenue impact: \$12M (90% CI: \$7M–\$17M). Expected churn impact: +1.4 pp (90% CI: +0.8–+2.1 pp)." |
+| **What the executive cannot do** | Cannot form an execution plan — no lever, no timing, no scope | Cannot evaluate whether action is worth organizational cost — magnitudes are missing | (No deficiency) — has everything needed for execution and accountability |
 
 *Figure 19.1*
 
@@ -96,7 +99,11 @@ If evidence is presented as graph structure rather than domain language, the exe
 
 If evidence omits the confidence distinctions — treating all variables as equally grounded regardless of their evidence base — the executive cannot identify which parts of the recommendation are most vulnerable to being wrong.
 
-<!-- → [TABLE: Example evidence section for the pricing recommendation. Three rows, one per key variable. Columns: Variable name (domain language), Estimated value, Confidence level (HIGH / MEDIUM / EXPERT-ANCHORED), Evidence source and sample, Contribution to projected effect. Row 1: "European enterprise price elasticity: −0.73. HIGH. 18 months observational data, 2,400 accounts. Primary driver of revenue projection." Row 2: "Enterprise churn sensitivity to price: +1.8 pp per 10% increase. MEDIUM. 14 months data, smaller sample in this tier. Principal risk factor." Row 3: "Competitive response lag: 8–12 weeks. EXPERT-ANCHORED. VP Sales, session 2024-Q2-3. Timing parameter for NA rollout." Callout annotations on each row: what the executive should do with each entry — "trust and use," "probe with domain knowledge," "monitor and test."] -->
+| Variable | Estimated value | Confidence | Evidence source and sample | Contribution to projected effect |
+|---|---|---|---|---|
+| **European enterprise price elasticity** | $-0.73$ | **HIGH** | 18 months observational data, 2,400 accounts, DML estimate, CI $[-0.84, -0.62]$ | Primary driver of the revenue projection — *trust and use* |
+| **Enterprise churn sensitivity to price** | $+1.8$ pp per 10% increase | **MEDIUM** | 14 months data, 870 accounts in this tier; smaller sample, wider CI $[+0.9, +2.7]$ | Principal risk factor — *probe with domain knowledge* |
+| **Competitive response lag** | 8–12 weeks | **EXPERT-ANCHORED** | VP Sales, elicitation session 2024-Q2-3, no observational support yet | Timing parameter for the NA rollout — *monitor and test* |
 
 *Figure 19.2*
 
@@ -264,7 +271,15 @@ The narrator generates the report; the report is read by a human owner; the huma
 
 Living Models that connect their narration directly to action — that recommend a price change and then execute the price change without human review — are operating outside the architecture this book describes. The report's purpose is to support a human decision, not to replace it. The named human owner from the accountability framework is not optional; it is structural.
 
-<!-- → [TABLE: Two-column narration evaluation rubric. Left column header: "Must-Do (✓ if satisfied)." Right column header: "Must-Never (✗ if violated)." Six rows on the left and seven rows on the right, each as a single-line checklist item with a brief description of what satisfaction / violation looks like. Left rows: (1) Translates ranking into specific recommendation — "First paragraph names the model's top-ranked action." (2) Surfaces confidence with intervals — "Every projection includes CI at stated confidence level." (3) Flags uncertainty without undermining — "Assumptions stated with magnitude, not generic hedges." (4) Grounds claims in model evidence — "Every claim traceable to a package output." (5) Produces reasoning trace — "Log of which package outputs were consulted." (6) Consistent identity — "Voice and structure match prior reports." Right rows: (1) Explains the model — "No methodology paragraphs in the report." (2) Shows full graph — "DAG in appendix only." (3) Presents options as equal — "Top-ranked option is headline; alternatives are contextualized with shortfall." (4) Claims outside model scope — "No assertions about legal, competitive, or macro factors not in the package." (5) Generic apologies — "No 'the model has limitations' language." (6) Fabricates consensus — "No 'the system recommends' without a named mechanism." (7) Acts autonomously — "No action executed without sign-off."] -->
+| Must-Do (✓ if satisfied) | Must-Never (✗ if violated) |
+|---|---|
+| **1. Translates the model's ranking into a specific recommendation.** First paragraph names the model's top-ranked action — actor, action, magnitude, timing. | **1. Explains the model.** No methodology paragraphs in the report — methodology lives in the appendix or the model card. |
+| **2. Surfaces confidence with intervals.** Every projection includes a confidence interval at a stated confidence level. | **2. Shows the full graph.** The DAG belongs in the appendix; the report shows the active causal pathway, not the full structure. |
+| **3. Flags uncertainty without undermining the recommendation.** Assumptions are stated with magnitude, not generic hedges. | **3. Presents options as equal.** The top-ranked option is the headline; alternatives are contextualized with a named shortfall. |
+| **4. Grounds every claim in model evidence.** Each claim is traceable to a specific package output by file path. | **4. Claims outside the model's scope.** No assertions about legal, competitive, or macro factors not in the package. |
+| **5. Produces a reasoning trace.** Logs which package outputs were consulted to produce each section. | **5. Generic apologies for uncertainty.** No "the model has limitations" language — limitations are named specifically. |
+| **6. Carries a consistent identity.** Voice and structure match prior reports from this Living Model. | **6. Fabricates consensus.** No "the system recommends" without naming the specific mechanism that produced the recommendation. |
+|  | **7. Acts autonomously.** No action executed without sign-off by the named accountable human. |
 
 *Figure 19.5*
 
@@ -650,3 +665,29 @@ End the conversation with three things:
 **Connection to previous chapters:** Every chapter has fed this. Chapter 6 gave you the structure, Chapter 8 gave you the estimate, Chapter 10 gave you the E-value for the assumptions section, Chapter 12 gave you the friction-adjusted deployment forecast, Chapter 18 gave you the package. This chapter renders all of it for the executive.
 
 **Preview of next chapter:** Chapter 20 keeps the model alive after the recommendation lands. You'll specify the Bayesian-update protocol for parameters, the structural-drift detector, and the four-stage minimum viable feedback loop — the operational discipline that turns a one-time deliverable into infrastructure.
+
+---
+
+## 🕰️ AI Wayback Machine
+
+The ideas in this chapter didn't appear from nowhere. **Marie Neurath** was designing the Isotype picture-language for public communication of statistical and policy claims through the 1930s and 1940s — the foundational case that decision-grade visualization is itself a craft, not decoration decades before most people had heard of the four-part executive report and decision-focused visualization. Here's a prompt to find out more — and then make it better.
+
+![Marie Neurath, c. 1940s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/marie-neurath.jpg)
+*Marie Neurath, c. 1940s. AI-generated portrait based on a public domain photograph.*
+
+**Run this:**
+
+```
+Who was Marie Neurath, and how does her Isotype work — the disciplined design of statistical visualizations that communicate uncertain quantitative claims to non-specialist audiences — connect to the chapter's must-do / must-never-do rules for decision-focused visualization in a Causal Brain Executive Report? Keep it to three paragraphs. End with the single most surprising thing about her career or ideas.
+```
+
+→ Search **"Marie Neurath"** on Wikipedia after you run this. See what the model got right, got wrong, or left out.
+
+**Now make the prompt better.** Try one of these:
+
+- Ask it to explain the *Isotype* approach in plain language, as if you've never read information design
+- Ask it to compare Neurath's editorial discipline (what to include, what to leave out) to the four-part report structure in this chapter
+- Add a constraint: "Answer as if you're reviewing a draft visualization against the must-never-do list"
+
+What changes? What gets better? What gets worse?
+
